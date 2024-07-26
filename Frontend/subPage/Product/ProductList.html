@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <title>Online Food Ordering service</title>
+    <link href="../../css/output.css" rel="stylesheet">
+    <script src="/js/identification.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src='../../js/identification.js'></script>
+    <script src='../../js/cookies.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+
+
+<div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <!--
+      Mobile menu
+
+      Off-canvas menu for mobile, show/hide based on off-canvas menu state.
+    -->
+    <div id="header-modal" class="hidden relative z-10 lg:hidden" role="dialog" aria-modal="true">
+        <!--
+          Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+
+          Entering: "transition-opacity ease-linear duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "transition-opacity ease-linear duration-300"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+
+        <div class="fixed inset-0 z-40 flex">
+
+            <div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                <div class="flex px-4 pb-2 pt-5">
+                    <button id="menu-close-btn" type="button" class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
+                        <span class="sr-only">Close menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Links -->
+                <div class="mt-2">
+                    <div class="border-b border-gray-200">
+                        <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
+                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                            <a href="subPage/Product/Restaurant.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Restaurant</a>
+                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('subPage/Product/Order.html')">Order</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+                    <div class="flow-root">
+                        <a href="subPage/User/Login.html" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                    </div>
+                    <div class="flow-root">
+                        <a href="subPage/User/Register3.html" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-30">
+        <nav aria-label="Top">
+            <!-- Secondary navigation -->
+            <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="border-b border-gray-200 dark:border-black">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <!-- Logo (lg+) -->
+                            <div class="hidden lg:flex lg:items-center">
+                                <a href="#">
+                                    <span class="sr-only">Easy Eat</span>
+                                    <img class="h-10 w-auto" src="../../images/logo.png" alt="">
+                                </a>
+                            </div>
+
+                            <div class="hidden h-full lg:flex">
+                                <!-- Mega menus -->
+                                <div class="ml-8">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="../../index.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
+                                            </div>
+
+                                        </div>
+                                        <!--                                        <div class="flex">-->
+                                        <!--                                            <div class="relative flex">-->
+                                        <!--                                                &lt;!&ndash; Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" &ndash;&gt;-->
+                                        <!--                                                <a href="javascript:void(0);" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="sendTokenRequest('')">Order</a>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="#" type="button" class="border-transparent text-yellow-600 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Order</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="../User/HistoryOrder.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">History Order</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="../Others/About.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">About us</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="../Others/Privacy.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Privacy Policy</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="../Others/Help.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Help</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile menu and search (lg-) -->
+                            <div class="flex flex-1 items-center lg:hidden">
+                                <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
+                                <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                    <span class="sr-only">Open menu</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </button>
+
+                                <!-- Search -->
+                                <a href="subPage/Search.html" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Logo (lg-) -->
+                            <a href="#" class="lg:hidden">
+                                <span class="sr-only">Easy Eat</span>
+                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                            </a>
+
+                            <div class="flex flex-1 items-center justify-end">
+                                <div class="flex items-center lg:ml-8">
+
+                                    <div class="hidden lg:flex">
+                                        <a href="subPage/Search.html" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                            <span class="sr-only">Search</span>
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+
+                                        <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                                <!-- Sun Icon -->
+                                                <g class="dark:hidden">
+                                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                                </g>
+                                                <!-- Moon Icon -->
+                                                <g class="hidden dark:block">
+                                                    <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
+
+                                    <div id="user-links" class="hidden flex space-x-8 px-4">
+
+
+
+                                        <div class="flex space-x-8">
+
+                                            <div class="flex">
+                                                <!-- Trigger Button -->
+                                                <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                    <span class="sr-only">Account</span>
+                                                    <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="">
+                                                </button>
+
+                                                <!-- Dropdown Menu -->
+                                                <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                    <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                    <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                    <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                        <span class="sr-only">Close</span>
+                                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                        <div class="flex">
+                                            <!-- Trigger Button -->
+                                            <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                <span class="sr-only">Account</span>
+                                                <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="">
+                                            </button>
+
+                                            <!-- Dropdown Menu -->
+                                            <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                    <span class="sr-only">Close</span>
+                                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    <!-- 商品分类的-->
+    <div class="lg:fixed lg:inset-y-0 lg:z-0 lg:flex lg:w-60 lg:flex-col">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-100 px-6 pb-4">
+            <div class="flex h-16 items-center">
+                <img class="h-8 w-auto mr-4" src="../../images/logo.png" alt="EASY EAT">
+                <div class="text-white font-extrabold text-xl font-semibold">EASY EAT</div>
+            </div>
+
+            <nav class="flex flex-1 flex-col">
+                <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                    <li id="category-list" class="space-y-5">
+
+                    </li>
+
+
+
+                    <li class="mt-auto">
+                        <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
+                            <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 购物车的-->
+    <div class="lg:fixed lg:inset-y-0 lg:right-0 lg:w-1/6 lg:flex lg:flex-col">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-100 px-8 pb-4">
+            <div class="flex h-16 items-center">
+                <img class="h-8 w-auto mr-4" src="../../images/logo.png" alt="EASY EAT">
+                <div class="text-white font-extrabold text-xl font-semibold">EASY EAT</div>
+            </div>
+
+            <nav class="flex flex-1 flex-col">
+                <ul role="list" class="flex flex-1 flex-col gap-y-7">
+
+                    <li>
+                        <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
+                        <a  class="bg-gray-100 text-black group flex gap-x-3 rounded-md p-2 text-xl leading-6 font-semibold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                            </svg>
+                            Order
+                        </a>
+                    </li>
+
+                    <ul id="shopping-cart-list" role="list" class="divide-y divide-gray-100 space-y-4">
+                        <!--产品会动态加载到这里-->
+
+                    </ul>
+
+                    <div class="border-t border-gray-300"></div>
+
+
+                    <li class="mt-auto flex flex-col justify-center items-center gap-y-4">
+
+                        <a class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-black ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            Total Amount
+                            <p id="total-amount" class="text-yellow-600">3$</p>
+                        </a>
+
+                        <a href="javascript:void(0);" type="button" id = "cartBtn" class="inline-flex items-center gap-x-2 rounded-md bg-yellow-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Checkout
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!--商品的-->
+    <main class="py-10 w-2/3 mx-auto opacity-0 transition-opacity duration-500">
+        <div class="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:px-8">
+
+            <div class="relative mt-8">
+                <div class="relative -mb-6 w-full overflow-x-auto pb-6">
+                    <ul id="product-list" role="list" class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0 space-y-8">
+                        <!--动态加载单个商品-->
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+    <!-- 模态框 -->
+    <div id="myModal" class="hidden fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity justify-center items-center">
+        <div class="flex min-h-full items-stretch justify-center text-center px-6 lg:px-8">
+            <div class="w-full max-w-3xl transform text-left">
+                <form class="relative flex flex-col bg-white rounded-lg py-8" style="top: 200px;">
+                    <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8">
+                        <h2 class="text-lg font-medium text-gray-900">Shopping Cart</h2>
+                        <button type="button" id="closeBtn" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Close</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <section aria-labelledby="cart-heading">
+                        <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+                        <ul id="cartList" role="list" class="divide-y divide-gray-100 max-h-80 overflow-y-auto px-4 lg:px-8 py-4 lg:py-8">
+                            <!-- 产品会动态加载到这里 -->
+                        </ul>
+
+                        <li class="mt-auto flex flex-col justify-center items-center gap-y-4">
+
+                            <a class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-black ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                Total Amount
+                                <p id="total-amount1" class="text-yellow-600">3$</p>
+                            </a>
+
+
+                        </li>
+
+                    </section>
+
+                    <div class="mt-8 flex justify-end px-4 sm:px-6 lg:px-8">
+                        <a href="../Product/ConfirmOrder.html" class="rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-50">Continue to Payment</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 结算的 -->
+    <div id="shoppingCartModal" class="hidden fixed inset-0 z-10 bg-gray-500 bg-opacity-75 overflow-y-auto h-full w-full">
+        <div class="flex justify-center items-center min-h-screen">
+            <div class="bg-white rounded-lg p-5 w-full max-w-4xl m-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg font-medium text-gray-900">Shopping Cart</h2>
+                    <button onclick="toggleShoppingCart()" class="rounded p-2 text-gray-500 hover:text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <ul id="cartItems" class="divide-y divide-gray-200 mt-4"></ul>
+                <div class="mt-4 text-right">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 产品的详细页面，初始时隐藏 -->
+    <div id="productModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
+
+        <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
+                    <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                        <button type="button" onclick="closeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
+                            <span class="sr-only">Close</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+                            <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+                                <img id="modalImage" src="" alt="" class="object-cover object-center">
+                            </div>
+                            <div class="sm:col-span-8 lg:col-span-7">
+                                <h2 id="modalTitle" class="text-2xl font-bold text-gray-900 sm:pr-12"></h2>
+
+                                <section aria-labelledby="information-heading" class="mt-2">
+                                    <p id="modalDescription" class="text-gray-700"></p>
+                                    <p id="modalPrice" class="text-2xl text-gray-900"></p>
+
+                                    <!-- Reviews -->
+                                    <div class="mt-6">
+                                        <h4 class="sr-only">Reviews</h4>
+                                        <div class="flex items-center">
+                                            <div class="flex items-center">
+                                                <!-- Active: "text-gray-900", Default: "text-gray-200" -->
+                                                <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                </svg>
+                                                <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                </svg>
+                                                <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                </svg>
+                                                <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                </svg>
+                                                <svg class="text-gray-200 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <p class="sr-only">3.9 out of 5 stars</p>
+                                            <a href="#" class="ml-3 text-sm font-medium text-yellow-600 hover:text-indigo-500">13 reviews</a>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section aria-labelledby="options-heading" class="mt-10">
+                                    <h3 id="options-heading" class="sr-only">Product options</h3>
+                                    <ul id="modalSpecifications"></ul>
+                                    <form>
+
+
+                                        <a class="add-to-cart-button mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-yellow-500 px-8 py-3 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" data-index="${product.id}" onclick="">Add to bag<span class="sr-only">, ${product.name}</span></a>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+</body>
+
+<!--<script src="../../js/script.js"></script>-->
+<script src="../../config.js"></script>
+<script>
+    console.log(API_BASE_URL)
+    function closeModal() {
+        document.getElementById('productModal').classList.add('hidden');
+    }
+
+
+    //规格的映射表
+    const specificationMappings = {
+        1: ["Big "," medium ", "small"],
+        2: ["Hot "," not hot"],
+        3: ["Sweet "," not sweet"],
+        4: ["Cold "," hot"],
+        5: ["Original "," flavoured"]
+    };
+
+
+    // 动态加载左边菜品分类的
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryList = document.getElementById('category-list');
+
+        // 示例数据，可能来自API或其他数据源
+        const categories = [
+            { name: "Salads", emoji: "🥗" },
+            { name: "Burgers", emoji: "🍔" },
+            { name: "Pizzas", emoji: "🍕" },
+            { name: "Drinks", emoji: "🍹" },
+            { name: "Desserts", emoji: "🍰" }
+        ];
+
+        // 为每个分类创建HTML元素并添加到页面中
+        categories.forEach(category => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <a href="#" class="category-item text-black bg-gray-200 text-4xl hover:bg-gray-300 group flex gap-x-3 rounded-md p-2 text-xl leading-6 font-semibold">
+                ${category.emoji} ${category.name}
+            </a>
+        `;
+
+            // 添加到列表中
+            categoryList.appendChild(li);
+        });
+
+        // 添加点击事件监听，实现高亮效果
+        categoryList.addEventListener('click', function(event) {
+            if (event.target.matches('.category-item')) {
+                // 移除之前所有高亮
+                document.querySelectorAll('.category-item').forEach(item => {
+                    item.classList.remove('bg-gray-500', 'text-white');
+                });
+
+                // 高亮点击的项
+                event.target.classList.add('bg-gray-500', 'text-white');
+            }
+        });
+    });
+
+
+    function truncate(text, maxLength) {
+        return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
+    }
+
+
+    async function fetchProducts() {
+
+        // 假设 token 存储在 localStorage 中
+        const token = localStorage.getItem('tempToken');
+
+        // 构建请求的 headers
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+
+        try {
+            const response = await fetch(`http://${API_BASE_URL}:8000/api/product/get_default_product`, {
+                headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('tempToken')
+                    }
+
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch products: ' + response.statusText);
+            }
+            const products = await response.json();
+
+
+            return products.map(product => ({
+                id: product.product_id,
+                name: product.product_name,
+                price: product.price,
+                description: product.description,
+                imageUrl: product.image || '../../images/KFC.jpg',
+                specification_id:product.specification_id,
+                specifications: specificationMappings[product.specification_id] || [] // 映射规格ID到属性数组，若无匹配则为空数组
+            }));
+        } catch (error) {
+            console.error('Error loading products:', error);
+            return []; // 出错时返回空数组，以便其他代码继续运行
+        }
+    }
+
+
+    let productsList;
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            const products = await fetchProducts(); // 等待产品数据加载
+            productsList = products;
+            // 使用产品数据初始化页面和绑定事件等
+            initializeProducts(products);
+        } catch (error) {
+            console.error('Error initializing the page with products:', error);
+        }
+    });
+
+
+    function initializeProducts(products) {
+        const productList = document.getElementById('product-list');
+        // 动态加载商品
+        var t = 0;
+        products.forEach((product) => {
+
+            const li = document.createElement('li');
+            li.className = "inline-flex w-64 flex-col text-center lg:w-auto";
+
+            let buttonHTML = product.specification_id == null || product.specification_id.length === 0
+                ? `<a class="add-to-cart-button relative flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-600" data-index="${product.id}" onclick="">Add to bag<span class="sr-only">, ${product.name}</span></a>`
+                : `<a class="select-specifications-button relative flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-600" data-index="${product.id}">Select specifications<span class="sr-only">, ${product.name}</span></a>`;
+
+            li.innerHTML = `
+<div class="group relative flex flex-col items-center cursor-pointer">
+        <div class="w-48 h-48 overflow-hidden rounded-md bg-gray-200 hover:bg-gray-100 "  onclick=showProductDetails(${product.id})>
+            <img src="${product.imageUrl}" class="min-w-full min-h-full object-cover object-center">
+            <!-- object-cover 确保图片覆盖整个容器，object-center 确保图片居中 -->
+        </div>
+        <div class="flex-grow"></div>
+        <div class="mt-6 w-full px-4 text-center"> <!-- 文本居中显示 -->
+            <h3 class="font-semibold text-lg text-gray-900 truncate">
+                ${product.name}
+            </h3>
+            <p class="text-gray-900">$${product.price}</p>
+            <h5 class="font-light text-gray-400 truncate">
+                ${product.description}
+            </h5>
+        </div>
+        <div class="mt-6 w-full px-4">
+            ${buttonHTML}
+        </div>
+    </div>
+
+
+
+            <!-- Hidden specifications form -->
+            <div class="hidden specifications-form" data-index="${product.id}">
+                <select class="mt-2 p-2 border border-gray-300 rounded">
+                    ${product.specifications ? product.specifications.map(spec => `<option value="${spec}">${spec}</option>`).join('') : ''}
+                </select>
+                <button class="mt-2 p-2 bg-yellow-500 text-gray-700 rounded hover:bg-yellow-500">Add</button>
+            </div>
+
+        `;
+
+            productList.appendChild(li);
+        });
+    }
+
+
+
+    // 显示产品详细信息的函数
+    function showProductDetails(productId) {
+        const product = productsList.find(p => p.id === productId);
+        if (product) {
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('modalImage').src = product.imageUrl;
+            document.getElementById('modalImage').alt = "Image of " + product.name;
+            document.getElementById('modalDescription').textContent = product.description;
+            document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;  // 显示价格
+
+            const specContainer = document.getElementById('modalSpecifications');
+            specContainer.innerHTML = ''; // 清空之前的内容
+
+            // 判断是否有规格并展示
+            if (product.specifications && product.specifications.length > 0) {
+                const select = document.createElement('select');
+                select.className = 'mt-2 p-2 border border-gray-300 rounded';
+                product.specifications.forEach(spec => {
+                    const option = document.createElement('option');
+                    option.value = spec;
+                    option.textContent = spec;
+                    select.appendChild(option);
+                });
+                specContainer.appendChild(select);
+            } else {
+                specContainer.textContent = 'No specifications available.';
+            }
+            // Remove 'hidden' class to show the modal
+            document.getElementById('productModal').classList.remove('hidden');
+        } else {
+            console.error('Product with ID ' + productId + ' not found.');
+        }
+    }
+
+
+    // 动态加载商品 同步到右侧购物车
+    document.addEventListener('DOMContentLoaded', function() {
+        const shoppingCartList = document.getElementById('shopping-cart-list');
+        const CartList = document.getElementById('cartList');
+        const totalAmountElement = document.getElementById('total-amount');
+        const totalAmountElement1 = document.getElementById('total-amount1');
+        let shoppingCart = [];  // 存储购物车中的商品
+        let orderSubtotal = 0;
+        let orderTotal = 0;
+        const order = {
+            shoppingCart: shoppingCart,
+            subtotal: orderSubtotal,
+            total: orderTotal,
+            tax: 0.2,
+            shipping: 5
+        };
+
+        function updateShoppingCart() {
+            shoppingCartList.innerHTML = ''; // 清空购物车列表
+            CartList.innerHTML = '';
+            let totalAmount = 0;
+
+            shoppingCart.forEach((product, index) => {
+                totalAmount += product.price * product.quantity;
+                order.subtotal = totalAmount;
+                order.total = totalAmount*1.2+5;
+                const li = document.createElement('li');
+                li.className = "flex gap-x-4 py-5";
+                li.innerHTML = `
+            <img class="h-12 w-12 flex-none rounded-md bg-gray-50" src="${product.imageUrl}" alt="${product.name}">
+            <div class="flex-auto">
+                <div class="flex items-baseline justify-between gap-x-4">
+                    <p class="text-xl font-semibold leading-6 text-gray-900">${product.name}</p>
+                    <p class="flex-none text-base text-gray-600">${product.price} $</p>
+                </div>
+                <div class="flex items-baseline justify-between gap-x-4 space-y-4">
+                    <p class="text-base leading-6 text-gray-600">${product.description}</p>
+                    <div class="flex items-center">
+                        <button data-action="decrease" data-index="${index}" class="quantity-modify p-0.5 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-4 h-4 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12" />
+                            </svg>
+                        </button>
+                        <p class="px-2 text-base text-gray-600">${product.quantity}</p>
+                        <button data-action="increase" data-index="${index}" class="quantity-modify p-0.5 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-4 h-4 text-gray-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                shoppingCartList.appendChild(li); // 添加新的列表项到购物车列表
+
+            });
+            // 更新模态框中的购物车内容
+            CartList.innerHTML = shoppingCartList.innerHTML;
+            order.shoppingCart = shoppingCart;
+            // 将订单对象保存到本地存储
+
+            localStorage.setItem('order', JSON.stringify(order));
+            totalAmountElement.textContent = `$${totalAmount.toFixed(2)}`; // 更新总金额
+            totalAmountElement1.textContent = `$${totalAmount.toFixed(2)}`; // 更新总金额
+        }
+
+        // 绑定事件监听器到购物车列表
+        shoppingCartList.addEventListener('click', function(event) {
+
+            // 确定点击的是增加或减少按钮
+            if (event.target.closest('.quantity-modify')) {
+                const button = event.target.closest('.quantity-modify');
+                const action = button.dataset.action;
+                const index = parseInt(button.dataset.index, 10);
+                const product = shoppingCart[index];
+
+                // 根据按钮的动作调整数量
+                if (action === 'increase') {
+                    product.quantity++;
+                } else if (action === 'decrease') {
+                    product.quantity--;
+                    // 如果数量小于或等于0，则从购物车中移除该商品
+                    if (product.quantity <= 0) {
+                        shoppingCart.splice(index, 1);
+                    }
+                }
+
+                // 更新购物车显示
+                updateShoppingCart();
+            }
+        });
+
+        // 初始化购物车显示
+        updateShoppingCart();
+
+        // 吧商品添加到购物车
+        // 添加到购物车函数可能需要进行小修改以处理规格
+        function addToShoppingCart(product) {
+            let existingProductIndex = shoppingCart.findIndex(item => item.name === product.name && item.specifications === product.specifications);
+
+            if (existingProductIndex !== -1) {
+                shoppingCart[existingProductIndex].quantity += product.quantity; // 如果产品已存在，只增加数量
+            } else {
+                shoppingCart.push(product); // 如果是新产品，添加到购物车
+            }
+
+            updateShoppingCart(); // 更新购物车显示
+
+        }
+
+
+
+        const productList = document.getElementById('product-list');
+
+
+
+        // 事件监听器来显示/隐藏规格表单
+        productList.addEventListener('click', function(event) {
+            if (event.target.matches('.select-specifications-button')) {
+                const index = event.target.dataset.index;
+                const form = document.querySelector(`.specifications-form[data-index="${index}"]`);
+                form.classList.toggle('hidden');  // 切换显示或隐藏
+            }
+        });
+
+        // 实时添加到购物车中
+        document.addEventListener('click', function(event) {
+            // 处理添加到购物车按钮的点击事件
+            if (event.target.matches('.add-to-cart-button')) {
+                const button = event.target;
+                const productId = button.dataset.index; // 使用产品ID来查找产品
+                const product = productsList.find(p => p.id.toString() === productId);
+                if (product) {
+                    addToShoppingCart({...product, quantity: 1, description: "Standard configuration"}); // 添加产品到购物车，使用标准描述
+                }
+            }
+            // 处理规格表单内的Add按钮点击事件
+            else if (event.target.matches('.specifications-form button')) {
+                const form = event.target.closest('.specifications-form');
+                const productId = form.dataset.index;
+                const selectElement = form.querySelector('select');
+                const selectedSpec = selectElement.value;
+                const product = productsList.find(p => p.id.toString() === productId);
+
+                if (product && selectedSpec) {
+                    const productToAdd = {
+                        ...product,
+                        description: `Specification: ${selectedSpec}`, // 更新描述为选中的规格
+                        specifications: selectedSpec,
+                        quantity: 1
+                    };
+                    addToShoppingCart(productToAdd);
+                    form.classList.add('hidden'); // 隐藏规格选择表单
+                }
+            }
+        });
+
+    });
+
+
+
+    (function() {
+        /*建立模态框对象*/
+        var modalBox = {};
+        /*获取模态框*/
+        modalBox.modal = document.querySelector(".fixed.inset-0.z-10.w-screen.overflow-y-auto");
+        /*获得trigger按钮*/
+        modalBox.triggerBtn = document.getElementById("cartBtn");
+        /*获得关闭按钮*/
+        modalBox.closeBtn = modalBox.modal.querySelector("button[type='button']");
+        /*模态框显示*/
+        modalBox.show = function() {
+            console.log(this.modal);
+            this.modal.style.display = "block";
+        }
+        /*模态框关闭*/
+        modalBox.close = function() {
+            this.modal.style.display = "none";
+        }
+        /*当用户点击模态框内容之外的区域，模态框也会关闭*/
+        modalBox.outsideClick = function() {
+            var modal = this.modal;
+            window.onclick = function(event) {
+                if(event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+        /*模态框初始化*/
+        modalBox.init = function() {
+            var that = this;
+            this.triggerBtn.onclick = function() {
+                that.show();
+            }
+            this.closeBtn.onclick = function() {
+                that.close();
+            }
+            this.outsideClick();
+        }
+        modalBox.init();
+    })();
+
+
+</script>
+<!--<script src="../../js/Product/Product.js"></script>-->
+<script>
+
+    authentication.checkUserAuthentication()
+    window.addEventListener('load', () => {
+        const mainElement = document.querySelector('main');
+        mainElement.classList.remove('opacity-0');
+        mainElement.classList.add('opacity-100');
+    });
+
+</script>
+</html>

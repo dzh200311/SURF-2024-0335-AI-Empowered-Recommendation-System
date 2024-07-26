@@ -1,0 +1,36 @@
+
+/* Dashboard的主体样式 */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px; /* 减小间隙 */
+    padding: 20px;
+    margin-left: 250px; /* 增加左边距，根据需要调整 */
+    margin-top: 70px;
+}
+
+
+/* 卡片样式 */
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.card-header {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+}
+
+.card-content {
+    color: #666;
+}

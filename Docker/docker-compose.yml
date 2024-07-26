@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: cpt202_db_image:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: my_root_password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - cpt202_network
+
+  backend_app:
+    image: backend:latest
+    depends_on:
+      - mysql
+    networks:
+      - cpt202_network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

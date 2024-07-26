@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "rsa",
+      "type": "website.surf0335.backend.Config.RsaKeyProperties",
+      "sourceType": "website.surf0335.backend.Config.RsaKeyProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "rsa.private-key",
+      "type": "java.security.interfaces.RSAPrivateKey",
+      "sourceType": "website.surf0335.backend.Config.RsaKeyProperties"
+    },
+    {
+      "name": "rsa.public-key",
+      "type": "java.security.interfaces.RSAPublicKey",
+      "sourceType": "website.surf0335.backend.Config.RsaKeyProperties"
+    }
+  ],
+  "hints": []
+}

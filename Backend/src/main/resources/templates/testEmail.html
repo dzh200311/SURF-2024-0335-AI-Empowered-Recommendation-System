@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test email</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta name="google-signin-client_id" content="559128899303-5oncp9ieu28ktfr3te7fgov2t4o6p9bp.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+<p>test for mail</p>
+
+<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+<script>
+    //初始化一下就可以了，
+    let vConsole = new VConsole();
+    //你打印的数据 比如
+    console.log('test');
+    //就可像小程序一样的看了和调试了。
+</script>
+
+<input id="email" type="email" placeholder="email">
+<input id="name" type="text" placeholder="username">
+<button class="buttonCode">send me code</button>
+
+Time out test: Using this email address: 2664804791@qq.com
+And using the code : MUGMTG
+
+You should see the alert of timeout
+
+<p>------------------------------</p>
+
+<input id="check" type="text" placeholder="enter code">
+<button class="checkCode">check</button>
+
+<p>------------------------------</p>
+<p>token test (token will be generated and print in the console)</p>
+<input id="username" type="text" placeholder="username for token">
+<button class="tempToken">generate temp token (can use 3 minutes ONLY)</button>
+<button class="longTermToken">generate long term token (can use 7 days or customized days)</button>
+
+<p>------------------------------</p>
+<p>decode token and validate token (open console to check)</p>
+<p>Expired token test (the token below is an expired test which should return invalid and should not decode from this expired token)</p>
+<p>eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiSmllQyIsImV4cCI6MTcxMjg0NTU5NiwiaWF0IjoxNzEyODQ1NDE2fQ.2rXWNDK9ZXU5eZ4sNXFYKZ7D3rYzilyJI36EAjMr5xeKh5XofcoquZLAII6RvjGyQs7nfEG8uU_c_jl2Jr7gBQQrwOp7BH7HYWd08oo0xTy4l4N3bIpqp3jY8aERavYcUL9tum-YDv1Fpb_KM1LTDM0Z371JSBboPc1IwAaO2N6ZhhxZoDyigNEmpHElRbgOBHnsJFxec8FNlPzgUD4cORkE1De6ykh5tmm8dfvqdM-fQfcye0FZuVDLsJmdz3002mvx7Y6pBjYKJ7ubupQ8wUUvA3ExNG0ZISQa1ukIquGuT-en2-KY0lrz78EzmUPAJ_qnnthYCUp00b-ogZpcfQ</p>
+<input id="token" type="text" placeholder="token here to decode and validate">
+<button class="decode">decode username (should see your username in the console)</button>
+<button class="validate">validate token (true if valid, vice verse)</button>
+
+<p>------------------------------</p>
+<p>All restful apis are protected now. If you make a request to a restful api without the authorization header (Bearer) or
+    without the correct token you will receive a 401 (Denied) response. </p>
+<p>Below is a sample case you can check the js ajax code for this button to see
+how to add a bearer header in the http request header</p>
+
+<input id="token1" type="text" placeholder="token here access protected restful api">
+<input id="name1" type="text" placeholder="your name here">
+<button class="test">access to a protected api</button>
+
+<p>You should see "Successfully access!! Hello, + {your name}" in the console if you provide a valid token. Also you can check the error type in the console</p>
+
+<button class="test1">test2</button>
+
+<button class="getUser">get user</button>
+
+<p>===========================</p>
+
+<input type="text" placeholder="block user's id" id="block_user_id">
+<button class="block">block user</button>
+
+<button class="unblock">unblock user</button>
+
+<p>===========================</p>
+
+<button class="getNumber">number</button>
+<button class="getPage">page</button>
+
+<p>===========================</p>
+
+test for upload image cannot use until the project is deployed
+<input type="file" id="fileInput">
+<input type="text" id="userID" placeholder="user id here">
+<button id="uploadButton">Upload Image</button>
+<div id="message"></div>
+
+<p>===========================</p>
+
+<p>Below is the staff test</p>
+
+<button class="staffNumber">staff number total</button>
+<input type="text" placeholder="staff role" id="role1">
+
+<button class="staffNumberByRole">staff number in role</button>
+
+<button class="staffPage">staff page in role</button>
+
+<p>===========================</p>
+
+<input type="text" placeholder="staff page" id="staffPage">
+
+<input type="text" placeholder="staff role" id="role">
+
+<button class="getStaff">get staff in page</button>
+<p>===========================</p>
+
+<input type="text" placeholder="block staff's id" id="block_staff_id">
+<button class="blockStaff">block staff</button>
+
+<button class="unblockStaff">unblock staff</button>
+
+<p>===========================</p>
+
+<button class="addStaff">add staff</button>
+
+<!--<img src="http://localhost:8000/api/image/avatar/download?fileName=avatar_22.jpg" alt="imagesss">-->
+
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<script>
+    $(".addStaff").click(function(event) {
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        console.log(token);
+        var staff_name = "niuheng1212";
+        var position = 0;
+        var shift = 0;
+        var salary = 12.12
+        var store_id = 1;
+        var role = 2;
+
+        $.ajax({
+            type: 'POST',
+            url: "/api/staff/add_staff",
+            data: {
+                staff_name: staff_name,
+                position: position,
+                shift: shift,
+                salary: salary,
+                store_id: store_id,
+                role: role
+            },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                alert("Error adding staff");
+                console.log("Error:", error);
+            }
+        });
+    });
+
+
+    // staff test
+    $(".staffNumberByRole").click(function (event){
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        var role = document.getElementById("role1").value;
+        $.ajax({
+            type: 'GET',
+            url: "/api/staff/get_staff_number_in_role",
+            data: { role: role },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".staffPage").click(function (event){
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        var role = document.getElementById("role1").value;
+        $.ajax({
+            type: 'GET',
+            url: "/api/staff/get_staff_pages",
+            data: { role: role },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".staffNumber").click(function (event){
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'GET',
+            url: "/api/staff/get_staff_total",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".blockStaff").click(function (event){
+        event.preventDefault();
+        var id = document.getElementById("block_staff_id").value;
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'POST',
+            url: "/api/staff/block_staff",
+            data: { id: id },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".unblockStaff").click(function (event){
+        event.preventDefault();
+        var id = document.getElementById("block_staff_id").value;
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'POST',
+            url: "/api/staff/unblock_staff",
+            data: { id: id },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".getStaff").click(function (event) {
+        var token = document.getElementById("token1").value;
+        var page = document.getElementById("staffPage").value;
+        var role = document.getElementById("role").value;
+        console.log(page, role);
+        $.ajax({
+            url: '/api/staff/get_all_staff',
+            type: 'GET',
+            data: { page: page, role: role},
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error); // Log any errors to the console
+            }
+        });
+    });
+
+    // user test.....
+
+    $(".getPage").click(function (event){
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'GET',
+            url: "/api/user/get_user_pages",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".getNumber").click(function (event){
+        event.preventDefault();
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'GET',
+            url: "/api/user/get_user_total",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".block").click(function (event){
+        event.preventDefault();
+        var id = document.getElementById("block_user_id").value;
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'POST',
+            url: "/api/user/block_user",
+            data: { id: id },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".unblock").click(function (event){
+        event.preventDefault();
+        var id = document.getElementById("block_user_id").value;
+        var token = document.getElementById("token1").value;
+        $.ajax({
+            type: 'POST',
+            url: "/api/user/unblock_user",
+            data: { id: id },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".getUser").click(function (event) {
+        var token = document.getElementById("token").value;
+        var page = 11;
+        $.ajax({
+            url: '/api/user/get_all_user',
+            type: 'GET',
+            data: { page: page },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error); // Log any errors to the console
+            }
+        });
+    });
+
+    //upload image cannot use until the project is deployed
+
+    $('#uploadButton').click(function() {
+        var fileInput = $('#fileInput')[0].files[0];
+        var id = document.getElementById("userID").value;
+        var token = document.getElementById("token").value;
+
+        var formData = new FormData();
+        formData.append('file', fileInput);
+        formData.append('id', id); // Add ID to the FormData
+
+        $.ajax({
+            url: '/api/image/avatar/upload',
+            type: 'POST',
+            data: formData, // Pass FormData directly
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data);
+                $('#message').text('Image uploaded successfully.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                $('#message').text('Error occurred while uploading image.');
+            }
+        });
+    });
+
+
+    $(".longTermToken").click(function (event){
+        event.preventDefault();
+        var username = document.getElementById("username").value;
+        $.ajax({
+            type: 'POST',
+            url: "/token/generate_long_token",
+            data: { name: username },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+
+    })
+    $(".test1").click(function (event) {
+        var token = document.getElementById("token").value;
+
+        $.ajax({
+            type: 'POST',
+            url: "/token/info1",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response);
+                window.location.href = "/test/page1";
+            },
+            error: function(error) {
+                alert("error calling");
+                console.log("unknown error:", error);
+            }
+        });
+    });
+
+
+    $(".test").click(function (event) {
+        var token = document.getElementById("token1").value;
+        var name = document.getElementById("name1").value;
+
+        $.ajax({
+            type: 'POST',
+            url: "/token/info",
+            data: { name: name },
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                alert("error calling");
+                console.log("unknown error:", error);
+            }
+        });
+    });
+
+
+    $(".validate").click(function (event){
+        var token = document.getElementById("token").value;
+        $.ajax({
+            type: 'POST',
+            url: "/token/validate",
+            data: { token: token },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".decode").click(function (event){
+        var token = document.getElementById("token").value;
+        $.ajax({
+            type: 'POST',
+            url: "/token/decode",
+            data: { token: token },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".tempToken").click(function (event){
+        event.preventDefault();
+        var username = document.getElementById("username").value;
+        $.ajax({
+            type: 'POST',
+            url: "/token/generate_temp_token",
+            data: { username: username },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+
+    })
+
+    $(".checkCode").click(function (event){
+        event.preventDefault();
+        var code = document.getElementById("check").value;
+        var email = document.getElementById("email").value;
+        var type = 0;
+        $.ajax({
+            type: 'POST',
+            url: "/api/email/check_code",
+            data: { email: email, code: code, type: type },
+            success: function(response) {
+                if (response === "ok") {
+                    alert("ok")
+                } else if (response === "wrong") {
+                    alert("wrong")
+                } else if (response === "timeout") {
+                   alert("timeout")
+                } else {
+                    alert("unknown")
+                }
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+
+    $(".buttonCode").click(function (event){
+
+        event.preventDefault();
+
+        console.log("send code");
+        var email = document.getElementById("email").value;
+        var username = document.getElementById("name").value;
+        console.log(email)
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/api/email/send_verification_email?tos=" + encodeURIComponent(email) +
+            "&username=" + encodeURIComponent(username), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    alert("Successfully Sent");
+                } else {
+                    alert("Failed to send email. Please try again.");
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
+</body>
+</html>

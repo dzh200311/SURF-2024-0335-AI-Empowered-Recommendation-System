@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Page</title>
+  <link rel="stylesheet" href="../../css/output.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="../../js/ThirdPartyLogin1.js"></script>
+  <script src='../../src/three.min.js'></script>
+  <link href="../../css/animation.css" rel="stylesheet">
+</head>
+<body class="h-full">
+
+<div class="flex min-h-full ">
+  <main class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 opacity-0 transition-opacity duration-300">
+    <div class="mx-auto w-full max-w-sm lg:w-96">
+      <div>
+        <div class="flex items-center">
+          <img class="h-11 w-auto" src="../../images/logo.png" alt="Your Company">
+          <h2 class="ml-4 text-3xl font-bold leading-9 tracking-tight text-orange-300">Join to EASYEAT</h2>
+        </div>
+
+        <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Verify your email</h2>
+
+
+        <div class="mt-2 flex justify-between text-sm leading-6 text-gray-500">
+          <span>
+              <a href="../../index.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Back to main page</a>
+
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <div>
+          <form id="RegisterForm" method="post" class="space-y-8">
+            <div>
+              <label for="verification-code" class="block text-sm font-medium leading-6 text-gray-900">Verification Code</label>
+              <div class="mt-2 flex space-x-8 justify-center max-w-sm mx-auto">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox1">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox2">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox3">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox4">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox5">
+                <input class="w-8 h-10 text-center text-lg font-semibold form-control rounded border border-gray-300" maxlength="1" type="text" id="codeBox6">
+              </div>
+              <p id="verificationCodeError" class="mt-1 text-sm text-red-500"></p>
+            </div>
+
+            <div class="flex flex-wrap justify-between space-y-4 md:space-y-0 space-x-4">
+              <button id="resetButton"
+                      class="reset-btn flex-1 rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex items-center justify-center">
+                <span>Resend Code</span>
+                <span id="countdown" class="ml-2 text-sm text-gray-500"></span>
+              </button>
+
+              <button type="submit"
+                      class="flex-1 rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Confirm
+              </button>
+            </div>
+
+
+
+
+
+          </form>
+        </div>
+      </div>
+
+
+
+    </div>
+  </main>
+  <div class="relative hidden w-0 flex-1 lg:block">
+    <div id="threejs-canvas-container"></div>
+  </div>
+</div>
+
+<script src="../../config.js"></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var inputs = document.querySelectorAll('.form-control');
+
+    // 自动转换输入的字母为大写并跳转到下一个输入框
+    inputs.forEach(function(input, idx) {
+      input.oninput = function() {
+        input.value = input.value.toUpperCase();  // 将输入转换为大写
+        if (idx < inputs.length - 1 && input.value) {
+          inputs[idx + 1].focus();  // 跳转到下一个输入框
+        }
+      };
+
+      // 处理 Backspace 删除操作，跳转到上一个输入框
+      input.addEventListener('keyup', function(e) {
+        if (e.key === "Backspace" && idx > 0 && !input.value) {
+          inputs[idx - 1].focus();
+        }
+      });
+
+      // 选中下一个输入框的文本，以便用户可以直接输入并覆盖它
+      input.addEventListener('click', function() {
+        input.select();
+      });
+    });
+  });
+
+  // 禁用按钮
+  document.addEventListener('DOMContentLoaded', function () {
+    const resetButton = document.getElementById('resetButton');
+    const countdownElement = document.getElementById('countdown');
+
+    resetButton.addEventListener('click', function () {
+      // 开始时禁用按钮和改变颜色
+      this.disabled = true;
+      this.classList.add('bg-gray-400', 'hover:bg-gray-400');
+      this.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+
+      let timeLeft = 30; // 倒计时秒数
+      countdownElement.innerText = `${timeLeft}s`;
+
+      // 开始倒计时
+      const intervalId = setInterval(() => {
+        timeLeft--;
+        countdownElement.innerText = `${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+          clearInterval(intervalId);
+          countdownElement.innerText = '';
+          // 倒计时结束时恢复按钮状态
+          resetButton.disabled = false;
+          resetButton.classList.remove('bg-gray-400', 'hover:bg-gray-400');
+          resetButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+        }
+      }, 1000); // 每秒更新一次
+    });
+  });
+
+  // 渐入动画
+  window.addEventListener('load', () => {
+    const mainElement = document.querySelector('main');
+    mainElement.classList.remove('opacity-0');
+    mainElement.classList.add('opacity-100');
+  });
+
+  function validateVerificationForm() {
+    var email = localStorage.getItem('email');  // 从 localStorage 获取 email
+    var code = getVerificationCode();  // 从输入框收集验证码
+    var type = 0;  // 假设类型为 0
+    if (!code || code.length < 6) { // 确保验证码长度充足
+      document.getElementById('verificationCodeError').innerText = 'Please fill in all fields.';
+      return false; // 验证不通过
+    }
+
+    // 清除任何先前的错误信息
+    document.getElementById('verificationCodeError').innerText = '';
+
+    // 使用 AJAX 发送验证码到服务器进行验证
+    $.ajax({
+      type: 'POST',
+      url: `http://${API_BASE_URL}:8000/api/email/check_code`,
+      data: {
+        email: email,
+        code: code,
+        type: type
+      },
+      success: function(response) {
+        if (response === "ok") {
+          performRegistration();  // 验证成功后执行注册
+        } else if (response === "wrong") {
+          document.getElementById('verificationCodeError').innerText = 'Invalid verification code. Please try again.';
+        } else if (response === "timeout") {
+          document.getElementById('verificationCodeError').innerText = 'Verification code has expired. Please request a new code.';
+        } else {
+          document.getElementById('verificationCodeError').innerText = 'Unknown error occurred. Please try again.';
+        }
+      },
+      error: function() {
+        document.getElementById('verificationCodeError').innerText = 'Error processing your request. Please try again.';
+      }
+    });
+    return false; // 阻止表单默认提交
+  }
+
+  function performRegistration() {
+    var username = localStorage.getItem('username');  // 从 localStorage 获取用户名
+    var email = localStorage.getItem('email');  // 从 localStorage 获取邮箱
+    var password = localStorage.getItem('password');  // 从 localStorage 获取密码
+
+    var data = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    // 发送注册请求
+    $.ajax({
+      type: 'POST',
+      url: `http://${API_BASE_URL}:8000/api/user/register`,
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function(response) {
+        console.log('Success:', response);
+        alert('Registration successful!');
+
+        localStorage.setItem('isRegister', "true");
+        window.location.href = '../../subPage/User/Login.html';  // 重定向到仪表盘
+
+      },
+      error: function(xhr) {
+        console.error('Error:', xhr.statusText);
+        alert('Registration failed! Please check your information again.');
+      }
+    });
+  }
+
+  function getVerificationCode() {
+    var code = '';
+    for (var i = 1; i <= 6; i++) {
+      code += document.getElementById('codeBox' + i).value.trim().toUpperCase();  // 收集并转换为大写
+    }
+    return code;
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var verificationForm = document.getElementById('RegisterForm');
+    verificationForm.addEventListener('submit', function (e) {
+      e.preventDefault();  // 阻止默认提交
+      validateVerificationForm();  // 执行验证函数
+    });
+  });
+
+  // document.addEventListener('DOMContentLoaded', function () {
+  //     var form = document.getElementById('RegisterForm');
+  //
+  //     form.addEventListener('submit', function (e) {
+  //         e.preventDefault(); // 阻止表单默认提交行为
+  //
+  //         // 先进行表单验证
+  //         if (validateForm()) {
+  //             // 如果表单验证通过，执行AJAX请求
+  //             var formData = new FormData(form);
+  //             var xhr = new XMLHttpRequest();
+  //             xhr.open('POST', 'http://localhost:8000/api/user/register', true);
+  //             xhr.setRequestHeader('Content-Type', 'application/json');
+  //
+  //             xhr.onload = function () {
+  //                 if (xhr.status >= 200 && xhr.status < 300) {
+  //                     console.log('Success:', xhr.responseText);
+  //                     const jsonResponse = JSON.parse(xhr.responseText);
+  //                     if (jsonResponse.success) {
+  //                         alert('Registration successful! Please verify your email address.');
+  //                         localStorage.setItem('isLoggedIn', true);
+  //                         window.location.href = './Verify.html'; // 重定向到主页
+  //                     } else {
+  //                         alert('Registration failed! Please check your information again.');
+  //                     }
+  //                 } else {
+  //                     console.error('Something went wrong:', xhr.statusText);
+  //                     alert('Registration failed! Please check your information again.');
+  //                 }
+  //             };
+  //
+  //             var object = {};
+  //             formData.forEach((value, key) => { object[key] = value; });
+  //             var json = JSON.stringify(object);
+  //             xhr.send(json);
+  //         } else {
+  //             // 如果验证不通过，显示错误消息
+  //             console.log('Validation failed!');
+  //         }
+  //     });
+  // });
+
+
+
+
+</script>
+<script src="../../src/1bitDemo.js"></script>
+
+</body>
+</html>

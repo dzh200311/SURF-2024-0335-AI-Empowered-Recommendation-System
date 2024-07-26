@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <title>Online Food Ordering service</title>
+    <style>
+        /* CSS样式，添加动画曲线和优化持续时间 */
+    </style>
+    <link href="css/output.css" rel="stylesheet">
+    <link href="css/animation.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src='src/three.min.js'></script>
+
+</head>
+<body>
+
+<div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <!--
+      Mobile menu
+
+      Off-canvas menu for mobile, show/hide based on off-canvas menu state.
+    -->
+    <div id="header-modal" class="hidden relative z-40 lg:hidden" role="dialog" aria-modal="true">
+        <!--
+          Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+
+          Entering: "transition-opacity ease-linear duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "transition-opacity ease-linear duration-300"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+
+        <div class="fixed inset-0 z-40 flex">
+
+            <div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                <div class="flex px-4 pb-2 pt-5">
+                    <button id="menu-close-btn" type="button" class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
+                        <span class="sr-only">Close menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Links -->
+                <div class="mt-2">
+                    <div class="border-b border-gray-200">
+                        <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
+                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                            <a href="subPage/Product/ProductList.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">View Food</a>
+                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('./subPage/Product/ProductList')">Order</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+                    <div class="flow-root">
+                        <a href="subPage/User/Login.html" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                    </div>
+                    <div class="flow-root">
+                        <a href="subPage/User/Register3.html" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-30">
+        <nav aria-label="Top">
+            <!-- Secondary navigation -->
+            <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="border-b border-gray-200 dark:border-black">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <!-- Logo (lg+) -->
+                            <div class="hidden lg:flex lg:items-center">
+                                <a href="#">
+                                    <span class="sr-only">Easy Eat</span>
+                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                </a>
+                            </div>
+
+                            <div class="hidden h-full lg:flex">
+                                <!-- Mega menus -->
+                                <div class="ml-8">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./index.html" type="button" class="border-transparent text-yellow-600 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">主页</a>
+                                            </div>
+
+                                        </div>
+                                        <!--                                        <div class="flex">-->
+                                        <!--                                            <div class="relative flex">-->
+                                        <!--                                                &lt;!&ndash; Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" &ndash;&gt;-->
+                                        <!--                                                <a href="javascript:void(0);" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="sendTokenRequest('')">Order</a>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/Product/ProductList.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">点单</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/User/HistoryOrder.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">历史订单</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/Others/About.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">关于我们</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/Others/Privacy.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">隐私条例</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/Others/Help.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">帮助</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile menu and search (lg-) -->
+                            <div class="flex flex-1 items-center lg:hidden">
+                                <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
+                                <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                    <span class="sr-only">Open menu</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </button>
+
+                                <!-- Search -->
+                                <a href="subPage/Search.html" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Logo (lg-) -->
+                            <a href="#" class="lg:hidden">
+                                <span class="sr-only">Easy Eat</span>
+                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                            </a>
+
+                            <div class="flex flex-1 items-center justify-end">
+                                <div class="flex items-center lg:ml-8">
+
+                                    <div class="hidden lg:flex">
+                                        <a href="subPage/Search.html" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                            <span class="sr-only">Search</span>
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+
+                                        <button id="translateLanguage" class="p-2 rounded-2xl bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700" onclick="window.location.href = 'index.html';">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+                                            </svg>
+                                        </button>
+
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-3" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+
+                                        <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                                <!-- Sun Icon -->
+                                                <g class="dark:hidden">
+                                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                                </g>
+                                                <!-- Moon Icon -->
+                                                <g class="hidden dark:block">
+                                                    <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+
+
+                                    <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
+
+                                    <div id="signup-buttons" class="flex space-x-8 px-4">
+                                        <a href="subPage/User/Register.html" type="button" class="rounded-md bg-white dark:bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-950 hover:bg-gray-50 dark:hover:bg-gray-700">注册</a>
+
+                                        <a href="./subPage/User/Login.html" type="button" class="rounded-md bg-yellow-500 dark:bg-yellow-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">登陆</a>
+                                    </div>
+
+                                    <div id="user-links" class="hidden flex space-x-8 px-4">
+
+
+
+                                        <div class="flex space-x-8">
+
+                                            <div class="flex">
+                                                <!-- Trigger Button -->
+                                                <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                    <span class="sr-only">Account</span>
+                                                    <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="">
+                                                </button>
+
+                                                <!-- Dropdown Menu -->
+                                                <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                    <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                    <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                    <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                        <span class="sr-only">Close</span>
+                                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+
+        <div class="flex flex-col border-b border-gray-200 lg:border-0">
+
+            <div class="relative ">
+                <div aria-hidden="true" class="absolute hidden h-full w-1/2 bg-yellow-100 dark:bg-yellow-300 lg:block transition-colors duration-300"></div>
+                <div class="relative bg-gray-100 lg:bg-transparent">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
+                        <div class="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
+                            <div class="lg:pr-16">
+                                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">简单吃,放心吃,随心吃</h1>
+                                <p class="mt-4 text-xl text-gray-600">先吃饱,再想别的</p>
+                                <div class="mt-6">
+                                    <a href="subPage/Product/Restaurant.html" class="inline-block rounded-md border border-transparent bg-yellow-500 dark:bg-yellow-600 px-8 py-3 font-medium text-white hover:bg-yellow-600 transition-colors duration-300">现在就点!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-48 w-full sm:h-64 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2">
+                    <div id="threejs-canvas-container"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Sale and testimonials -->
+
+        <div class="relative overflow-hidden fade-in-section">
+            <!-- Decorative background image and gradient -->
+            <div aria-hidden="true" class="absolute inset-0">
+                <div class="absolute inset-0 mx-auto max-w-7xl overflow-hidden xl:px-8">
+                    <img src="./images/display/bg.jpg" alt="" class="h-full w-full object-cover object-center">
+                </div>
+                <div class="absolute inset-0 bg-white bg-opacity-90 dark:bg-black bg-opacity-10 transition-colors duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-white via-white dark:bg-gradient-to-t dark:from-black dark:via-black transition-colors duration-300"></div>
+            </div>
+
+            <!-- Sale -->
+
+            <section aria-labelledby="sale-heading" class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-amber-500">首单享25%优惠!</h2>
+                    <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600 dark:text-white">现在订购，体验让你最喜欢的饭菜送到你家门口的便利。限时提供!</p>
+                    <a href="subPage/Product/Restaurant.html" class="mt-6 inline-block w-full rounded-md border border-transparent bg-yellow-500 px-8 py-3 font-medium text-white hover:bg-yellow-600 sm:w-auto">点餐</a>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="fade-in-section">
+                <section aria-labelledby="testimonial-heading" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+                    <div class="mx-auto max-w-2xl lg:max-w-none">
+                        <h2 id="testimonial-heading" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-amber-500">精选评论</h2>
+
+                        <div class="mt-16 space-y-16 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
+                            <blockquote class="sm:flex lg:block">
+                                <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true" class="flex-shrink-0 text-gray-300">
+                                    <path d="M0 18h8.7v-5.555c-.024-3.906 1.113-6.841 2.892-9.68L6.452 0C3.188 2.644-.026 7.86 0 12.469V18zm12.408 0h8.7v-5.555C21.083 8.539 22.22 5.604 24 2.765L18.859 0c-3.263 2.644-6.476 7.86-6.451 12.469V18z" fill="currentColor" />
+                                </svg>
+                                <div class="mt-8 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-10">
+                                    <p class="text-lg text-gray-600 dark:text-white">这是我第一次在EasyEat点餐，我被快速的送货和美味的食物所震撼。强烈推荐!</p>
+                                    <cite class="mt-4 block font-semibold not-italic text-gray-900 dark:text-white">小明</cite>
+                                </div>
+                            </blockquote>
+                            <blockquote class="sm:flex lg:block">
+                                <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true" class="flex-shrink-0 text-gray-300">
+                                    <path d="M0 18h8.7v-5.555c-.024-3.906 1.113-6.841 2.892-9.68L6.452 0C3.188 2.644-.026 7.86 0 12.469V18zm12.408 0h8.7v-5.555C21.083 8.539 22.22 5.604 24 2.765L18.859 0c-3.263 2.644-6.476 7.86-6.451 12.469V18z" fill="currentColor" />
+                                </svg>
+                                <div class="mt-8 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-10">
+                                    <p class="text-lg text-gray-600 dark:text-white">EasyEat让网上订餐变得如此简单。整个过程很顺利，食物也很美味。一定会再次订购!</p>
+                                    <cite class="mt-4 block font-semibold not-italic text-gray-900 dark:text-white">李雷</cite>
+                                </div>
+                            </blockquote>
+                            <blockquote class="sm:flex lg:block">
+                                <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true" class="flex-shrink-0 text-gray-300">
+                                    <path d="M0 18h8.7v-5.555c-.024-3.906 1.113-6.841 2.892-9.68L6.452 0C3.188 2.644-.026 7.86 0 12.469V18zm12.408 0h8.7v-5.555C21.083 8.539 22.22 5.604 24 2.765L18.859 0c-3.263 2.644-6.476 7.86-6.451 12.469V18z" fill="currentColor" />
+                                </svg>
+                                <div class="mt-8 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-10">
+                                    <p class="text-lg text-gray-600 dark:text-white">简单吃提供的食物质量给我留下了深刻的印象。方便可靠，非常适合忙碌的日子!</p>
+                                    <cite class="mt-4 block font-semibold not-italic text-gray-900 dark:text-white">韩梅梅</cite>
+                                </div>
+                            </blockquote>
+                        </div>
+
+
+                    </div>
+                </section>
+            </section>
+
+
+        </div>
+
+
+        <!-- 种类  -->
+        <div class="relative overflow-hidden fade-in-section">
+
+
+            <!-- Sale -->
+
+            <section aria-labelledby="sale-heading" class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-6 text-center sm:px-6 lg:px-6 py-4">
+                <div class="mx-auto max-w-1xl lg:max-w-none px-3">
+                    <h3 id="sale-heading" class="text-xl font-bold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl dark:text-amber-500">Categories</h3>
+                </div>
+                <a href="./subPage/Product/ProductList.html" class="hidden text-sm font-semibold text-yellow-600 hover:text-yellow-700 sm:block dark:text-yellow-800">
+                    See everything
+                    <span aria-hidden="true"> &rarr;</span>
+                </a>
+
+                <div class="relative h-11">
+
+                </div>
+
+                <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 ">
+                    <a href="./subPage/Product/ProductList.html" class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/pizz.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Pizza</h3>
+                        </div>
+                    </a>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/mian.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Pasta</h3>
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/brunch.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Brunch</h3>
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/bing.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Mexican food</h3>
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/rice.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Spanish fried rice</h3>
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow dark:bg-gray-800 transition-colors duration-300 hover:-translate-y-1 transform hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <div class="flex flex-1 flex-col p-8">
+                            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="./images/display/sala.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-white">Salad</h3>
+                        </div>
+                    </li>
+
+                    <!-- More people... -->
+                </ul>
+
+
+
+            </section>
+
+
+        </div>
+
+
+        <!-- 特色食物 -->
+        <div class="relative overflow-hidden fade-in-section">
+            <section aria-labelledby="sale-heading" class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-6 py-4">
+                <div class="mx-auto max-w-1xl lg:max-w-none px-3">
+                    <h3 id="sale-heading" class="text-xl font-bold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl dark:text-amber-500">Featured Food</h3>
+                </div>
+                <a href="./subPage/Product/ProductList.html" class="hidden text-sm font-semibold text-yellow-600 hover:text-yellow-700 sm:block dark:text-yellow-800">
+                    See everything
+                    <span aria-hidden="true"> &rarr;</span>
+                </a>
+
+                <div class="relative h-11">
+
+                </div>
+
+                <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+                        <div class="flex flex-1 flex-col p-8 dark:bg-gray-800 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <img class="mx-auto h-58 w-64 flex-shrink-0 rounded-xl " src="./images/display/hanbao1.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-yellow-600">Angus Beef burger</h3>
+                            <dl class="mt-1 flex flex-grow flex-col justify-between">
+                                <dt class="sr-only">Title</dt>
+                                <dd class="text-sm text-gray-500 dark:text-white">Enjoy a classic taste with our Angus Beef Burger, grilled to perfection and served with a side of our signature fries. A timeless delight for burger enthusiasts!</dd>
+                            </dl>
+                            <dd class="mt-3">
+                                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">7$</span>
+                            </dd>
+                            <dd class="mt-4">
+                                <button type="button" class="rounded-full bg-yellow-500 p-2 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:-translate-y-1 transform">
+                                    <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                    </svg>
+                                </button>
+                            </dd>
+
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+                        <div class="flex flex-1 flex-col p-8 dark:bg-gray-800 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <img class="mx-auto h-58 w-64 flex-shrink-0 rounded-xl " src="./images/display/mifan1.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-yellow-600">Japanese roast beef rice</h3>
+                            <dl class="mt-1 flex flex-grow flex-col justify-between">
+                                <dt class="sr-only">Title</dt>
+                                <dd class="text-sm text-gray-500 dark:text-white">Introducing our Japanese-style Pork Roast Beef Rice, a flavorful fusion of tender pork roast beef, steamed rice, and vibrant vegetables. </dd>
+                            </dl>
+                            <dd class="mt-3">
+                                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">9$</span>
+                            </dd>
+                            <dd class="mt-4">
+                                <button type="button" class="rounded-full bg-yellow-500 p-2 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:-translate-y-1 transform">
+                                    <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                    </svg>
+                                </button>
+                            </dd>
+
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+                        <div class="flex flex-1 flex-col p-8 dark:bg-gray-800 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <img class="mx-auto h-58 w-64 flex-shrink-0 rounded-xl " src="./images/display/pizza1.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-yellow-600">Seafood Supreme Pizza</h3>
+                            <dl class="mt-1 flex flex-grow flex-col justify-between">
+                                <dt class="sr-only">Title</dt>
+                                <dd class="text-sm text-gray-500 dark:text-white">Enjoy a classic taste with our Angus Beef Burger, grilled to perfection and served with a side of our signature fries. A timeless delight for burger enthusiasts!</dd>
+                            </dl>
+                            <dd class="mt-3">
+                                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">20$</span>
+                            </dd>
+                            <dd class="mt-4">
+                                <button type="button" class="rounded-full bg-yellow-500 p-2 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:-translate-y-1 transform">
+                                    <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                    </svg>
+                                </button>
+                            </dd>
+
+                        </div>
+                    </li>
+
+                    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+                        <div class="flex flex-1 flex-col p-8 dark:bg-gray-800 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <img class="mx-auto h-58 w-64 flex-shrink-0 rounded-xl " src="./images/display/dangao1.png" alt="">
+                            <h3 class="mt-6 text-sm font-medium text-gray-900 dark:text-yellow-600">Strawberry cake</h3>
+
+                            <dl class="mt-1 flex flex-grow flex-col justify-between">
+                                <dt class="sr-only">Title</dt>
+                                <dd class="text-sm text-gray-500 dark:text-white">Enjoy a classic taste with our Angus Beef Burger, grilled to perfection and served with a side of our signature fries. A timeless delight for burger enthusiasts!</dd>
+                            </dl>
+                            <dd class="mt-3">
+                                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">13$</span>
+                            </dd>
+                            <dd class="mt-4">
+                                <button type="button" class="rounded-full bg-yellow-500 p-2 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:-translate-y-1 transform">
+                                    <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                    </svg>
+                                </button>
+                            </dd>
+
+                        </div>
+                    </li>
+                </ul>
+
+
+
+
+
+            </section>
+        </div>
+
+
+        <!-- Trending Restaurant -->
+        <section class="fade-in-section">
+            <section aria-labelledby="features-heading" class="mx-auto max-w-7xl py-32 sm:px-2 lg:px-8 relative">  <!-- Add relative for positioning arrows -->
+                <div class="mx-auto max-w-1xl px-4 lg:max-w-none lg:px-0">
+                    <div class="max-w-1xl">
+                        <h2 id="features-heading" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">The most popular food</h2>
+                    </div>
+
+
+                    <div class="mt-4" id="panels">
+
+                        <div id="panel-container" class="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
+                            <!-- Panel content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+
+        <!-- 声明  -->
+        <div class="relative overflow-hidden fade-in-section">
+
+
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+                <div class="relative overflow-hidden rounded-lg">
+                    <div class="absolute inset-0">
+                        <img src="./images/display/bg2.jpg" alt="" class="h-full w-full object-cover object-center">
+                    </div>
+                    <div class="relative bg-gray-900 bg-opacity-50 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
+                        <div class="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+                            <h2 class="text-3xl font-bold tracking-tight text-yellow-400 sm:text-4xl">
+                                <span class="block sm:inline">Our commitment </span>
+                                <span class="block sm:inline">and persistence</span>
+                            </h2>
+                            <p class="mt-3 text-xl text-white">Our commitment and persistence drive us forward on this journey. We're dedicated to providing you with seamless service, ensuring every order is handled with care and efficiency. From start to finish, we strive to meet your needs and exceed your expectations.</p>
+                            <a href="#" class="mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </main>
+
+    <section class="fade-in-section dark:bg-gray-950 transition-colors duration-300">
+        <footer aria-labelledby="footer-heading" class="bg-white dark:bg-gray-950 transition-colors duration-300">
+            <h2 id="footer-heading" class="sr-only">Footer</h2>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="border-t border-gray-200">
+                    <div class="pb-20 pt-16">
+                        <div class="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
+                            <div class="grid grid-cols-2 gap-8 xl:col-span-2">
+                                <div class="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-yellow-300">Popular Cuisines</h3>
+                                        <ul role="list" class="mt-6 space-y-6">
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Chinese</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Italian</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Indian</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Mexican</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Japanese</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-yellow-300">Customer Support</h3>
+                                        <ul role="list" class="mt-6 space-y-6">
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Contact Us</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">FAQ</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Order Status</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Refund Policy</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Terms & Conditions</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-yellow-300">About Us</h3>
+                                        <ul role="list" class="mt-6 space-y-6">
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Our Story</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Blog</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Careers</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Press</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-yellow-300">Legal</h3>
+                                        <ul role="list" class="mt-6 space-y-6">
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Privacy Policy</a>
+                                            </li>
+                                            <li class="text-sm">
+                                                <a href="#" class="text-gray-500 hover:text-gray-600 dark:text-white">Terms of Service</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-10 md:flex md:items-center md:justify-between">
+                    <div class="text-center md:text-left">
+                        <img src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" class="custom-report-img" loading="lazy">
+                        <p class="text-sm text-gray-500">&copy; 2024 All Rights Reserved | 赣ICP备2024023405号</p>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-center md:mt-0">
+                        <div class="flex space-x-8">
+                            <a href="#" class="text-sm text-gray-500 hover:text-gray-600">Accessibility</a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-gray-600">Privacy</a>
+                            <a href="#" class="text-sm text-gray-500 hover:text-gray-600">Terms</a>
+                        </div>
+
+                        <div class="ml-6 border-l border-gray-200 pl-6">
+                            <a href="#" class="flex items-center text-gray-500 hover:text-gray-600">
+                                <img src="https://tailwindui.com/img/flags/flag-china.svg" alt="" class="h-auto w-5 flex-shrink-0">
+                                <span class="ml-3 text-sm">China</span>
+                                <span class="sr-only">location and currency</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+<!-- Cookie Consent Start -->
+<div id="cookie-consent-banner" class="fixed inset-x-0 bottom-0 p-4 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm z-50 shadow-lg transition-opacity duration-500 ease-in-out hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+        <span class="flex p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+          <!-- Cookie Icon -->
+            <svg class="h-6 w-6 text-gray-500" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Environment / Cookie">
+                <g id="Vector">
+                <path d="M12.1521 4.08723C12.1513 3.71959 12.1001 3.3538 12 3C16.9683 3.00545 20.9944 7.03979 21 12C21.0161 16.9625 16.9705 20.9835 12 20.9997C7.02946 21.0158 3.01615 16.963 3 12.0005C4.11168 12.2363 5.27038 11.9981 6.1499 11.2795C7.0562 10.5452 7.5789 9.43935 7.5702 8.27407C7.56959 8.01195 7.5461 7.75072 7.5 7.49268C8.51784 7.89624 9.67043 7.76409 10.5708 7.14162C11.5696 6.44537 12.161 5.3034 12.1521 4.08723Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.00195 7.002V7H3V7.00195L3.00195 7.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.00195 3.002V3H8V3.00195L8.00195 3.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.00195 3.002V3H4V3.00195L4.00195 3.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10.002 17.002V17H10V17.002L10.002 17.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.002 15.002V15H15V15.002L15.002 15.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11.002 12.002V12H11V12.002L11.002 12.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16.002 10.002V10H16V10.002L16.002 10.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.00195 7.002V7H3V7.00195L3.00195 7.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.00195 3.002V3H8V3.00195L8.00195 3.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.00195 3.002V3H4V3.00195L4.00195 3.002Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                </g>
+            </svg>
+        </span>
+                <p class="ml-3 font-medium">
+                <p class="dark:text-white"> We use cookies to enhance your browsing experience.</p>
+
+                </p>
+            </div>
+            <div class="flex order-2 mt-2 flex-shrink-0 space-x-4 sm:order-3 sm:mt-0 sm:w-auto" >
+                <button id="cookie-consent-accept" type="button" class="flex items-center justify-center rounded-md border border-transparent px-4 py-2 bg-yellow-500 dark:bg-yellow-700 text-base font-medium text-white hover:bg-yellow-600 dark:hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors duration-300">
+                    Agree
+                </button>
+                <a href="#" class="flex items-center justify-center rounded-md border border-transparent px-4 py-2 bg-gray-100 dark:bg-gray-700 text-base font-medium text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-300 dark:text-white">
+                    Learn more
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    if(cookies.getCookie("cookieInfo") === 'empty'){
+        console.log("cookie not set")
+        showCookie()
+    }else {
+        console.log("cookie set")
+    }
+
+    function showCookie(){
+        $('#cookie-consent-banner').fadeIn()
+    }
+
+    function hideCookie(){
+        $('#cookie-consent-banner').fadeOut()
+    }
+
+    $('#cookie-consent-accept').click(function (e){
+        e.preventDefault()
+        console.log("cookies set")
+        cookies.setCookies("cookieInfo",true,30)
+
+        hideCookie()
+    })
+</script>
+
+
+
+
+
+<script src="js/script.js"></script>
+<script src="src/1bitDemo.js"></script>
+<script src="js/mainPage.js"></script>
+<script src="js/header.js"></script>
+<script>
+
+    document.getElementById('cookie-consent-accept').addEventListener('click', function() {
+        var banner = document.getElementById('cookie-consent-banner');
+        banner.classList.add('opacity-0'); // 开始淡出效果
+        setTimeout(function() {
+            banner.style.display = 'none'; // 500ms后完全隐藏横幅
+        }, 500);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var isLoggedIn = localStorage.getItem('isLoggedIn'); // 假设这是检查登录状态的方法
+
+        var signupButtons = document.getElementById('signup-buttons');
+        var userLinks = document.getElementById('user-links');
+
+        if (isLoggedIn) {
+            signupButtons.classList.add('hidden'); // 用户登录，隐藏注册按钮
+            userLinks.classList.remove('hidden');   // 显示用户链接
+        } else {
+            signupButtons.classList.remove('hidden'); // 用户未登录，显示注册按钮
+            userLinks.classList.add('hidden');       // 隐藏用户链接
+        }
+    });
+
+
+
+
+
+</script>
+
+<!--控制渐变轮播的-->
+<script>
+    const panelData = [
+        {
+            title: "Seafood Supreme Pizza",
+            description: "Indulge in the ocean's bounty with our Seafood Supreme Pizza. Dive into a symphony of flavors as you savor succulent shrimp, tender calamari, and juicy scallops atop a crispy crust, all crowned with a generous layer of melted mozzarella cheese. Each ingredient is carefully selected from the finest coastal waters, ensuring a fresh and authentic taste. The crispy, hand-tossed crust is infused with a hint of garlic and olive oil, offering the perfect base for the rich and creamy seafood toppings.",
+            imageUrl: "./images/display/Pizza.png",
+            imageAlt: "Seafood pizza with shrimp, calamari, and scallops on a crispy crust."
+        },
+        {
+            title: "Angus Beef burger",
+            description: "Enjoy a classic taste with our Angus Beef Burger, grilled to perfection and served with a side of our signature fries. A timeless delight for burger enthusiasts! Our Angus beef is sourced from grass-fed cows, providing a rich and robust flavor. Each patty is seasoned with a secret blend of spices, grilled over an open flame to achieve a smoky char, and served on a freshly baked brioche bun with lettuce, tomatoes, pickles, and our house-made sauce. It's a perfect blend of textures and flavors that make each bite unforgettable.",
+            imageUrl: "./images/display/Hamburger.png",
+            imageAlt: "Juicy Angus beef burger with fresh vegetables and house sauce."
+        },
+        {
+            title: "Seafood pasta",
+            description: "Transport your taste buds to the shores of Italy with our Seafood Pasta. Delight in a medley of flavors as you twirl al dente pasta, adorned with succulent shrimp, tender calamari, and plump mussels, all tossed in a savory marinara sauce. The pasta is cooked perfectly 'al dente' to capture the sauce in every bite, while the fresh seafood is sautéed with garlic and white wine, adding a depth of flavor that complements the tangy tomato sauce. Garnished with fresh basil and grated Parmesan, this dish is a masterpiece of Italian cooking.",
+            imageUrl: "./images/display/pasta.png",
+            imageAlt: "Rich and flavorful seafood pasta with shrimp, calamari, and mussels."
+        },
+        {
+            title: "Strawberry puff cake",
+            description: "Elevate your dessert experience with our Strawberry Puff Cake, a heavenly delight that's as beautiful as it is delicious. Indulge in layers of light, airy puff pastry, lovingly filled with fluffy whipped cream and fresh strawberries. Each bite is a delicate balance of sweetness and lightness, offering a refreshing burst of flavor with every mouthful. The strawberries are picked at the peak of ripeness, ensuring a vibrant and juicy flavor that contrasts wonderfully with the soft, pillowy cream. Perfect for any occasion, this cake is not just a dessert, it's a celebration of flavor.",
+            imageUrl: "./images/display/cake.png",
+            imageAlt: "Elegant Strawberry puff cake with layers of pastry, cream, and fresh strawberries."
+        }
+    ];
+
+
+    let currentPanelIndex = 0;
+
+    function fadeOutElement(element, callback) {
+        element.classList.replace('opacity-100', 'opacity-0');
+        element.addEventListener('transitionend', function handler() {
+            element.removeEventListener('transitionend', handler);
+            callback();  // 淡出完成后的回调函数
+        }, { once: true });
+    }
+
+    function fadeInElement(element) {
+        // 确保新内容在DOM中准备就绪
+        requestAnimationFrame(() => {
+            element.classList.replace('opacity-0', 'opacity-100');  // 开始淡入效果
+        });
+    }
+
+    function displayPanel(index) {
+        const panel = panelData[index];
+        const panelContainer = document.getElementById('panel-container');
+        const currentContent = document.getElementById('panel-content');
+
+        if (currentContent) {
+            fadeOutElement(currentContent, () => {
+                injectNewContent(panel, panelContainer);
+            });
+        } else {
+            injectNewContent(panel, panelContainer);
+        }
+    }
+
+    function injectNewContent(panel, panelContainer) {
+        panelContainer.innerHTML = `
+        <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8 transition-opacity duration-700 ease-in opacity-0" id="panel-content">
+    <div class="mt-6 lg:col-span-7 lg:mt-0 flex flex-col">
+    <h3 class="text-3xl font-medium text-yellow-500">${panel.title}</h3>
+    <p class="mt-2 text-xl text-gray-500">${panel.description}</p>
+    <div class="mt-auto">
+        <a href="./subPage/Product/ProductList.html" class="text-lg font-semibold text-yellow-600 hover:text-yellow-700 dark:text-yellow-800 ">
+            See detail
+            <span aria-hidden="true"> &rarr;</span>
+        </a>
+    </div>
+</div>
+
+
+    <!-- 调整图片容器占比更小 -->
+    <div class="lg:col-span-5"> <!-- 更改列跨度从7变为4 -->
+        <div class="aspect-w-16 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"> <!-- 修改宽高比 -->
+            <img src="${panel.imageUrl}" alt="${panel.imageAlt}" class="object-cover object-center w-full h-full">
+        </div>
+    </div>
+</div>
+
+    `;
+        const newContent = document.getElementById('panel-content');
+        fadeInElement(newContent);  // 调用淡入函数
+    }
+
+    function setupAutoChange() {
+        displayPanel(currentPanelIndex);  // 最初显示第一个面板
+        setInterval(() => {
+            currentPanelIndex = (currentPanelIndex + 1) % panelData.length;  // 更新索引以循环返回到第一个
+            displayPanel(currentPanelIndex);  // 显示当前面板
+        }, 3000);  // 每3000毫秒更改一次（3秒）
+    }
+
+    window.addEventListener('DOMContentLoaded', setupAutoChange);
+</script>
+</body>
+<script>
+    window.addEventListener('load', () => {
+        const mainElement = document.querySelector('main');
+        mainElement.classList.remove('opacity-0');
+        mainElement.classList.add('opacity-100');
+    });
+</script>
+
+</html>

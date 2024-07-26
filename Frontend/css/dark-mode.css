@@ -1,0 +1,43 @@
+body.dark-mode {
+    background-color: #121212; /* 深色背景 */
+    color: #ffffff; /* 浅色文本 */
+    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e; /* 比body稍浅的深色 */
+    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+}
+
+.dark-mode .top-nav,
+.dark-mode .container,
+.dark-mode footer {
+    background: #1e1e1e;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+}
+
+
+.dark-mode a, .dark-mode a:hover, .dark-mode a:active {
+    color: #bbbbbb; /* 调整为适合深色背景的颜色 */
+    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+}
+
+.dark-mode button {
+    background-color: #333333;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+}
+
+body.dark-mode .theme-toggle-button {
+    background-color: #333; /* 深色模式下按钮背景 */
+}
+
+body.dark-mode .restaurant-card {
+    background-color: #333333; /* 深色背景 */
+    color: #ffffff; /* 浅色文本 */
+}
+
+body.dark-mode .restaurant-card:hover {
+    background-color: #444444; /* 深色背景，鼠标悬停时 */
+}

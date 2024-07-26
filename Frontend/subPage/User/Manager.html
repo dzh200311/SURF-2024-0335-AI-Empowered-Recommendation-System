@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="../../css/output.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src='../../src/three.min.js'></script>
+  <script src='../../js/identification.js'></script>
+  <link href="../../css/animation.css" rel="stylesheet">
+</head>
+<body class="h-full">
+
+<div class="flex min-h-full">
+  <main class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 opacity-0 transition-opacity duration-300">
+    <div class="mx-auto w-full max-w-sm lg:w-96">
+      <div>
+        <div class="flex items-center">
+          <img class="h-11 w-auto" src="../../images/logo.png" alt="Your Company">
+          <h2 class="ml-4 text-3xl font-bold leading-9 tracking-tight text-orange-300">Welcome back to EASYEAT</h2>
+        </div>
+
+        <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your company account</h2>
+
+      </div>
+
+      <div class="mt-10">
+        <div>
+          <form id="managerForm" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+              <div class="mt-2">
+                <input id="email" name="username" type="username" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 pl-4 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+              </div>
+            </div>
+
+            <div>
+              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+              <div class="mt-2">
+                <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 pl-4 pr-2.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-700">Remember me</label>
+              </div>
+
+              <div class="text-sm leading-6">
+                <a href="./Forget.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Forgot password?</a>
+              </div>
+            </div>
+
+
+
+
+            <div>
+              <!-- 注意：onclick 事件在按钮元素上使用，同时需要阻止表单默认提交行为 -->
+              <button id="login" class="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <div class="relative hidden w-0 flex-1 lg:block">
+    <div id="threejs-canvas-container"></div>
+  </div>
+</div>
+
+<script src="../../config.js"></script>
+<script>
+
+
+  $('#login').click(function(e){
+    e.preventDefault();
+    staffLogin();
+  });
+  function staffLogin(){
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    console.log(email, password)
+
+
+    $.ajax({
+      type: 'POST',
+      url: `http://${API_BASE_URL}:8000/api/staff/login`,
+      data: {
+        email: email,
+        password: password
+      },
+      success: function(response) {
+        if (response.success) {
+          var token = response.data.token;
+          var role = response.data.role;
+          var staff_id = response.data.staff_id;
+          var staff_name = response.data.staff_name;
+          var avatar = response.data.avatar;
+
+          localStorage.setItem('tempToken', token);
+
+          localStorage.setItem('staff_id', staff_id);
+          localStorage.setItem('staff_name', staff_name);
+          localStorage.setItem('avatar', avatar);
+
+
+          authentication.getLongTermToken(function (){
+            console.log('long term token set'+ localStorage.getItem('longTermToken'));
+            console.log("role " +role)
+            if (role === "0"){
+              console.log(0)
+              window.location.href = 'http://120.26.136.194:8080/subPage/Manager/Dashboard.html';
+            } else if (role === "1"){
+              console.log(1)
+              window.location.href = 'http://120.26.136.194:8080/subPage/cook/Dashboard.html';
+            }else if (role === "2") {
+              console.log("2")
+              window.location.href = 'http://120.26.136.194:8080/subPage/waiter/Dashboard.html';
+            }else if (role === "3") {
+              console.log("3")
+              window.location.href = 'http://120.26.136.194:8080/subPage/customerservice/Dashboard.html';
+            }
+          });
+
+
+
+          } else {
+          console.error("Login failed:", response.data.error);
+        }
+      },
+      error: function(error) {
+        console.error("Error:", error);
+        console.error("Error:", error.data.error);
+      }
+    });
+
+
+  }
+
+  window.addEventListener('load', () => {
+    const mainElement = document.querySelector('main');
+    mainElement.classList.remove('opacity-0');
+    mainElement.classList.add('opacity-100');
+  });
+</script>
+<script src="../../src/1bitDemo.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+header {
+    position: fixed;
+}
+
+main {
+    margin-top: 80px; /* 设置内容区域的上内边距，确保内容不被头部遮挡 */
+}
+
+/* 自定义样式 */
+.shopping-cart-btn {
+    position: fixed;
+    bottom: 20px; /* 距离底部的距离 */
+    right : 20px; /* 距离左边的距离 */
+    z-index: 999; /* 确保按钮位于其他内容的上层 */
+}
+.info-card {
+    position: fixed;
+    top: 50%; /* 居中 */
+    left: 0; /* 距离左边的距离 */
+    transform: translateY(-50%); /* 垂直居中 */
+    width: 250px; /* 卡片宽度 */
+    padding: 20px; /* 内边距 */
+    background-color: #fff; /* 卡片背景色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='../../js/identification.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<button onclick="fetchCategories()">Fetch Categories</button>
+<button onclick="fetchDefaultProducts()">Fetch Default Products</button>
+<input type="number" id="categoryInput" placeholder="Enter category ID">
+<button onclick="fetchProductsByCategory(document.getElementById('categoryInput').value)">Fetch Products by Category</button>
+<button onclick="addCategory({name: 'New Category', description: 'A new category'})">Add Category</button>
+<button onclick="modifyCategory({category_id: 1, name: 'Updated Category', description: 'Updated description', image: 'new_image.jpg'})">Modify Category</button>
+
+
+<script>
+    // 获取分类（getCategory）
+    function fetchCategories() {
+        fetch('http://120.26.136.194:8000/api/product/get_category')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Categories:', data);
+                // 你可以在这里更新你的前端界面，比如更新一个下拉列表
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    // 获取默认产品（getDefaultProduct）
+    function fetchDefaultProducts() {
+        fetch('http://120.26.136.194:8000/api/product/get_default_product')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Default Products:', data);
+                // 在这里处理默认产品的显示逻辑
+            })
+            .catch(error => console.error('Error fetching default products:', error));
+    }
+
+    // 根据分类ID获取产品（getProduct）
+    function fetchProductsByCategory(categoryId) {
+        fetch('http://120.26.136.194:8000/api/product/get_product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `category_id=${categoryId}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Products:', data);
+                // 在这里处理产品列表的更新
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    }
+
+    // 添加新分类（addCategory）
+    function addCategory(category) {
+        fetch('http://120.26.136.194:8000/api/product/add_category', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(category)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Add Category Success:', data);
+                // 可以更新UI来显示添加成功或失败的消息
+            })
+            .catch(error => console.error('Error adding category:', error));
+    }
+
+    // 修改分类（modifyCategory）
+    function modifyCategory(category) {
+        fetch('http://120.26.136.194:8000/api/product/modify_category', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(category)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Modify Category Success:', data);
+                // 可以处理分类修改的反馈
+            })
+            .catch(error => console.error('Error modifying category:', error));
+    }
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+html {
+  width: 150%;
+  height: 150%;
+  background: linear-gradient(to bottom, #fdf0a5 50%, #fdc2a5 100%);
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

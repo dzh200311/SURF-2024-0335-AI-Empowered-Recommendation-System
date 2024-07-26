@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>page1</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+asadasdadada
+page1
+<input id="token" type="text" placeholder="token here to decode and validate">
+<button class="validate">validate token (true if valid, vice verse)</button>
+
+
+--------------------------
+<button class="test1">test</button>
+
+<script>
+
+    $(".validate").click(function (event){
+        var token = document.getElementById("token").value;
+        $.ajax({
+            type: 'POST',
+            url: "/token/validate",
+            data: { token: token },
+            success: function(response) {
+                console.log(response)
+            },
+            error: function(error) {
+                alert("error calling")
+                console.log("unknown error:", error);
+            }
+        });
+    })
+    $(".test1").click(function (event) {
+        var token = document.getElementById("token").value;
+
+        $.ajax({
+            type: 'POST',
+            url: "/token/info1",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                alert("error calling");
+                console.log("unknown error:", error);
+            }
+        });
+    });
+</script>
+</body>
+</html>

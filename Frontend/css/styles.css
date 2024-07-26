@@ -1,0 +1,308 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #ffffff;
+    scroll-behavior: smooth;
+}
+
+body, .top-nav, footer, .footer-section h5, .footer-section ul li a, .footer-social a {
+    transition: background-color 0.3s, color 0.3s, filter 0.3s;
+}
+
+.theme-toggle-button {
+    border: none;
+    width: 50px; /* 或者你喜欢的任何尺寸 */
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    position: fixed;
+    top: 10px; /* 根据需要调整 */
+    right: 10px; /* 根据需要调整 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s; /* 平滑背景颜色变化 */
+}
+
+.theme-toggle-button img {
+    max-width: 80%; /* 根据需要调整图标大小 */
+    transition: transform 0.3s; /* 平滑图标变化 */
+}
+
+.theme-toggle-button {
+    border: none;
+    width: 50px; /* 或者你喜欢的任何尺寸 */
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    position: fixed;
+    top: 10px; /* 根据需要调整 */
+    right: 10px; /* 根据需要调整 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s; /* 平滑背景颜色变化 */
+}
+
+.theme-toggle-button img {
+    max-width: 80%; /* 根据需要调整图标大小 */
+    transition: transform 0.3s; /* 平滑图标变化 */
+}
+
+.Order-button {
+    background-color: #6877fc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+}
+
+.Order-button-small {
+    background-color: #6877fc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+}
+
+
+
+@media (max-width: 768px) {
+    .theme-toggle-button {
+        display: none;
+    }
+}
+
+
+
+/* 通用按钮样式 */
+button {
+    padding: 10px 20px; /* 按钮内边距 */
+    font-size: 16px; /* 文本大小 */
+    color: white; /* 文本颜色 */
+    background-color: #007bff; /* 背景颜色 */
+    border: none; /* 去掉边框 */
+    border-radius: 7px; /* 边角圆滑 */
+    cursor: pointer; /* 鼠标悬浮时显示手形图标 */
+    outline: none; /* 点击时不显示轮廓 */
+    transition: background-color 0.3s, transform 0.3s; /* 平滑过渡效果 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+/* 鼠标悬浮在按钮上时的样式 */
+button:hover {
+    background-color: #0056b3; /* 深色背景 */
+    transform: translateY(-2px); /* 轻微上移效果 */
+}
+
+/* 鼠标点击按钮时的样式 */
+button:active {
+    transform: translateY(1px); /* 点击时下移效果 */
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+    flex-direction: column;
+    padding-top: 5em;
+}
+
+.intro-section {
+    padding: 350px 20px;
+    text-align: center;
+    background-image: url('../images/main.jpeg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed; /* 确保背景图片不随内容滚动 */
+    color: #ffffff;
+    margin-top: 0px; /* 假设你的导航栏在这个元素之上 */
+    transition: background-position 0.5s ease; /* 平滑过渡背景位置的变化 */
+    overflow: hidden; /* 防止内容在放大时溢出 */
+}
+
+.intro-section:hover {
+    background-position: calc(50% + 10px) calc(50% + 10px); /* 鼠标悬浮时背景图片向右下角移动 */
+}
+
+.intro-section h1 {
+    font-size: 2.5em; /* 大标题 */
+    margin-bottom: 20px; /* 与下方段落的间距 */
+}
+
+.intro-section p {
+    font-size: 1.2em; /* 段落字体大小 */
+    max-width: 600px; /* 最大宽度，以提高可读性 */
+    margin: auto; /* 水平居中 */
+}
+
+.product-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.product-info {
+    max-width: 50%;
+}
+
+.product-image {
+    max-width: 50%;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+}
+
+.features-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: center;
+}
+
+.feature-item {
+    width: 30%; /* Divide by approximately three items */
+    margin: 0 1.5%; /* Provide some space between the items */
+    box-sizing: border-box; /* Include padding and border in the element's width and height */
+}
+
+.feature-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px; /* Add space below the image */
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .features-container {
+        flex-direction: column;
+    }
+
+    .feature-item {
+        width: 100%;
+        margin-bottom: 50px; /* Add space below each item */
+    }
+}
+
+.card {
+    background: linear-gradient(135deg, #667eea, #d7cbe7);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    display: flex;
+    max-width: 944px;
+    min-height: 488px;
+    padding: 2em;
+}
+
+.main-content {
+    flex-basis: 50%;
+}
+
+.main-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.main-content button {
+    background: #000000;
+    border: none;
+    border-radius: 20px;
+    color:
+            white;
+    cursor: pointer;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.main-content button:hover {
+    background: #333333;
+}
+
+.sub-content {
+    flex-basis: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+}
+
+.sub-section {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 1em;
+    transition: background-color 0.3s;
+}
+
+.sub-section:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.sub-section h2 {
+    font-size: 1.5em;
+}
+
+.sub-section p {
+    font-size: 1em;
+}
+
+.custom-report-wrap {
+    text-align: center; /* 如果需要居中，可以加上这行样式 */
+    clear: both
+}
+
+
+
+.custom-link {
+    color: #888; /* 灰色字体 */
+    text-decoration: none; /* 去除下划线 */
+}
+
+.custom-primary {
+    /* 如果需要修改其他样式，可以在这里添加 */
+}
+
+.custom-report-img {
+    max-width: 30px; /* 图片最大宽度 */
+    max-height: 30px; /* 图片最大高度 */
+}
+
+.custom-report-link-text {
+    /* 如果需要修改文字样式，可以在这里添加 */
+}
+
+.custom-report-link-text-unique {
+    /* 如果需要修改特殊链接文字样式，可以在这里添加 */
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        min-height: initial;
+    }
+
+    .main-content, .sub-content {
+        flex-basis: auto;
+    }
+
+    .sub-content {
+        grid-template-columns: 1fr;
+        grid-gap: 0.5em;
+    }
+}
+

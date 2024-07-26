@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="../../css/output.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../js/ThirdPartyLogin1.js"></script>
+    <script src='../../src/Pizza/three.min.js'></script>
+    <link href="../../css/animation.css" rel="stylesheet">
+</head>
+<body class="h-full">
+
+<div class="flex min-h-full dark:bg-gray-950">
+    <main class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 opacity-0 transition-opacity duration-300">
+        <div class="mx-auto max-w-sm lg:w-96">
+
+            <div class="w-96">
+                <div class="relative z-10 hidden" id="privacyModal">
+
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="fixed inset-x-4 inset-y-0 z-10 overflow-y-auto">
+                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                            </svg>
+                                        </div>
+                                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Alert</h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">Please agree to the terms of
+                                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Terms of Service</a>,
+                                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Privacy Policy</a>,
+                                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Code of User Conduct</a>
+                                                    first.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 sm:ml-3 sm:w-auto"
+                                            onclick="document.getElementById('privacy-checkbox').checked = true; document.getElementById('privacyModal').style.display = 'none';">
+                                        Accept
+                                    </button>
+                                    <button type="button" onclick="document.getElementById('privacyModal').classList.add('hidden')" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-96">
+                <div class="flex items-center">
+                    <img class="h-11 w-auto" src="../../images/logo.png" alt="Your Company">
+                    <h2 class="ml-4 text-3xl font-bold leading-9 tracking-tight text-orange-300">Join to EASYEAT</h2>
+                </div>
+
+                <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Create your account</h2>
+
+                <div class="mt-2 flex justify-between text-sm leading-6 text-gray-500">
+                    <span>It's free and only takes a minute.
+
+
+                </div>
+
+                <div class="mt-2 flex justify-between text-sm leading-6 text-gray-500">
+          <span>Just want to browse?
+              <a href="../../index.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Have a look</a>
+
+
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <div>
+                    <form id="RegisterForm" method="post" onsubmit="return validateForm()" class="space-y-6">
+                        <div>
+                            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">User Name</label>
+                            <div class="mt-2">
+                                <input type="username" id="username" name="username" required
+                                       class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 pl-4 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+                                <p id="usernameError" class="mt-1 text-sm text-red-500"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                            <div class="mt-2">
+                                <input id="email" name="email" type="email"  required
+                                       class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 pl-4 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+                                <p id="emailError" class="mt-1 text-sm text-red-500"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="create-password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+
+                            <div class="mt-2 relative">
+                                <input id="create-password" name="password" type="password" required class="block w-full rounded-md py-1.5 pl-4 pr-10 shadow-sm ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-lg placeholder:text-gray-400" />
+                                <button id="acceptButton" type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                    <!-- 睁眼图标 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden" id="eyeClosedIcon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                    <!-- 闭眼图标，初始隐藏 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" id="eyeOpenIcon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                    </svg>
+                                </button>
+                                <p id="passwordError" class="mt-1 text-sm text-red-500"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="confirm-password"
+                                   class="block text-sm font-medium leading-6 text-gray-900">Confirm password</label>
+                            <div class="mt-2">
+                                <input id="confirm-password" name="confirm-password" type="password" autocomplete="current-password"
+                                       required
+                                       class="block w-full rounded-md border-0 py-1.5 pl-4 pr-2.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+                                <p id="confirmPasswordError" class="mt-1 text-sm text-red-500"></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="privacy-checkbox" type="checkbox" class="h-6 w-6 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <label for="privacy-checkbox" class="ml-3 block text-sm leading-6 text-gray-700">
+                                    I have read and agree to the
+                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Terms of Service</a>,
+                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Privacy Policy</a>,
+                                    <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Code of User Conduct</a>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="flex items-center justify-between">
+
+                            <div class="text-sm leading-6">
+                                <a href="./Login.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Already have a account?</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                    class="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                Sign in
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+    <div class="relative hidden w-0 flex-1 lg:block">
+        <div class="overflow-hidden w-full h-screen">
+            <div id="threejs-canvas-container" class="w-full h-full transform scale-150"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../../config.js"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const registerForm = document.getElementById('RegisterForm');
+
+        registerForm.addEventListener('submit', function (e) {
+            e.preventDefault();  // 阻止表单默认提交行为
+
+            var privacyCheckbox = document.getElementById('privacy-checkbox'); // 隐私政策同意复选框的ID
+            var privacyModal = document.getElementById('privacyModal'); // 模态框的ID
+
+            if (validateForm()) {
+
+                if (!privacyCheckbox.checked) {
+                    // 如果未勾选隐私政策同意框，显示模态框
+                    privacyModal.classList.remove('hidden');
+                    return; // 终止函数执行
+                }
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('create-password').value;
+
+                // 存储到 localStorage
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password); // 出于安全考虑，不应将密码明文存储在 localStorage
+
+                checkEmail(function () {
+                    sendVerificationCode(email, username, function (isSuccess) {
+                        if (isSuccess) {
+                            alert('Verification code has been sent to your email. Please check your email.');
+                            window.location.href = './Verify.html';
+                        } else {
+                            alert('Failed to send verification code. Please try again.');
+                        }
+                    });
+                }
+            )
+
+
+            } else {
+                console.log('Validation failed!');
+            }
+        });
+    });
+
+    function checkEmail(callback) {
+
+        var email = document.getElementById('email').value;
+        $.ajax({
+            url: `http://${API_BASE_URL}:8000/api/user/check_email`,
+            type: 'POST',
+            data: {
+                email: email
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.success){
+                    if (response.message !== "email already exists"){
+                        callback();
+                    }
+                }else {
+                        alert('Email already exists. Please use another email.');
+
+                }
+
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        })
+    }
+
+    function sendVerificationCode(email, username, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", `http://${API_BASE_URL}:8000/api/email/send_verification_email?tos=${encodeURIComponent(email)}&username=${encodeURIComponent(username)}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+
+    function validateForm() {
+        var isValid = true; // 假设验证是通过的
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('create-password').value;
+        var confirmPassword = document.getElementById('confirm-password').value;
+
+        var usernameError = document.getElementById('usernameError');
+        var emailError = document.getElementById('emailError');
+        var passwordError = document.getElementById('passwordError');
+        var confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        if (username.trim() === '') {
+            usernameError.innerText = 'Please enter your username.';
+            isValid = false;
+        } else {
+            usernameError.innerText = '';
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            emailError.innerText = 'Please enter a valid email address.';
+            isValid = false;
+        } else {
+            emailError.innerText = '';
+        }
+
+        var passwordRegex = /^(?=.*[A-Z]).{8,16}$/;
+        if (!passwordRegex.test(password)) {
+            passwordError.innerText = 'The password must be 8-16 characters long and contain at least one capital letter.';
+            isValid = false;
+        } else {
+            passwordError.innerText = '';
+        }
+
+        if (password !== confirmPassword) {
+            confirmPasswordError.innerText = 'The password you entered does not match. Please try again.';
+            isValid = false;
+        } else {
+            confirmPasswordError.innerText = '';
+        }
+
+        return isValid; // 返回验证结果
+    }
+
+    window.addEventListener('load', () => {
+        const mainElement = document.querySelector('main');
+        mainElement.classList.remove('opacity-0');
+        mainElement.classList.add('opacity-100');
+    });
+
+
+</script>
+<script src="../../src/Pizza/1bitDemo.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#create-password');
+        const eyeOpenIcon = document.querySelector('#eyeOpenIcon');
+        const eyeClosedIcon = document.querySelector('#eyeClosedIcon');
+        const toggleButton = document.querySelector('#acceptButton');  // 确保这个是你想要的按钮 ID
+
+        toggleButton.addEventListener('click', () => {
+            // Check the current type of the password field
+            const type = togglePassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            togglePassword.setAttribute('type', type);
+
+            // Toggle the visibility of the eye icons
+            eyeOpenIcon.classList.toggle('hidden');
+            eyeClosedIcon.classList.toggle('hidden');
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

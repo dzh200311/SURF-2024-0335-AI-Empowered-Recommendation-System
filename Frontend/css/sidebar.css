@@ -1,0 +1,90 @@
+/* 已有样式继续保留，下面是dashboard相关的CSS */
+
+/* 左侧导航栏样式 */
+.sidebar {
+    background: linear-gradient(to right, #ffffff 0%, #ffffff 100%); /* 设置水平方向的渐变背景 */
+    min-height: 100vh; /* 填满整个视口高度 */
+    width: 250px; /* 侧边栏宽度 */
+    position: fixed; /* 固定位置 */
+    top: 0; /* 顶部对齐 */
+    left: 0; /* 左侧对齐 */
+    overflow-y: auto; /* 如果内容过多，允许滚动 */
+    transition: all 0.3s; /* 平滑过渡效果 */
+    z-index: 1000;
+}
+
+
+/* 其他样式保持不变 */
+
+/* 更新左侧导航栏样式 */
+.sidebar ul {
+    list-style-type: none;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.sidebar ul li {
+    padding: 10px 15px;
+    margin-bottom: 10px; /* 添加间隔 */
+    border-radius: 10px; /* 圆角 */
+    transition: background-color 0.3s; /* 平滑过渡效果 */
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 垂直居中对齐 */
+}
+
+.sidebar ul li a i {
+    margin-right: 10px; /* 图标和文字之间的间距 */
+}
+
+/* 当前激活项的样式 */
+.sidebar ul li.active {
+    background-color: #007bff; /* 高亮颜色 */
+    color: white;
+}
+
+.sidebar ul li.active a {
+    color: white; /* 高亮颜色 */
+}
+
+/* 鼠标悬浮时的样式 */
+.sidebar ul li:not(.active):hover {
+    background-color: #e9ecef;
+}
+
+/* Logo样式 */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.logo img {
+    height: 35px; /* 根据实际logo大小调整 */
+    width: auto;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Logo文字颜色 */
+}
+
+.logo a:hover {
+    text-decoration: none; /* 鼠标悬停时无下划线 */
+}
+
+.logo-name {
+    margin-left: 10px; /* Logo图标和文字之间的间距 */
+    font-size: 24px; /* Logo文字大小 */
+    font-weight: bold; /* Logo文字粗细 */
+}
+
+
+

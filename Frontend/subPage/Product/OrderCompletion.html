@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <title>Online shopping service</title>
+    <link rel="stylesheet" href="../../css/output.css">
+    <script src='../../src/three.min.js'></script>
+    <link href="../../css/animation.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src='../../js/identification.js'></script>
+</head>
+<body class="dark:bg-gray-950">
+
+
+<header class="fixed top-0 left-0 w-full z-30">
+    <nav aria-label="Top">
+        <!-- Secondary navigation -->
+        <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="border-b border-gray-200 dark:border-black">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="flex h-16 items-center justify-between">
+                        <!-- Logo (lg+) -->
+                        <div class="hidden lg:flex lg:items-center">
+                            <a href="#">
+                                <span class="sr-only">Easy Eat</span>
+                                <img class="h-10 w-auto" src="../../images/logo.png" alt="">
+                            </a>
+                        </div>
+
+                        <div class="hidden h-full lg:flex">
+                            <!-- Mega menus -->
+                            <div class="ml-8">
+                                <div class="flex h-full justify-center space-x-8">
+                                    <div class="flex">
+                                        <div class="relative flex">
+                                            <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                            <a href="subPage/Product/Restaurant.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Restaurant</a>
+                                        </div>
+
+                                    </div>
+                                    <div class="flex">
+                                        <div class="relative flex">
+                                            <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                            <a href="javascript:void(0);" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="sendTokenRequest('subPage/Product/Order.html')">Order</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile menu and search (lg-) -->
+                        <div class="flex flex-1 items-center lg:hidden">
+                            <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
+                            <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                <span class="sr-only">Open menu</span>
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+                            </button>
+
+                            <!-- Search -->
+                            <a href="subPage/Search.html" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                <span class="sr-only">Search</span>
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- Logo (lg-) -->
+                        <a href="#" class="lg:hidden">
+                            <span class="sr-only">Easy Eat</span>
+                            <img src="images/logo.png" alt="" class="h-8 w-auto">
+                        </a>
+
+                        <div class="flex flex-1 items-center justify-end">
+                            <div class="flex items-center lg:ml-8">
+
+                                <div class="hidden lg:flex">
+                                    <a href="subPage/Search.html" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                        <span class="sr-only">Search</span>
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
+
+                                <div class="flow-root">
+
+                                    <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                            <!-- Sun Icon -->
+                                            <g class="dark:hidden">
+                                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                            </g>
+                                            <!-- Moon Icon -->
+                                            <g class="hidden dark:block">
+                                                <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
+
+                                <div id="signup-buttons" class="flex space-x-8 px-4">
+                                    <a href="subPage/User/Register.html" type="button" class="rounded-md bg-white dark:bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-950 hover:bg-gray-50 dark:hover:bg-gray-700">Sign up</a>
+
+                                    <a href="./subPage/User/Login.html" type="button" class="rounded-md bg-yellow-500 dark:bg-yellow-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</a>
+                                </div>
+
+                                <div id="user-links" class="hidden flex space-x-8 px-4">
+
+                                    <div class="flow-root">
+
+                                        <a href="subPage/Product/shopping-cart.html" class="group -m-2 flex items-center p-2">
+                                            <svg class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                            </svg>
+                                            <span class="sr-only">items in cart, view bag</span>
+                                        </a>
+                                    </div>
+
+
+                                    <div class="flex space-x-8">
+
+                                        <div class="flex">
+                                            <!-- Trigger Button -->
+                                            <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                <span class="sr-only">Account</span>
+                                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Dropdown Menu -->
+                                            <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                    <span class="sr-only">Close</span>
+                                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <main class="opacity-0 transition-opacity duration-500">
+    <div class="h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12">
+        <div class="overflow-hidden w-full h-screen">
+            <div id="threejs-canvas-container" class="w-full h-full transform scale-150"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-32 xl:gap-x-24">
+            <div class="lg:col-start-2">
+                <h1 class="text-sm font-medium text-yellow-600">Payment successful</h1>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-200">Thanks for ordering</p>
+                <p class="mt-2 text-base text-gray-500 dark:text-gray-300">We appreciate your order, we’re currently processing it. So hang tight and we’ll send you confirmation very soon!</p>
+
+
+                <ul id="cartItems" role="list" class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
+                    <li  class="flex space-x-6 py-6">
+                    </li>
+                </ul>
+
+                <div class="mt-4 max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 dark:bg-gray-800">
+                    <div class="flex justify-between items-center">
+                        <h5 class="text-gray-900 font-bold text-xl dark:text-yellow-600">ORDER #Y34XDHR</h5>
+                        <span class="text-sm text-gray-500">Expected Arrival 01/13/18</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-3">
+                        <span class="text-xs font-medium text-yellow-700">USPS 24339482904809482</span>
+                    </div>
+
+                    <div class="grid grid-cols-4 text-xs font-medium mt-3 text-center">
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-yellow-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-4 text-xs font-medium mt-3 text-center">
+                        <span class="text-yellow-600">Order accepted</span>
+                        <span>Order preparation</span>
+                        <span>Order delivery</span>
+                        <span>Order Arrived</span>
+                    </div>
+                </div>
+
+
+                <dl class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
+                    <div class="flex justify-between">
+                        <dt>Subtotal</dt>
+                        <dd id="subtotal" class="text-gray-900 dark:text-white"> </dd>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <dt>Shipping</dt>
+                        <dd id = 'shipping' class="text-gray-900 dark:text-white"> </dd>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <dt>Taxes</dt>
+                        <dd id = 'tax' class="text-gray-900 dark:text-white"> </dd>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
+                        <dt class="text-base dark:text-white">Total</dt>
+                        <dd id = 'total' class="text-base dark:text-white"> </dd>
+                    </div>
+                </dl>
+                <!-- 这不知道为啥显示不出来... -->
+                <dl class="mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600">
+                    <div>
+                        <dt class="text-base">Shipping Address</dt>
+                        <dd id="first-name" class="text-base">
+                        </dd>
+                        <dd id="address" class="text-base">
+                        </dd>
+                        <dd id="city" class="text-base">
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-900 dark:text-white">Payment Information</dt>
+                        <dd class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0">
+                            <div class="flex-none">
+                                <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24" class="h-6 w-auto">
+                                    <rect width="36" height="24" rx="4" fill="#224DBA" />
+                                    <path d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z" fill="#fff" />
+                                </svg>
+                                <p class="sr-only">Visa</p>
+                            </div>
+                            <div class="flex-auto">
+                                <span id="card-number" class="text-gray-900"> </span>
+                                <span id="expiration-date"> </span>
+                            </div>
+                        </dd>
+                    </div>
+                </dl>
+
+                <div class="mt-16 border-t border-gray-200 py-6 text-right">
+                    <a  class="text-sm font-medium text-indigo-600 hover:text-yellow-600">
+                        <a href="../../index.html" class="text-yellow-600 font-medium hover:text-yellow-700">Continue Shopping</a>
+                        <span aria-hidden="true" class="dark:text-white"> &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+<script src="../../config.js"></script>
+<script src="../../js/order.js"></script>
+<script src="../../js/script.js"></script>
+<script src="../../src/Package/1bitDemo.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        const mainElement = document.querySelector('main');
+        mainElement.classList.remove('opacity-0');
+        mainElement.classList.add('opacity-100');
+    });
+
+
+    const stompClient = new StompJs.Client({
+        brokerURL: `ws://${API_BASE_URL}:8000/cook`
+        //ws://localhost:8000/payment120.26.136.194:8000
+    });
+
+    stompClient.onConnect = (frame) => {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/cook', (greeting) => {
+            console.log(greeting.body)
+            showGreeting(JSON.parse(greeting.body).content);
+        });
+
+        pay();
+    };
+
+    stompClient.onWebSocketError = (error) => {
+        console.error('Error with websocket', error);
+    };
+
+    stompClient.onStompError = (frame) => {
+        console.error('Broker reported error: ' + frame.headers['message']);
+        console.error('Additional details: ' + frame.body);
+    };
+
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        } else {
+            $("#conversation").hide();
+        }
+        $("#greetings").html("");
+    }
+
+    function connect() {
+        console.log("Connecting to WS...");
+        stompClient.activate();
+    }
+
+    function disconnect() {
+        stompClient.deactivate();
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function pay() {
+        var message = 'new order';
+        console.log("send" + message);
+        stompClient.publish({
+            destination: "/app/cook",
+            body: JSON.stringify({ 'name': message })
+        });
+    }
+
+
+    function showGreeting(message) {
+        console.log("receive" + message);
+    }
+
+    var orderData = {
+        order_id: 123,
+        total_price: 50.0,
+        payment_method: 'Credit Card',
+        order_state: 'Pending',
+        user_id: 456
+    };
+
+    function sendOrder(){
+        $.ajax({
+            url: 'http://120.26.136.194:8080/api/order/add_order',
+            type: 'POST',
+            data: { order: orderData },
+            success: function(response) {
+                // Handle the success response here if needed
+                console.log('Order added successfully');
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.error('Failed to add order:', error);
+            }
+        })
+    }
+
+    function sendOrderDetail(){
+
+    }
+
+    $(function () {
+        $("form").on('submit', (e) => e.preventDefault());
+
+        // Connect when the page is ready
+        $(document).ready(() => {
+            connect();
+        });
+
+        // Disconnect when the page is closed
+        $(window).on('beforeunload', () => {
+            disconnect();
+        });
+    });
+</script>
+</body>
+
+
+</html>

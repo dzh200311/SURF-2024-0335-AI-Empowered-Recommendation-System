@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="../../css/output.css">
+  <script src="../../js/ThirdPartyLogin1.js"></script>
+  <script src='../../src/Donuts/three.min.js'></script>
+  <link href="../../css/animation.css" rel="stylesheet">
+  <meta name="google-signin-client_id" content="559128899303-5oncp9ieu28ktfr3te7fgov2t4o6p9bp.apps.googleusercontent.com">
+  <script src="https://accounts.google.com/gsi/client" async></script>
+  <script src="/js/ThirdPartyLogin1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body class="h-full">
+
+<div class="flex min-h-full">
+  <main class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 opacity-0 transition-opacity duration-300">
+    <div class="mx-auto max-w-sm lg:w-96">
+
+  <div class="w-96">
+      <div class="relative z-10 hidden" id="privacyModal">
+
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Alert</h3>
+                    <div class="mt-2">
+                      <p class="text-sm text-gray-500">Please agree to the terms of
+                        <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Terms of Service</a>,
+                        <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Privacy Policy</a>,
+                        <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Code of User Conduct</a>
+                        first.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" class="inline-flex w-full justify-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 sm:ml-3 sm:w-auto"
+                        onclick="document.getElementById('privacy-checkbox').checked = true; document.getElementById('privacyModal').style.display = 'none';">
+                  Accept
+                </button>
+                <button type="button" onclick="document.getElementById('privacyModal').classList.add('hidden')" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+      <div class="lg:w-96">
+
+
+        <div class="flex items-center">
+          <img class="h-11 w-auto" src="../../images/logo.png" alt="Your Company">
+          <h2 class="ml-4 text-3xl font-bold leading-9 tracking-tight text-orange-300">Welcome to EASYEAT</h2>
+        </div>
+
+        <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+
+        <div class="mt-2 flex justify-between text-sm leading-6 text-gray-500">
+          <span>Not a member?
+            <a href="Register.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Sign up</a>
+          </span>
+                  <span>
+            <a href="../../index.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Have a look</a>
+        </span>
+        </div>
+
+      </div>
+
+      <div class="mt-10">
+        <div>
+          <form id="loginForm" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+              <div class="mt-2">
+                <input id="email" name="username" type="username" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 pl-4 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg sm:leading-6">
+              </div>
+            </div>
+
+            <div class="relative">
+              <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+              <div class="mt-2 relative">
+                <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md py-1.5 pl-4 pr-10 shadow-sm ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-lg placeholder:text-gray-400" />
+                <button id="acceptButton" type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                  <!-- 睁眼图标 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden" id="eyeClosedIcon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  </svg>
+                  <!-- 闭眼图标，初始隐藏 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" id="eyeOpenIcon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-700">Remember me</label>
+              </div>
+
+              <div class="text-sm leading-6">
+                <a href="./Forget.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Forgot password?</a>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input id="privacy-checkbox" type="checkbox" class="h-6 w-6 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                <label for="privacy-checkbox" class="ml-3 block text-sm leading-6 text-gray-700">
+                  I have read and agree to the
+                  <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Terms of Service</a>,
+                  <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Privacy Policy</a>,
+                  <a href="../Others/Privacy.html" target="_blank" class="text-blue-500 hover:text-blue-600">Code of User Conduct</a>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <button type="submit" class="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm font-medium leading-6">
+              <span class="bg-white px-6 text-gray-900">Or continue with</span>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-3 gap-4">
+
+            <button onclick="oauthGithub.getCode()" class="hover:bg-gray-600 flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]">
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-sm font-semibold leading-6">GitHub</span>
+            </button>
+
+            <div id="google-login-button" ></div>
+
+            <button onclick="window.location.href='../Manager/Dashboard.html)" class="hover:bg-gray-100 flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-white border border-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]">
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 1024 1024" aria-hidden="true">
+                <path fill="#1877f2" d="M1024,512C1024,229.23016,794.76978,0,512,0S0,229.23016,0,512c0,255.554,187.231,467.37012,432,505.77777V660H302V512H432V399.2C432,270.87982,508.43854,200,625.38922,200,681.40765,200,740,210,740,210V336H675.43713C611.83508,336,592,375.46667,592,415.95728V512H734L711.3,660H592v357.77777C836.769,979.37012,1024,767.554,1024,512Z"></path>
+                <path fill="#fff" d="M711.3,660,734,512H592V415.95728C592,375.46667,611.83508,336,675.43713,336H740V210s-58.59235-10-114.61078-10C508.43854,200,432,270.87982,432,399.2V512H302V660H432v357.77777a517.39619,517.39619,0,0,0,160,0V660Z"></path>
+              </svg>
+              <span class="text-sm font-semibold leading-6 text-black">Fackbook</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-2 flex justify-between text-sm leading-6 text-gray-500">
+          <span>Manager?
+            <a href="./Manager.html" class="font-semibold text-yellow-500 hover:text-yellow-600">Sign in as a manager</a>
+          </span>
+
+        </div>
+      </div>
+
+
+    </div>
+  </main>
+  <div class="relative hidden w-0 flex-1 lg:block">
+    <div class="overflow-hidden w-full h-screen">
+      <div id="threejs-canvas-container" class="w-full h-full transform scale-150"></div>
+    </div>
+  </div>
+
+</div>
+<script src="../../config.js"></script>
+<script>
+
+
+
+  if (localStorage.getItem('isRegister') === 'true') {
+    console.log("trueasdadadad")
+    localStorage.removeItem('isRegistered')
+    document.getElementById('email').value = localStorage.getItem('email')
+    localStorage.removeItem('email')
+    localStorage.removeItem('password')
+    localStorage.removeItem('username')
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('loginForm');
+    var privacyCheckbox = document.getElementById('privacy-checkbox'); // 隐私政策同意复选框的ID
+    var privacyModal = document.getElementById('privacyModal'); // 模态框的ID
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!privacyCheckbox.checked) {
+        // 如果未勾选隐私政策同意框，显示模态框
+        privacyModal.classList.remove('hidden');
+        return; // 终止函数执行
+      }
+
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', `http://${API_BASE_URL}:8000/api/user/login`, true); // 修改此处的URL为登录的URL
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log('Success:', xhr.responseText);
+          const jsonResponse = JSON.parse(xhr.responseText);
+          if (jsonResponse.success) {
+
+            const token = jsonResponse.data.token;
+            const id = jsonResponse.data.id;
+            const name = jsonResponse.data.name;
+            const avatar = jsonResponse.data.avatar;
+            const enable = jsonResponse.data.enable;
+
+            console.log(token, id,name,avatar,enable)
+
+
+            // 将 token 保存到浏览器的本地存储中
+            localStorage.setItem('tempToken', token);
+            localStorage.setItem('id', id);
+            localStorage.setItem('name', name);
+            localStorage.setItem('avatar', avatar);
+            localStorage.setItem('enable', enable);
+            localStorage.setItem('isLoggedIn', true);
+            alert('Login successful!')
+            // 跳转回主页面，你需要根据实际情况修改这里的跳转逻辑
+            window.location.href = '../../index.html';
+          } else {
+            // success 字段为 false，发出警告
+            alert('Login failed! Check your info again');
+          }
+
+        } else {
+          console.error('Something went wrong:', xhr.statusText);
+        }
+      };
+
+      var object = {};
+      formData.forEach((value, key) => object[key] = value);
+      var json = JSON.stringify(object);
+
+      xhr.send(json);
+    });
+  });
+
+  window.addEventListener('load', () => {
+    const mainElement = document.querySelector('main');
+    mainElement.classList.remove('opacity-0');
+    mainElement.classList.add('opacity-100');
+  });
+</script>
+<script src="../../src/Donuts/1bitDemo.js"></script>
+<script>
+  const togglePassword = document.querySelector('#password');
+  const eyeOpenIcon = document.querySelector('#eyeOpenIcon');
+  const eyeClosedIcon = document.querySelector('#eyeClosedIcon');
+  const acceptButton = document.querySelector('#acceptButton');  // 使用新的 ID 来获取按钮
+
+  acceptButton.addEventListener('click', () => {
+    const type = togglePassword.getAttribute('type') === 'password' ? 'text' : 'password';
+    togglePassword.setAttribute('type', type);
+    // 切换图标的可见状态
+    eyeOpenIcon.classList.toggle('hidden');
+    eyeClosedIcon.classList.toggle('hidden');
+  });
+
+</script>
+
+
+</body>
+</html>

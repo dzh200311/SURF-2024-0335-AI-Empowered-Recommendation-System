@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="../../css/output.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src='../../js/identification.js'></script>
+
+</head>
+<body class="h-full">
+
+<div>
+    <!-- Static sidebar for desktop -->
+    <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
+            <div class="flex h-16 items-center">
+                <img class="h-8 w-auto mr-4" src="../../images/logo.png" alt="EASY EAT">
+                <div class="text-white font-extrabold text-xl font-semibold">EASY EAT</div>
+            </div>
+
+            <nav class="flex flex-1 flex-col">
+                <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                    <li>
+                        <ul role="list" class="-mx-2 space-y-1">
+                            <li>
+                                <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
+                                <a href="./Dashboard.html" class="hover:text-white hover:bg-gray-800 text-gray-400 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Staff.html" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                    </svg>
+                                    Staff
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./User.html" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                                    </svg>
+                                    User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Product.html" class="bg-gray-800 text-white hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                    Product
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Restaurant.html" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                                    </svg>
+                                    Restaurant
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Announcement.html" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
+                                    </svg>
+                                    Announcement
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Log.html" class="nav-link text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                    <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zM8 11h8m-8 4h8m-5-8h2"/>
+                                    </svg>
+                                    Log
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--                    <li>-->
+                    <!--                        <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>-->
+                    <!--                        <ul role="list" class="-mx-2 mt-2 space-y-1">-->
+                    <!--                            <li>-->
+                    <!--                                &lt;!&ndash; Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" &ndash;&gt;-->
+                    <!--                                <a href="#" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">-->
+                    <!--                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">H</span>-->
+                    <!--                                    <span class="truncate">Heroicons</span>-->
+                    <!--                                </a>-->
+                    <!--                            </li>-->
+                    <!--                            <li>-->
+                    <!--                                <a href="#" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">-->
+                    <!--                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">T</span>-->
+                    <!--                                    <span class="truncate">Tailwind Labs</span>-->
+                    <!--                                </a>-->
+                    <!--                            </li>-->
+                    <!--                            <li>-->
+                    <!--                                <a href="#" class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">-->
+                    <!--                                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">W</span>-->
+                    <!--                                    <span class="truncate">Workcation</span>-->
+                    <!--                                </a>-->
+                    <!--                            </li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+
+
+                    <li class="mt-auto">
+                        <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                            Log out
+                        </a>
+
+                        <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
+                            <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="lg:pl-72">
+        <div class="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+            <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+
+            <!-- Separator -->
+            <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
+
+            <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+                <form class="relative flex flex-1" action="#" method="GET">
+                    <label for="search-field" class="sr-only">Search</label>
+                    <svg class="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                    </svg>
+                    <input id="search-field" class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." type="search" name="search">
+                </form>
+                <div class="flex items-center gap-x-4 lg:gap-x-6">
+                    <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+                        <span class="sr-only">View notifications</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
+                    </button>
+
+                    <!-- Separator -->
+                    <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true"></div>
+
+                    <!-- Profile dropdown -->
+                    <div class="relative">
+                        <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="sr-only">Open user menu</span>
+                            <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <span class="hidden lg:flex lg:items-center">
+                <span class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">Tom Cook</span>
+                <svg class="ml-2 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </span>
+                        </button>
+                        <div class="hidden absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <!-- Active: "bg-gray-50", Not Active: "" -->
+                            <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                            <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="py-10 opacity-0 transition-opacity duration-500 space-y-4">
+            <!-- 第一行 -->
+            <div class="px-4 sm:px-6 lg:px-8">
+                <div>
+                    <h3 class="text-base font-semibold leading-6 text-gray-900">Last 30 days</h3>
+
+                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6">
+                            <dt>
+                                <div class="absolute rounded-md bg-indigo-500 p-3">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                    </svg>
+                                </div>
+                                <p class="ml-16 truncate text-sm font-medium text-gray-500">Total Subscribers</p>
+                            </dt>
+                            <dd class="ml-16 flex items-baseline pb-6 sm:pb-7">
+                                <p class="text-2xl font-semibold text-gray-900">71,897</p>
+                                <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                    <svg class="h-5 w-5 flex-shrink-0 self-center text-green-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="sr-only"> Increased by </span>
+                                    122
+                                </p>
+                                <div class="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                                    <div class="text-sm">
+                                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> Total Subscribers stats</span></a>
+                                    </div>
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6">
+                            <dt>
+                                <div class="absolute rounded-md bg-indigo-500 p-3">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z" />
+                                    </svg>
+                                </div>
+                                <p class="ml-16 truncate text-sm font-medium text-gray-500">Avg. Open Rate</p>
+                            </dt>
+                            <dd class="ml-16 flex items-baseline pb-6 sm:pb-7">
+                                <p class="text-2xl font-semibold text-gray-900">58.16%</p>
+                                <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                    <svg class="h-5 w-5 flex-shrink-0 self-center text-green-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="sr-only"> Increased by </span>
+                                    5.4%
+                                </p>
+                                <div class="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                                    <div class="text-sm">
+                                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> Avg. Open Rate stats</span></a>
+                                    </div>
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6">
+                            <dt>
+                                <div class="absolute rounded-md bg-indigo-500 p-3">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+                                    </svg>
+                                </div>
+                                <p class="ml-16 truncate text-sm font-medium text-gray-500">Avg. Click Rate</p>
+                            </dt>
+                            <dd class="ml-16 flex items-baseline pb-6 sm:pb-7">
+                                <p class="text-2xl font-semibold text-gray-900">24.57%</p>
+                                <p class="ml-2 flex items-baseline text-sm font-semibold text-red-600">
+                                    <svg class="h-5 w-5 flex-shrink-0 self-center text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="sr-only"> Decreased by </span>
+                                    3.2%
+                                </p>
+                                <div class="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                                    <div class="text-sm">
+                                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only"> Avg. Click Rate stats</span></a>
+                                    </div>
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+
+                </div>
+
+
+            </div>
+
+
+
+            <main class="px-10 sm:px-6 lg:px-8">
+                <div class="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:px-8">
+                    <!-- 添加菜品按钮 -->
+                    <button id="addProductBtn" class="select-specifications-button relative flex items-center justify-center rounded-md border border-transparent bg-indigo-500 px-8 py-2 text-sm font-medium text-white hover:bg-indigo-600">
+                        Add product
+                    </button>
+
+                    <div class="relative mt-8">
+                        <div class="relative -mb-6 w-full overflow-x-auto pb-6">
+                            <ul id="product-list" role="list" class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0 space-y-6">
+                                <!-- 动态加载单个商品 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </main>
+
+
+           </main>
+
+
+    </div>
+
+    <!-- 模态框 -->
+    <!-- 模态框 -->
+    <div id="modal" class="fixed z-10 inset-0 overflow-y-auto hidden mt-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Manage product</h3>
+                        <div class="mt-2">
+                            <form id="product-form">
+                                <div class="mb-4">
+                                    <label for="productName" class="block text-sm font-medium text-gray-700">Product name</label>
+                                    <input type="text" id="productName" name="productName" class="mt-1 p-2 w-full border rounded-md">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="productPrice" class="block text-sm font-medium text-gray-700">Product price</label>
+                                    <input type="number" id="productPrice" name="productPrice" class="mt-1 p-2 w-full border rounded-md">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="productDescription" class="block text-sm font-medium text-gray-700">Product describe</label>
+                                    <textarea id="productDescription" name="productDescription" class="mt-1 p-2 w-full border rounded-md"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="productImage" class="block text-sm font-medium text-gray-700">image URL</label>
+                                    <input type="text" id="productImage" name="productImage" class="mt-1 p-2 w-full border rounded-md">
+                                </div>
+                                <div class="mt-5 sm:mt-6 flex justify-between">
+                                    <button type="button" id="save-product" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                                        Save
+                                    </button>
+                                    <button type="button" id="delete-product" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
+                                        Delete
+                                    </button>
+                                    <button type="button" id="close-modal" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:text-sm">
+                                        Close
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 模态对话框 -->
+    <div id="myModal" class="z-50 hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" style="top: 50px;">
+        <div class="z-10 relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white max-h-[80vh]">
+            <div class="flex space-x-6">
+                <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Add New Product</h3>
+                <!-- Form for entering product information -->
+
+                <!-- Close button at top-right corner -->
+                <button onclick="toggleModal()" class="absolute top-0 right-0 mt-4 mr-4 text-gray-700 hover:text-gray-900">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                </button>
+                <form id="addProductForm" class="space-y-2">
+                    <!-- Product-->
+                    <div class="flex space-x-4">
+                        <!-- Product ID (auto-generated) -->
+                        <div class="flex-2 flex flex-col">
+                            <label class="text-sm font-medium text-gray-700">Product ID (auto-generated)</label>
+                            <input type="text" id="productId" placeholder="Product ID" class="mt-1 p-2 border rounded w-full" readonly>
+                        </div>
+
+                        <!-- Product Name -->
+                        <div class="flex-1 flex flex-col">
+                            <label class="text-sm font-medium text-gray-700">Product Name</label>
+                            <input type="text" name="productName" placeholder="Name" class="mt-1 p-2 border rounded w-full">
+                        </div>
+                    </div>
+
+                    <!-- Category, Price, and Discount in a single row -->
+                    <div class="flex space-x-4">
+                        <!-- Category -->
+                        <div class="flex-1 flex flex-col">
+                            <label for="categorySelect" class="text-sm font-medium text-gray-700">Category</label>
+                            <select id="categorySelect" name="categoryId" class="mt-1 p-2 border rounded w-full">
+                                <option value="">Select Category</option>
+                                <!-- Options go here -->
+                            </select>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="flex-1 flex flex-col">
+                            <label for="price" class="text-sm font-medium text-gray-700">Price</label>
+                            <input type="number" id="price" name="price" placeholder="Price" class="mt-1 p-2 border rounded w-full">
+                        </div>
+
+                        <!-- Discount -->
+                        <div class="flex-1 flex flex-col">
+                            <label for="discount" class="text-sm font-medium text-gray-700">Discount (%)</label>
+                            <input type="number" id="discount" name="discount" placeholder="Discount" class="mt-1 p-2 border rounded w-full">
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <textarea name="description" placeholder="Description" class="p-2 border rounded w-full"></textarea>
+
+                    <!--推荐-->
+                    <div class="flex items-center space-x-4">
+                        <!-- Is Recommended (Favorite) -->
+                        <div class="flex items-center">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" name="favorite" class="form-checkbox">
+                                <span class="ml-2">Is Recommended?</span>
+                            </label>
+                        </div>
+
+                        <!-- Is New -->
+                        <div class="flex items-center">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" name="isNew" class="form-checkbox">
+                                <span class="ml-2">Is New?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--开始-截止日期-->
+                    <div class="flex items-start space-x-4">
+                        <!-- Discount Start Time -->
+                        <div class="flex-1 flex flex-col">
+                            <label class="text-sm font-medium text-gray-700">Discount Start Time</label>
+                            <input type="datetime-local" name="discountStartTime" class="mt-1 p-2 border rounded w-full">
+                        </div>
+
+                        <!-- Discount End Time -->
+                        <div class="flex-1 flex flex-col">
+                            <label class="text-sm font-medium text-gray-700">Discount End Time</label>
+                            <input type="datetime-local" name="discountEndTime" class="mt-1 p-2 border rounded w-full">
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded">
+                        Submit
+                    </button>
+                </form>
+            </div>
+
+
+                <!-- 右侧图片展示区域 -->
+                <div class="flex-1">
+                    <!-- 上传图片的地方 -->
+                    <div class="flex flex-col items-start">
+                        <label class="text-sm font-medium text-gray-700">Product Image</label>
+                        <input type="file" id="productImage" class="block w-full text-sm text-gray-500 mt-1 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" onchange="previewImage();">
+                        <img id="imagePreview" src="" alt="Image Preview" class="hidden mt-2 w-48">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="../../config.js"></script>
+<script>
+
+    // authentication.checkStaffAuthentication();
+
+
+    window.addEventListener('load', () => {
+        const mainElement = document.querySelector('main');
+        mainElement.classList.remove('opacity-0');
+        mainElement.classList.add('opacity-100');
+    });
+</script>
+<!--<script src="../../js/manager/product.js"></script>-->
+<script>
+    // JavaScript 用于打开和关闭模态对话框
+    document.getElementById('addProductBtn').addEventListener('click', function () {
+        toggleModal();
+    });
+
+    function toggleModal() {
+        const modal = document.getElementById('myModal');
+        modal.classList.toggle('hidden');
+    }
+</script>
+<script>
+    function addSpecification() {
+        // JavaScript function to dynamically add specification fields
+        const form = document.getElementById('addProductForm');
+        const newField = document.createElement('input');
+        newField.setAttribute('type', 'text');
+        newField.setAttribute('placeholder', 'Specification');
+        newField.className = 'mt-2 p-2 border border-gray-300 rounded w-full';
+        form.insertBefore(newField, form.lastElementChild);
+    }
+
+    function previewImage() {
+        const file = document.getElementById('productImage').files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('imagePreview');
+            img.src = e.target.result;
+            img.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+<script>
+
+    // 动态加载商品
+    document.addEventListener('DOMContentLoaded', function() {
+        const productList = document.getElementById('product-list');
+
+        // 假设 token 存储在 localStorage 中
+        const token = localStorage.getItem('tempToken');
+
+        // 构建请求的 headers，包括 Authorization
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+
+        fetch(`http://${API_BASE_URL}:8000/api/product/get_default_product`, { headers: headers })
+            .then(response => response.json())
+            .then(products => {
+                products.forEach(product => {
+                    const li = document.createElement('li');
+                    li.className = "inline-flex w-64 flex-col text-center lg:w-auto";
+
+                    let buttonHTML = `<a class="select-specifications-button relative flex items-center justify-center rounded-md border border-transparent bg-indigo-500 px-8 py-2 text-sm font-medium text-white hover:bg-indigo-600" data-index="${product.id}">Manager<span class="sr-only">, ${product.product_name}</span></a>`;
+
+                    li.innerHTML = `
+<div class="group relative flex flex-col items-center">
+    <div class="w-48 h-48 overflow-hidden rounded-md bg-gray-200">
+        <!-- 固定图片容器为48x48大小，可根据需求调整 -->
+        <img src="${product.image}" class="min-w-full min-h-full object-cover object-center" data-id="${product.id}" onclick="showProductDetails(${product.id})">
+        <!-- object-cover 确保图片覆盖整个容器，object-center 确保图片居中 -->
+    </div>
+    <div class="flex-grow"></div>
+    <div class="mt-6 w-full px-4 text-center"> <!-- 文本居中显示 -->
+        <h3 class="font-semibold text-lg text-gray-900 truncate">
+            ${product.product_name}
+        </h3>
+        <p class="text-gray-900">$${product.price}</p>
+        <h5 class="font-light text-gray-400 truncate">
+            ${product.description}
+        </h5>
+    </div>
+    <div class="mt-6 w-full px-4">
+        ${buttonHTML}
+    </div>
+</div>
+
+
+
+            <!-- Hidden specifications form -->
+            <div class="hidden specifications-form" data-index="${product.id}">
+                <select class="mt-2 p-2 border border-gray-300 rounded">
+                    ${product.specifications ? product.specifications.map(spec => `<option value="${spec}">${spec}</option>`).join('') : ''}
+                </select>
+                <button class="mt-2 p-2 bg-yellow-500 text-gray-700 rounded hover:bg-yellow-500">Add</button>
+            </div>
+
+                `;
+
+                    productList.appendChild(li);
+
+                    const button = li.querySelector('.select-specifications-button');
+                    button.addEventListener('click', () => showProductModal(product));
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchCategories();
+        fetchNextProductId();
+    });
+
+    function showProductModal(product) {
+        const modal = document.getElementById('modal');
+        const productNameInput = document.getElementById('productName');
+        const productPriceInput = document.getElementById('productPrice');
+        const productDescriptionInput = document.getElementById('productDescription');
+        const productImageInput = document.getElementById('productImage');
+
+        // 预填充产品信息
+        productNameInput.value = product.product_name;
+        productPriceInput.value = product.price;
+        productDescriptionInput.value = product.description;
+        productImageInput.value = product.image;
+
+        // 显示模态框
+        modal.classList.remove('hidden');
+
+        // 保存按钮的点击事件
+        const saveButton = document.getElementById('save-product');
+        saveButton.onclick = () => saveProduct(product);
+
+        // 删除按钮的点击事件
+        const deleteButton = document.getElementById('delete-product');
+        deleteButton.onclick = () => deleteProduct(product);
+    }
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+    });
+
+    function saveProduct(product) {
+        const productNameInput = document.getElementById('productName').value;
+        const productPriceInput = document.getElementById('productPrice').value;
+        const productDescriptionInput = document.getElementById('productDescription').value;
+        const productImageInput = document.getElementById('productImage').value;
+
+        // 构建更新后的产品数据
+        const updatedProduct = {
+            product_id: product.product_id,
+            product_name: productNameInput,
+            price: productPriceInput,
+            description: productDescriptionInput,
+            image: productImageInput
+        };
+
+        var token = localStorage.getItem('tempToken')
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        };
+        // 发送更新请求到服务器
+        fetch(`http://${API_BASE_URL}:8000/api/product/modify_product`, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(updatedProduct)
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('Product update successfully');
+                // 关闭模态框并刷新产品列表（或更新DOM）
+                document.getElementById('modal').classList.add('hidden');
+                location.reload(); // 刷新页面以显示更新后的数据
+            })
+            .catch(error => {
+                console.error('Error updating product:', error);
+            });
+    }
+
+    function deleteProduct(productId) {
+
+        var token = localStorage.getItem('tempToken')
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        };
+        // 发送删除请求到服务器
+        fetch(`http://${API_BASE_URL}:8000/api/product/delete_product/${productId.product_id}`, {
+            method: 'DELETE',
+            headers: headers
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('产品删除成功');
+                // 关闭模态框并刷新产品列表（或更新DOM）
+                document.getElementById('modal').classList.add('hidden');
+                location.reload(); // 刷新页面以显示更新后的数据
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error);
+            });
+    }
+</script>
+<script>
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+    });
+
+
+    function fetchCategories() {
+
+        // 假设 token 存储在 localStorage 中
+        const token = localStorage.getItem('tempToken');
+
+        // 构建请求的 headers，包括 Authorization
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+
+        fetch(`http://${API_BASE_URL}:8000/api/product/get_category`, { headers: headers })
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('categorySelect');
+                data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    function fetchNextProductId() {
+        // 假设 token 存储在 localStorage 中
+        const token = localStorage.getItem('tempToken');
+
+        // 构建请求的 headers，包括 Authorization
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+
+        // 使用带有 headers 的 fetch 请求
+        fetch(`http://${API_BASE_URL}:8000/api/product/get_next_product_id`, { headers: headers })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 假设返回的 data 是直接产品ID，不包含其他结构
+                document.getElementById('productId').value = data;
+            })
+            .catch(error => console.error('Error fetching product ID:', error));
+    }
+
+
+    document.getElementById('addProductForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+        // 假设 token 存储在 localStorage 中
+        const token = localStorage.getItem('tempToken');
+
+        // 构建请求的 headers，包括 Authorization
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        });
+
+        const formData = {
+            product_id: parseInt(document.getElementById('productId').value, 10) || null,
+            product_name: document.querySelector('[name="productName"]').value || "",
+            category_id: parseInt(document.getElementById('categorySelect').value, 10) || 1, //默认改成1了，我在这测的不知道为什么选完id还是null，
+            // 接默认1然后展示也就展示默认的添加行了（后端我也光调用的/get_default_product，就只展示默认种类的食物，后端不做分类了）
+            price: parseFloat(document.querySelector('[name="price"]').value) || 0,
+            discount: parseFloat(document.querySelector('[name="discount"]').value) || 0,
+            description: document.querySelector('[name="description"]').value || "",
+            // 这里我们将前端的复选框是否选中（布尔值）转换为后端期望的数值形式
+            favorite: document.querySelector('[name="favorite"]').checked ? 1 : 0,
+            is_new: document.querySelector('[name="isNew"]').checked ? 1 : 0,
+            discount_starttime: document.querySelector('[name="discountStartTime"]').value || "",
+            discount_endtime: document.querySelector('[name="discountEndTime"]').value || "",
+            quantity:1,
+        };
+
+        // 发送 JSON 数据到后端
+        fetch(`http://${API_BASE_URL}:8000/api/product/add_product`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // 添加 token 到请求的 headers 中
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert('Product added successfully!');
+
+                uploadProductImage(data.productId);
+
+                window.location.reload();
+
+                // 这里可以添加关闭模态窗口的逻辑
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add product');
+            });
+    });
+
+
+    function uploadProductImage(productId) {
+        var fileInput = document.getElementById('productImage').files[0];
+        if (!fileInput) {
+            alert('No image to upload');
+            return;
+        }
+
+        var id = productId;
+        // 本地这样写 现在先用一个虚拟的
+        var token = localStorage.getItem('tempToken');
+        // var token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwiZXhwIjoxNzE1MjQ5MDAxLCJpYXQiOjE3MTQ2NDQyMDF9.UovfTYVYv5Wz8Rp6g_5CLv3cuZU_encJZAvuii9-Za3g-HGMd9weoTVYztqyJNjDE3l6iDSLQEQ4oYneIG8nokOdQawQDWJx11TnHUyy65FOCQy6cqUv-5y8jkVORzYfKwHUuh67W3W3JdhNaWDQACdKxXoVCwLLnPzT1MMsq-H6SQ_CxnxrhmN-_hrX6Rxga4MHbMQ7GfFge6ytEP_sTsB7aul-tOsmPfSFfdq_76_rOmwyxnekawlJQs7ICtpafkjArN_2fIGnwQ3RLpo1lwitUIgVgXDpcLlbWhhBY5O4rRx6KoK9o0cHLm6HhZ1Y7b6WtjehvhbiuvBsKwJgrQ';
+
+        var formData = new FormData();
+        formData.append('file', fileInput);
+        // 测试用,服务器数据库id太大
+        formData.append('id', 1010101);
+        // formData.append('id', id); // Add ID to the FormData
+
+        $.ajax({
+            url: 'http://120.26.136.194:8000/api/image/product/upload',
+            type: 'POST',
+            data: formData, // Pass FormData directly
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data);
+                var url = data;
+                alert('Image uploaded successfully.');
+                updateProductImageUrl(id, data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('Error occurred while uploading image.');
+            }
+        });
+    }
+
+    function updateProductImageUrl(productId, imageUrl) {
+        fetch(`/api/product/update_image/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({ imageUrl: imageUrl })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to update product image URL');
+                return response.json();
+            })
+            .then(updateResponse => {
+                console.log('Product image URL updated successfully:', updateResponse);
+                alert('Product image URL updated successfully');
+            })
+            .catch(error => {
+                console.error('Error updating product image URL:', error);
+                alert('Failed to update product image URL');
+            });
+    }
+
+</script>
+
+
+</body>
+</html>

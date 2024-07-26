@@ -1,0 +1,62 @@
+
+.dashboard-header {
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+    z-index: 900;
+    margin-left: 250px;
+}
+
+.search-container input[type="search"] {
+    width: 100%; /* 充满容器宽度 */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: auto; /* 确保搜索框在左侧 */
+}
+
+.user-nav {
+    display: flex;
+    align-items: center;
+}
+
+/* 其他代码保持不变 */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.user-profile .profile-img {
+    border-radius: 50%;
+    width: 40px; /* 头像大小 */
+    height: 40px;
+    margin-right: 10px; /* 头像和用户信息之间的距离 */
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 2px; /* 人名和部门之间的距离 */
+}
+
+.user-department {
+    font-size: 12px; /* 较小的字体大小 */
+    color: #888; /* 淡颜色 */
+}
+
+/* 其他代码保持不变 */
+
+

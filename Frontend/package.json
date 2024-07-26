@@ -1,0 +1,25 @@
+{
+  "name": "cpt202",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 8080 --cors"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "aos": "^2.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "googleapis": "^134.0.0",
+    "http-server": "^14.1.1",
+    "qrcode2": "^1.2.3",
+    "qrcodejs2": "^0.0.2"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "proxy": "http://localhost:8000"
+}
