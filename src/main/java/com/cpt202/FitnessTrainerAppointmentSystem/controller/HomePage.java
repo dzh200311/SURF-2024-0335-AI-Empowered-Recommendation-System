@@ -12,7 +12,7 @@ public class HomePage {
 
     @GetMapping("/home_page")
     public String getHomePage(Model m){
-        return "homepage_old_fitness";
+        return "homepage";
     }
 
 
