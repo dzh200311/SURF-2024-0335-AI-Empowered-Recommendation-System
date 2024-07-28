@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Recommendation Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <link href="./animation.css" rel="stylesheet">
+    <style>
+        .fade-in-section {
+        opacity: 0;
+        transform: translateY(100px); /* 增加初始的Y轴偏移量 */
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.55, 0.72),
+        transform 0.3s cubic-bezier(0.47, 0, 0.75, 0.72);
+    }
+    </style>
 </head>
 <body>
 <!-- Navbar -->
@@ -268,7 +275,7 @@
                     </div>
                 </div>
                 <div class="h-48 w-full sm:h-64 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2">
-                    <img src="../static/homepage_tmp.jpg" alt="Platform related photo" class="object-cover h-full w-full">
+                    <img src="homepage_tmp.jpg" alt="Platform related photo" class="object-cover h-full w-full">
                 </div>
             </div>
         </div>
@@ -280,7 +287,7 @@
             <!-- Decorative background image and gradient -->
             <div aria-hidden="true" class="absolute inset-0">
                 <div class="absolute inset-0 mx-auto max-w-7xl overflow-hidden xl:px-8">
-                    <img src="../static/homepage_tmp2.jpg" alt="" class="h-full w-full object-cover object-center">
+                    <img src="homepage_tmp2.jpg" alt="" class="h-full w-full object-cover object-center">
                 </div>
                 <div class="absolute inset-0 bg-white bg-opacity-90 dark:bg-black bg-opacity-10 transition-colors duration-300"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-white via-white dark:bg-gradient-to-t dark:from-black dark:via-black transition-colors duration-300"></div>
@@ -357,7 +364,7 @@
                 </div>
                 <div class="lg:w-1/2 mt-10 lg:mt-0 lg:pl-10">
                     <div class="relative">
-                            <img src="../static/homepage_tmp.jpg" alt="Enhanced Recommendation" class="rounded-lg shadow-lg">
+                            <img src="homepage_tmp.jpg" alt="Enhanced Recommendation" class="rounded-lg shadow-lg">
                         <div class="absolute inset-0 bg-gradient-to-t from-purple-900 via-transparent to-transparent opacity-75 rounded-lg"></div>
                     </div>
                 </div>
@@ -371,7 +378,7 @@
             <section aria-labelledby="key3-heading" class="relative mx-auto max-w-7xl flex flex-col lg:flex-row items-center text-center lg:text-left lg:space-x-8">
                 <div class="lg:w-1/2 order-last lg:order-first mt-10 lg:mt-0 lg:pl-10 flex justify-center">
                     <div class="relative w-full max-w-md">
-                        <img src="../static/homepage_tmp.jpg" alt="Collaborative Editing" class="rounded-lg shadow-lg">
+                        <img src="homepage_tmp.jpg" alt="Collaborative Editing" class="rounded-lg shadow-lg">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-50 rounded-lg"></div>
                     </div>
                 </div>
@@ -391,7 +398,7 @@
             <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div class="relative overflow-hidden rounded-lg">
                     <div class="absolute inset-0">
-                        <img src="../static/homepage_tmp.jpg" alt="" class="h-full w-full object-cover object-center">
+                        <img src="homepage_tmp.jpg" alt="" class="h-full w-full object-cover object-center">
                     </div>
                     <div class="relative bg-purple-900 bg-opacity-75 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
                         <div class="relative mx-auto flex max-w-3xl flex-col items-center text-center">
