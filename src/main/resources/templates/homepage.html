@@ -18,7 +18,7 @@
 <!-- Navbar -->
 <div class="bg-white dark:bg-gray-950 transition-colors duration-500">
     <!--
-  Mobile menu
+  Mobile menu 还没适配
 
   Off-canvas menu for mobile, show/hide based on off-canvas menu state.
 -->
@@ -52,9 +52,9 @@
                     <div class="border-b border-gray-200">
                         <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
                             <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <a href="subPage/Product/ProductList.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">View Food</a>
+                            <a href="subPage/Product/ProductList.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Match</a>
                             <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('./subPage/Product/ProductList')">Order</a>
+                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('./subPage/Product/ProductList')">Match</a>
 
                         </div>
                     </div>
@@ -64,10 +64,10 @@
 
                 <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                     <div class="flow-root">
-                        <a href="subPage/User/Login.html" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                        <a href="/add_user" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
                     </div>
                     <div class="flow-root">
-                        <a href="subPage/User/Register3.html" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                        <a href="/log_in" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
                     </div>
                 </div>
 
@@ -96,46 +96,11 @@
                                         <div class="flex">
                                             <div class="relative flex">
                                                 <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./index.html" type="button" class="border-transparent text-purple-600 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
+                                                <a href="#" type="button" class="border-transparent text-purple-600 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
                                             </div>
 
                                         </div>
-                                        <!--                                        <div class="flex">-->
-                                        <!--                                            <div class="relative flex">-->
-                                        <!--                                                &lt;!&ndash; Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" &ndash;&gt;-->
-                                        <!--                                                <a href="javascript:void(0);" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-yellow-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="sendTokenRequest('')">Order</a>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./subPage/Product/ProductList.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Match</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./subPage/User/HistoryOrder.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">AI Polishing</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./subPage/Others/About.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Co-editing</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./subPage/Others/Privacy.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Privacy Policy</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                                <a href="./subPage/Others/Help.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Help</a>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +265,7 @@
                     <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-amber-500">Match</h2>
                     <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600 dark:text-white">Tailor your recommendation letter needs: teachers set detailed standards, students select preferences.
                     </p>
-                    <a href="subPage/Product/Restaurant.html" class="mt-6 inline-block w-full rounded-md border border-transparent bg-purple-500 px-8 py-3 font-medium text-white hover:bg-purple-600 sm:w-auto">Find your satisfied student/teacher now</a>
+                    <a href="log_in" class="mt-6 inline-block w-full rounded-md border border-transparent bg-purple-500 px-8 py-3 font-medium text-white hover:bg-purple-600 sm:w-auto">Find your satisfied student/teacher now</a>
                 </div>
             </section>
 
@@ -407,7 +372,7 @@
                                 <span class="block sm:inline">and Synchronization</span>
                             </h2>
                             <p class="mt-3 text-xl text-gray-200">Experience a dedicated inbox that consolidates all your emails. Leveraging text-mining technology, our platform extracts key information such as student names, school names, and deadlines, automatically creating calendar notifications for a seamless workflow.</p>
-                            <a href="#" class="mt-8 block w-full rounded-md border border-transparent bg-purple-500 px-8 py-3 text-base font-medium text-gray-900 hover:bg-purple-600 sm:w-auto">Discover More</a>
+                            <a href="log_in" class="mt-8 block w-full rounded-md border border-transparent bg-purple-500 px-8 py-3 text-base font-medium text-gray-900 hover:bg-purple-600 sm:w-auto">Discover More</a>
                         </div>
                     </div>
                 </div>
