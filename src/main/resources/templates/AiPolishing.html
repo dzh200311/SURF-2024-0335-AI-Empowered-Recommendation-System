@@ -2,9 +2,245 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>AI Polishing</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* 固定顶部栏的样式 */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 30;
+        }
+        /* 增加内容顶部间距 */
+        .main-content {
+            margin-top: 4rem; /* 根据需要调整 */
+        }
+    </style>
 </head>
-<body>
+<body class="h-screen flex flex-col">
+<header class="fixed-header">
+    <nav>
+        <nav aria-label="Top">
+            <!-- Secondary navigation -->
+            <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="border-b border-gray-200 dark:border-black">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <!-- Logo (lg+) -->
+                            <div class="hidden lg:flex lg:items-center">
+                                <a href="#">
+                                    <span class="sr-only">Recommendation system</span>
+                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                </a>
+                            </div>
 
+                            <div class="hidden h-full lg:flex">
+                                <!-- Mega menus -->
+                                <div class="ml-8">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="/home_page_auth" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
+                                            </div>
+
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="match_student" type="button" class="border-transparent text-grey-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Match</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="ai_polish" type="button" class="border-transparent text-purple-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">AI Polishing</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="co_edit" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Co-editing</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="inbox" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Inbox</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
+                                                <a href="./subPage/Others/Help.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Help</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile menu and search (lg-) -->
+                            <div class="flex flex-1 items-center lg:hidden">
+                                <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
+                                <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                    <span class="sr-only">Open menu</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </button>
+
+                                <!-- Search -->
+                                <a href="subPage/Search.html" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Logo (lg-) -->
+                            <a href="#" class="lg:hidden">
+                                <span class="sr-only">Easy Eat</span>
+                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                            </a>
+
+                            <div class="flex flex-1 items-center justify-end">
+                                <div class="flex items-center lg:ml-8">
+
+                                    <div class="hidden lg:flex">
+                                        <a href="subPage/Search.html" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                            <span class="sr-only">Search</span>
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+
+                                        <button id="translateLanguage" class="p-2 rounded-2xl bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700" onclick="window.location.href = 'index_chinese.html';">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+                                            </svg>
+                                        </button>
+
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-3" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+
+                                        <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                                <!-- Sun Icon -->
+                                                <g class="dark:hidden">
+                                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                                </g>
+                                                <!-- Moon Icon -->
+                                                <g class="hidden dark:block">
+                                                    <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+
+
+                                    <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
+
+                                    <div id="signup-buttons" class="hidden flex space-x-8 px-4">
+                                        <a href="/log_in" type="button" class="rounded-md bg-white dark:bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-950 hover:bg-gray-50 dark:hover:bg-gray-700">Sign up</a>
+
+                                        <a href="/add_user" type="button" class="rounded-md bg-purple-500 dark:bg-purple-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</a>
+                                    </div>
+
+                                    <div id="user-links" class="flex space-x-8 px-4">
+
+
+
+                                        <div class="flex space-x-8">
+
+                                            <div class="flex">
+                                                <!-- Trigger Button -->
+                                                <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                    <span class="sr-only">Account</span>
+                                                    <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="">
+                                                </button>
+
+                                                <!-- Dropdown Menu -->
+                                                <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                    <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                    <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                    <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                        <span class="sr-only">Close</span>
+                                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </nav>
+</header>
+
+<div class="flex flex-1 main-content">
+    <!-- 左侧导航栏 -->
+    <div class="w-1/4 bg-gray-100 p-4 overflow-y-auto">
+        <h2 class="text-xl font-semibold mb-4">Saved Letter</h2>
+        <div class="flex justify-between flex h-14 items-center"><span class="flex" data-state="closed"><button class="h-10 rounded-lg px-2 text-token-text-secondary focus-visible:outline-0 hover:bg-token-sidebar-surface-secondary focus-visible:bg-token-sidebar-surface-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-xl-heavy"><path fill="currentColor" fill-rule="evenodd" d="M8.857 3h6.286c1.084 0 1.958 0 2.666.058.729.06 1.369.185 1.961.487a5 5 0 0 1 2.185 2.185c.302.592.428 1.233.487 1.961.058.708.058 1.582.058 2.666v3.286c0 1.084 0 1.958-.058 2.666-.06.729-.185 1.369-.487 1.961a5 5 0 0 1-2.185 2.185c-.592.302-1.232.428-1.961.487C17.1 21 16.227 21 15.143 21H8.857c-1.084 0-1.958 0-2.666-.058-.728-.06-1.369-.185-1.96-.487a5 5 0 0 1-2.186-2.185c-.302-.592-.428-1.232-.487-1.961C1.5 15.6 1.5 14.727 1.5 13.643v-3.286c0-1.084 0-1.958.058-2.666.06-.728.185-1.369.487-1.96A5 5 0 0 1 4.23 3.544c.592-.302 1.233-.428 1.961-.487C6.9 3 7.773 3 8.857 3M6.354 5.051c-.605.05-.953.142-1.216.276a3 3 0 0 0-1.311 1.311c-.134.263-.226.611-.276 1.216-.05.617-.051 1.41-.051 2.546v3.2c0 1.137 0 1.929.051 2.546.05.605.142.953.276 1.216a3 3 0 0 0 1.311 1.311c.263.134.611.226 1.216.276.617.05 1.41.051 2.546.051h.6V5h-.6c-1.137 0-1.929 0-2.546.051M11.5 5v14h3.6c1.137 0 1.929 0 2.546-.051.605-.05.953-.142 1.216-.276a3 3 0 0 0 1.311-1.311c.134-.263.226-.611.276-1.216.05-.617.051-1.41.051-2.546v-3.2c0-1.137 0-1.929-.051-2.546-.05-.605-.142-.953-.276-1.216a3 3 0 0 0-1.311-1.311c-.263-.134-.611-.226-1.216-.276C17.029 5.001 16.236 5 15.1 5zM5 8.5a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1M5 12a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1" clip-rule="evenodd"></path></svg></button></span><span class="flex" data-state="closed"><button class="h-10 rounded-lg px-2 text-token-text-secondary focus-visible:outline-0 hover:bg-token-sidebar-surface-secondary focus-visible:bg-token-sidebar-surface-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" class="icon-xl-heavy"><path d="M15.673 3.913a3.121 3.121 0 1 1 4.414 4.414l-5.937 5.937a5 5 0 0 1-2.828 1.415l-2.18.31a1 1 0 0 1-1.132-1.13l.311-2.18A5 5 0 0 1 9.736 9.85zm3 1.414a1.12 1.12 0 0 0-1.586 0l-5.937 5.937a3 3 0 0 0-.849 1.697l-.123.86.86-.122a3 3 0 0 0 1.698-.849l5.937-5.937a1.12 1.12 0 0 0 0-1.586M11 4A1 1 0 0 1 10 5c-.998 0-1.702.008-2.253.06-.54.052-.862.141-1.109.267a3 3 0 0 0-1.311 1.311c-.134.263-.226.611-.276 1.216C5.001 8.471 5 9.264 5 10.4v3.2c0 1.137 0 1.929.051 2.546.05.605.142.953.276 1.216a3 3 0 0 0 1.311 1.311c.263.134.611.226 1.216.276.617.05 1.41.051 2.546.051h3.2c1.137 0 1.929 0 2.546-.051.605-.05.953-.142 1.216-.276a3 3 0 0 0 1.311-1.311c.126-.247.215-.569.266-1.108.053-.552.06-1.256.06-2.255a1 1 0 1 1 2 .002c0 .978-.006 1.78-.069 2.442-.064.673-.192 1.27-.475 1.827a5 5 0 0 1-2.185 2.185c-.592.302-1.232.428-1.961.487C15.6 21 14.727 21 13.643 21h-3.286c-1.084 0-1.958 0-2.666-.058-.728-.06-1.369-.185-1.96-.487a5 5 0 0 1-2.186-2.185c-.302-.592-.428-1.233-.487-1.961C3 15.6 3 14.727 3 13.643v-3.286c0-1.084 0-1.958.058-2.666.06-.729.185-1.369.487-1.961A5 5 0 0 1 5.73 3.545c.556-.284 1.154-.411 1.827-.475C8.22 3.007 9.021 3 10 3A1 1 0 0 1 11 4"></path></svg></button></span></div>
+        <ul>
+            <li th:each="letter : ${letters}"
+                th:text="${letter.title}"
+                th:onclick="'loadLetter(' + ${letter.id} + ')' "
+                class="cursor-pointer p-2 hover:bg-gray-200 rounded">
+            </li>
+        </ul>
+    </div>
+
+    <!-- 右侧内容区 -->
+    <div class="flex-1 flex flex-col bg-white">
+        <!-- 推荐信编辑器 -->
+        <div class="flex-1 p-4 overflow-y-auto">
+            <h2 class="text-2xl font-semibold mb-4">Edit Your Letter with AI!</h2>
+            <textarea id="letterContent" class="w-full h-full p-2 border rounded" th:text="${selectedLetter.content}"></textarea>
+        </div>
+
+        <!-- 发送框 -->
+        <!-- 发送框 -->
+        <div class="p-4 border-t">
+            <form th:action="@{/send}" method="post" class="flex relative">
+                <input type="text" name="message" placeholder="给AI发送消息..." class="flex-1 p-3 border rounded-full pr-16">
+                <button type="submit" class="bg-purple-500 text-white p-3 rounded-full absolute right-0 top-0 mt-2 mr-2">发送</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function loadLetter(letterId) {
+        // 加载选中的推荐信内容
+        fetch(`/letters/${letterId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('letterContent').innerText = data.content;
+            });
+    }
+</script>
 </body>
 </html>
