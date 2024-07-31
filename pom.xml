@@ -51,6 +51,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.baidubce</groupId>
+			<artifactId>qianfan</artifactId>
+			<version>0.0.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>

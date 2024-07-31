@@ -5,6 +5,9 @@
 4.	在vscode打开文件，点开/main/java/com/CPT202/PetGroomingSystem中的PetGroomingSystemApplication.java 以非调试模式运行
 5.	打开http://localhost:8080/home_page
 
+# 文心一言api使用
+https://github.com/baidubce/bce-qianfan-sdk/tree/main/java
+
 ## 以下git的使用只是个人经验，建议网上找个视频也看看
 
 ## Git 常用使用指令（如果遇到网络问题无法push成功请百度解决）
