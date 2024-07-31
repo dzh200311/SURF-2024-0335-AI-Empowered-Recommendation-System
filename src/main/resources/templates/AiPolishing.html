@@ -222,11 +222,12 @@
 
         <!-- 发送框 -->
         <div class="p-4 border-t">
-            <form id="sendForm" class="flex relative">
+            <form id="sendForm" class="flex items-center relative">
                 <input type="text" name="message" id="message" placeholder="给AI发送消息..." class="flex-1 p-3 border rounded-full pr-16">
-                <button type="submit" class="bg-purple-500 text-white p-3 rounded-full absolute right-0 top-0 mt-2 mr-2">发送</button>
+                <button type="submit" class="bg-purple-500 text-white p-3 rounded-full ml-2">发送</button>
             </form>
         </div>
+
 
         <!-- AI 回复显示区域 -->
         <div id="aiResponse" class="p-4 border-t">
@@ -252,16 +253,43 @@
         $('#sendForm').on('submit', function(event){
             event.preventDefault();
             var message = $('#message').val();
-            $('#aiResponse').html(''); // 清空之前的回复内容
+            $('#aiResponse').text(''); // 清空之前的回复内容
+
             var eventSource = new EventSource('/ai_prompt?message=' + message);
+            var responseElement = $('#aiResponse');
+            var textBuffer = ''; // 缓冲区来收集所有的数据块
+            var index = 0;
+            var isAppending = false; // 标志位，防止重复调用 displayNextCharacter
+
             eventSource.onmessage = function(event) {
-                $('#aiResponse').append('<p>' + event.data + '</p>');
+                textBuffer += event.data; // 收集数据块
+
+                if (!isAppending) {
+                    isAppending = true;
+                    function displayNextCharacter() {
+                        if (index < textBuffer.length) {
+                            if (textBuffer.charAt(index) === '\n') {
+                                responseElement.append('<br>'); // 遇到换行符时插入换行
+                            } else {
+                                responseElement.append(textBuffer.charAt(index));
+                            }
+                            index++;
+                            setTimeout(displayNextCharacter, 50); // 调整字符显示的速度（50ms）
+                        } else {
+                            isAppending = false; // 允许下一次的字符显示
+                        }
+                    }
+                    displayNextCharacter();
+                }
             };
+
             eventSource.onerror = function() {
                 eventSource.close();
             };
         });
     });
+
+
 </script>
 </body>
 </html>

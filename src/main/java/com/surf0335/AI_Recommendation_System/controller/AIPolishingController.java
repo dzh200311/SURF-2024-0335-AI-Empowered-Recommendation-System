@@ -68,6 +68,8 @@ public class AIPolishingController {
                         .executeStream()
                         .forEachRemaining(chunk -> {
                             try {
+                                String result = chunk.getResult();
+                                System.out.print("Received chunk: " + result); // 输出到控制台
                                 emitter.send(SseEmitter.event().data(chunk.getResult()));
                             } catch (IOException e) {
                                 e.printStackTrace();
