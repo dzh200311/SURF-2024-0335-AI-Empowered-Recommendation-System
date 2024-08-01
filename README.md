@@ -8,6 +8,16 @@
 # 文心一言api使用
 https://github.com/baidubce/bce-qianfan-sdk/tree/main/java
 
+# 共享文档api
+目前使用的是开源的etherpad https://github.com/ether/etherpad-lite
+安装说明 https://github.com/ether/etherpad-lite#installation
+## 在Windows测试：
+- **安装npm和node.js**
+- 克隆该库放到项目下
+- cmd 运行 `bin\installOnWindows.bat`
+- 安装依赖成功后 run start.bat and open http://localhost:9001 in your browser.
+
+
 ## 以下git的使用只是个人经验，建议网上找个视频也看看
 
 ## Git 常用使用指令（如果遇到网络问题无法push成功请百度解决）
