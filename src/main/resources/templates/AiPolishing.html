@@ -301,6 +301,10 @@
                                     <label class="block mb-2 font-semibold">通讯地址</label>
                                     <input type="text" name="address" class="w-full p-2 border rounded">
                                 </div>
+                                <div class="mb-4">
+                                    <label class="block mb-2 font-semibold">申请专业</label>
+                                    <input type="text" name="major" class="w-full p-2 border rounded">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -413,9 +417,31 @@
             event.preventDefault();
             // 按钮被按下后的提示
             alert('提交按钮已按下');
+            // 按钮被按下后的提示
+            alert('提交按钮已按下');
 
-            var formData = $(this).serialize();
-            $.post('/generate_letter', formData, function(response) {
+            // 获取第一个表单的数据
+            var formData1 = $(this).serializeArray();
+
+            // 获取第二个表单的数据
+            var formData2 = $('#simpleUnderstandingForm').serializeArray();
+
+            // 获取第三个表单的数据
+            var formData3 = $('#detailedUnderstandingForm').serializeArray();
+
+            // 将所有表单数据合并到一个对象
+            var mergedData = {};
+            formData1.forEach(function(item) {
+                mergedData[item.name] = item.value;
+            });
+            formData2.forEach(function(item) {
+                mergedData[item.name] = item.value;
+            });
+            formData3.forEach(function(item) {
+                mergedData[item.name] = item.value;
+            });
+
+            $.post('/generate_letter', mergedData, function(response) {
                 // 提交成功后的提示
                 alert('提交成功，正在加载内容...');
 

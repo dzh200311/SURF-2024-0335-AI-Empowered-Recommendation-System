@@ -2,6 +2,7 @@ package com.surf0335.AI_Recommendation_System.controller;
 
 import com.baidubce.qianfan.Qianfan;
 import com.baidubce.qianfan.core.auth.Auth;
+import com.baidubce.qianfan.model.chat.ChatResponse;
 import com.baidubce.qianfan.model.completion.CompletionResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -46,39 +47,6 @@ public class AIPolishingController {
         return "AiPolishing";
     }
 
-    /*public String getAiPrompt(@RequestParam("message") String userMessage, Model model) {
-        Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH, "YUgx4nhKHxcjqPeSOLgJZ7Mc", "8PShKKkAlfsGdwniI5oGFZSw5aD1PK0v");
-        System.out.println("receive message " + userMessage);
-        // 使用传递的用户消息调用 AI 服务
-        ChatResponse response = qianfan.chatCompletion()
-                .model("ERNIE-4.0-8K") // 使用model指定预置模型
-                .addMessage("user", userMessage) // 添加用户消息
-                .temperature(0.7) // 自定义超参数
-                .execute(); // 发起请求
-
-        // 获取响应结果
-        String result = response.getResult();
-        System.out.println("receive result: " + result);
-        // 将响应结果添加到模型中，以便前端渲染
-        model.addAttribute("aiResponse", result);
-
-        // 返回视图名称
-        return "AiPolishing"; // 这里的视图名称应对应你的 Thymeleaf 模板名（不带 .html 后缀）
-    }
-*/
-    /*@GetMapping("/ai_prompt")
-    @ResponseBody
-    public String getAiPrompt(@RequestParam String message, Model m){
-        System.out.println(message);
-        Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH, "YUgx4nhKHxcjqPeSOLgJZ7Mc", "8PShKKkAlfsGdwniI5oGFZSw5aD1PK0v");
-        ChatResponse response = qianfan.chatCompletion()
-                .model("ERNIE-4.0-8K")
-                .addMessage("user", message)
-                .temperature(0.7)
-                .execute();
-        System.out.println("receive result: " + response.getResult());
-        return response.getResult();
-    }*/
     @GetMapping("/ai_prompt")
     public SseEmitter getAiPrompt(@RequestParam String message) {
         SseEmitter emitter = new SseEmitter();
@@ -138,27 +106,34 @@ public class AIPolishingController {
         String refereeDetails = formData.get("refereeDetails");
         String languageLevel = formData.get("languageLevel");
         String otherRequirements = formData.get("otherRequirements");
+        String major = formData.get("major");
         // 组合成prompt
         String prompt = generatePrompt(refereeName, gender, position, phone, email, organization, address,
-                acquaintanceTime, acquaintanceEvent, abilities, examples, refereeDetails, languageLevel, otherRequirements);
+                acquaintanceTime, acquaintanceEvent, abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
         // 调用百度AI API生成推荐信内容
         Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH, baiduAccessKey, baiduApiSecret);
-        CompletionResponse response = qianfan.completion()
-                .model("CodeLlama-7b-Instruct")
-                .prompt(prompt)
+        ChatResponse response = qianfan.chatCompletion()
+                .model("ERNIE-4.0-8K")
+                .addMessage("user", prompt)
+                .temperature(0.7)
                 .execute();
-        System.out.println(response.getResult());
-        return response.getResult();
+        String result = refereeName + "\n" + position + "\n" + phone + "\n" + email + "\n" + organization + "\n" + address + "\n" + response.getResult();
+        System.out.println(result);
+        return result;
     }
 
     private String generatePrompt(String refereeName, String gender, String position, String phone, String email,
                                   String organization, String address, String acquaintanceTime, String acquaintanceEvent,
-                                  String abilities, String examples, String refereeDetails, String languageLevel, String otherRequirements) {
-        return String.format("请根据以下信息生成一封英文推荐信:\n推荐人姓名: %s\n性别: %s\n职务: %s\n电话: %s\n邮箱: %s\n工作单位: %s\n通讯地址: %s\n" +
-                        "与推荐人认识的时间: %s\n认识的事件: %s\n推荐人主要推荐的能力: %s\n推荐人推荐的能力实例: %s\n推荐人情况: %s\n" +
-                        "推荐信语言程度: %s\n其他补充要求: %s",
-                refereeName, gender, position, phone, email, organization, address, acquaintanceTime, acquaintanceEvent,
-                abilities, examples, refereeDetails, languageLevel, otherRequirements);
+                                  String abilities, String examples, String refereeDetails, String languageLevel, String otherRequirements, String major) {
+        String result = String.format("请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，" +
+                        "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\n认识的事件: %s\n" +
+                        "第二和第三段用110字描述：推荐人主要推荐的能力: %s\n推荐人推荐的能力事例: %s\n。注意，这一段描述要基于推荐人情况: %s\n" +
+                        "然后第四段总结对同学各项能力的肯定，并且期望考虑" +
+                        "注意，推荐信语言风格是: %s\n，其他补充要求: %s\n 学生所申请的专业是：%s\n ",
+                acquaintanceTime, acquaintanceEvent,
+                abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
+        System.out.println(result);
+        return result;
     }
     private String generateRandomPadId() {
         // 生成唯一的 padID
