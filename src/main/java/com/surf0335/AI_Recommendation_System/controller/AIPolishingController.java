@@ -40,6 +40,8 @@ public class AIPolishingController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private String tmpLetterContent = null;
+
 
     private final ExecutorService executor = Executors.newCachedThreadPool();
     @GetMapping("/ai_polish")
@@ -55,7 +57,13 @@ public class AIPolishingController {
             try {
                 qianfan.chatCompletion()
                         .model("ERNIE-4.0-8K")
-                        .addMessage("user", message)
+                        .addMessage("user", "请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，\" +\n" +
+                                "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\\n认识的事件: %s\\n\" +\n" +
+                                "第二和第三段用110字描述：推荐人主要推荐的能力: %s\\n推荐人推荐的能力事例: %s\\n。注意，这一段描述要基于推荐人情况: %s\\n\" +\n" +
+                                "然后第四段总结对同学各项能力的肯定，并且期望考虑\" +\n" +
+                                "注意，推荐信语言风格是: %s\\n，其他补充要求: %s\\n 学生所申请的专业是：%s\\n ")
+                        .addMessage("assistant",tmpLetterContent)
+                        .addMessage("user",message)
                         .executeStream()
                         .forEachRemaining(chunk -> {
                             try {
@@ -82,6 +90,7 @@ public class AIPolishingController {
         System.out.println("收到请求： " + formData);
         // 2. 调用百度 AI API 获取推荐信内容
         String content = generateContentWithBaiduAi(formData);
+        tmpLetterContent = content;
 
         // 3. 将内容插入到 Etherpad 文档
         String padId = createEtherpadDocument(content);
