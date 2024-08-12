@@ -57,7 +57,42 @@
 			<artifactId>qianfan</artifactId>
 			<version>0.0.9</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-core</artifactId>
+			<version>8.0.1</version>
+		</dependency>
+
+		<!-- iText Kernel (Core PDF library) -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.2.0</version>
+		</dependency>
+
+		<!-- iText Layout (High-level layout components) -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>layout</artifactId>
+			<version>7.2.0</version>
+		</dependency>
+
+
+		<!-- Jackson JSON 解析库 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>

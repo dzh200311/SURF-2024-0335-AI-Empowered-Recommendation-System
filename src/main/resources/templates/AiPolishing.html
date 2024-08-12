@@ -232,7 +232,10 @@
         <div class="flex flex-1">
             <!-- 右侧：推荐信编辑器模块 -->
             <div class="flex-1 p-4 border-r">
-                <h2 class="text-2xl font-semibold mb-4">Edit Your Letter with AI!</h2>
+                <div class="flex items-center justify-between mb-4"> <!-- 新增容器用于布局 -->
+                    <h2 class="text-2xl font-semibold">Edit Your Letter with AI!</h2>
+                    <button id="saveBtn" class="bg-green-500 text-white py-2 px-4 rounded">保存</button> <!-- 保存按钮 -->
+                </div>
                 <iframe id="etherpad" src="http://localhost:9001" width="100%" height="90%"></iframe>
                 <button id="generateAiBtn" class="mt-4 w-full bg-green-500 text-white py-2 rounded">由AI生成</button>
             </div>
@@ -415,11 +418,6 @@
         // 表单提交事件处理
         $('#newLetterForm').submit(function(event) {
             event.preventDefault();
-            // 按钮被按下后的提示
-            alert('提交按钮已按下');
-            // 按钮被按下后的提示
-            alert('提交按钮已按下');
-
             // 获取第一个表单的数据
             var formData1 = $(this).serializeArray();
 
@@ -446,6 +444,9 @@
                 alert('提交成功，正在加载内容...');
 
                 document.getElementById('etherpad').src = `http://localhost:9001/p/${response.padId}`;
+                // 保存表单数据和 padId 到 sessionStorage
+                sessionStorage.setItem('formData', JSON.stringify(formData1));
+                sessionStorage.setItem('padId', response.padId);
                 $('#infoModal').addClass('hidden');
                 $('#etherpad').removeClass('hidden');
             }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -495,6 +496,68 @@
     });
 
 
+</script>
+
+<script>
+    document.getElementById('saveBtn').addEventListener('click', function() {
+        // TODO 这个地方要是是用户自己新建内容就读不到id，如果直接在前端读会有跨域问题，需要后续实现反向代理
+        // 从 sessionStorage 获取存储的数据
+        var formData = JSON.parse(sessionStorage.getItem('formData'));
+
+        var padId = sessionStorage.getItem('padId');
+
+        if (padId) {
+            // 添加 padId 到表单数据中
+            formData.padId = padId;
+
+            // 转换 formData 为 URL 编码的字符串
+            var urlEncodedData = $.param(formData) + "&padId=" + padId;
+
+            // 使用 POST 请求将数据发送到后端保存
+            $.ajax({
+                url: '/export/pdf',
+                method: 'POST',
+                data: urlEncodedData,
+                processData: false, // 不处理数据
+                contentType: 'application/x-www-form-urlencoded', // 设置 Content-Type
+                xhrFields: {
+                    responseType: 'blob' // 指定响应类型为 Blob
+                },
+                success: function(response, status, xhr) {
+                    // 从响应头中获取文件名
+                    var disposition = xhr.getResponseHeader('Content-Disposition');
+                    var filename = 'document.pdf'; // 默认文件名
+                    if (disposition && disposition.indexOf('filename=') !== -1) {
+                        filename = disposition.split('filename=')[1].trim().replace(/"/g, '');
+                    }
+
+                    // 创建一个 Blob 对象
+                    var blob = new Blob([response], { type: 'application/pdf' });
+
+                    // 创建一个下载链接
+                    var downloadUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(downloadUrl);
+
+                    // 提示保存成功
+                    alert('PDF 文件已保存并下载！');
+                    console.log('Extracted filename:', filename);
+                    console.log('Response content:', response);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // 提示保存失败
+                    alert('保存失败，请重试');
+                    console.error("Error: " + textStatus + ", " + errorThrown);
+                }
+            });
+        } else {
+            alert('未找到保存的数据');
+        }
+    });
 </script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.baidubce.qianfan.core.auth.Auth;
 import com.baidubce.qianfan.model.chat.ChatResponse;
 import com.baidubce.qianfan.model.completion.CompletionResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,6 +25,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+// TODO: 加更多填表的内容 数字签名 模板导出（LaTeX/word）
+
 @Controller
 public class AIPolishingController {
     //@Autowired
@@ -31,6 +34,9 @@ public class AIPolishingController {
 
     @Value("${etherpad.api.url}")
     private String etherpadApiUrl;
+
+    @Value("${etherpad.api.key}")
+    private String etherpadApiKey;
 
     @Value("${baidu.ai.api.access}")
     private String baiduAccessKey;
@@ -41,6 +47,12 @@ public class AIPolishingController {
     private final RestTemplate restTemplate = new RestTemplate();
 
     private String tmpLetterContent = null;
+
+    private final String prompt = "请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，\" +\n" +
+            "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\\n认识的事件: %s\\n\" +\n" +
+            "第二和第三段用110字描述：推荐人主要推荐的能力: %s\\n推荐人推荐的能力事例: %s\\n。注意，这一段描述要基于推荐人情况: %s\\n\" +\n" +
+            "然后第四段总结对同学各项能力的肯定，并且期望考虑\" +\n" +
+            "注意，推荐信语言风格是: %s\\n，其他补充要求: %s\\n 学生所申请的专业是：%s\\n ";
 
 
     private final ExecutorService executor = Executors.newCachedThreadPool();
@@ -57,11 +69,7 @@ public class AIPolishingController {
             try {
                 qianfan.chatCompletion()
                         .model("ERNIE-4.0-8K")
-                        .addMessage("user", "请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，\" +\n" +
-                                "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\\n认识的事件: %s\\n\" +\n" +
-                                "第二和第三段用110字描述：推荐人主要推荐的能力: %s\\n推荐人推荐的能力事例: %s\\n。注意，这一段描述要基于推荐人情况: %s\\n\" +\n" +
-                                "然后第四段总结对同学各项能力的肯定，并且期望考虑\" +\n" +
-                                "注意，推荐信语言风格是: %s\\n，其他补充要求: %s\\n 学生所申请的专业是：%s\\n ")
+                        .addMessage("user", prompt)
                         .addMessage("assistant",tmpLetterContent)
                         .addMessage("user",message)
                         .executeStream()
@@ -99,15 +107,9 @@ public class AIPolishingController {
         return Map.of("padId", padId);
     }
 
+
+
     private String generateContentWithBaiduAi(Map<String, String> formData) {
-        // 1. 获取表单数据
-        String refereeName = formData.get("refereeName");
-        String gender = formData.get("gender");
-        String position = formData.get("position");
-        String phone = formData.get("phone");
-        String email = formData.get("email");
-        String organization = formData.get("organization");
-        String address = formData.get("address");
         String acquaintanceTime = formData.get("acquaintanceTime");
         String acquaintanceEvent = formData.get("acquaintanceEvent");
         String abilities = formData.get("abilities");
@@ -117,7 +119,7 @@ public class AIPolishingController {
         String otherRequirements = formData.get("otherRequirements");
         String major = formData.get("major");
         // 组合成prompt
-        String prompt = generatePrompt(refereeName, gender, position, phone, email, organization, address,
+        String prompt = generatePrompt(
                 acquaintanceTime, acquaintanceEvent, abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
         // 调用百度AI API生成推荐信内容
         Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH, baiduAccessKey, baiduApiSecret);
@@ -126,19 +128,14 @@ public class AIPolishingController {
                 .addMessage("user", prompt)
                 .temperature(0.7)
                 .execute();
-        String result = refereeName + "\n" + position + "\n" + phone + "\n" + email + "\n" + organization + "\n" + address + "\n" + response.getResult();
+        String result = response.getResult();
         System.out.println(result);
         return result;
     }
 
-    private String generatePrompt(String refereeName, String gender, String position, String phone, String email,
-                                  String organization, String address, String acquaintanceTime, String acquaintanceEvent,
+    private String generatePrompt(String acquaintanceTime, String acquaintanceEvent,
                                   String abilities, String examples, String refereeDetails, String languageLevel, String otherRequirements, String major) {
-        String result = String.format("请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，" +
-                        "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\n认识的事件: %s\n" +
-                        "第二和第三段用110字描述：推荐人主要推荐的能力: %s\n推荐人推荐的能力事例: %s\n。注意，这一段描述要基于推荐人情况: %s\n" +
-                        "然后第四段总结对同学各项能力的肯定，并且期望考虑" +
-                        "注意，推荐信语言风格是: %s\n，其他补充要求: %s\n 学生所申请的专业是：%s\n ",
+        String result = String.format(prompt,
                 acquaintanceTime, acquaintanceEvent,
                 abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
         System.out.println(result);
@@ -152,7 +149,7 @@ public class AIPolishingController {
         System.out.println("createEtherpadDocument");
         String padID = generateRandomPadId();
         String etherpadCreateApiUrl = etherpadApiUrl + "/1/createPad";
-        String createPadRequestUrl = etherpadCreateApiUrl + "?padID=" + padID + "&apikey=123456";
+        String createPadRequestUrl = etherpadCreateApiUrl + "?padID=" + padID + "&apikey=" + etherpadApiKey;;
         String authorId = "1";
 
         content = "padID: " + padID + "\n\n" + content;
