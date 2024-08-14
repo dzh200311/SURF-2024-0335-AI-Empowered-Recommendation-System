@@ -5,6 +5,7 @@
     <title>AI Polishing</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* 固定顶部栏的样式 */
         .fixed-header {
@@ -253,120 +254,184 @@
     </div>
 </div>
 
-<!-- 模态框 -->
+<!-- Modal -->
 <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full" style="margin: 20px; max-height: 90vh; overflow-y: auto;">
-            <!-- 页内容 -->
-            <div class="flex flex-col h-full">
-                <!-- 页导航 -->
-                <div class="flex bg-gray-100 px-4 py-2 border-b border-gray-300">
-                    <button type="button" class="flex-1 px-4 py-2 text-white bg-purple-500 rounded-lg hover:bg-blue-600" id="showPage1">基本信息</button>
-                    <button type="button" class="flex-1 px-4 py-2 text-white bg-purple-500 rounded-lg hover:bg-blue-600 mx-2" id="showPage2">简单了解</button>
-                    <button type="button" class="flex-1 px-4 py-2 text-white bg-purple-500 rounded-lg hover:bg-blue-600" id="showPage3">具体了解</button>
+        <!-- Background overlay -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"></span>
+        <!-- Modal Content -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full" style="margin: 20px; max-height: 90vh; overflow-y: auto;">
+            <!-- Modal Header with Navigation -->
+            <div class="bg-gray-100 px-4 py-3 border-b border-gray-300 text-lg leading-6 font-bold">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-gray-900">Recommendation Form</h3>
+                    <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none" onclick="closeModal()">×</button>
                 </div>
-
-                <!-- 页内容 -->
-                <div class="flex-grow p-6">
-                    <div id="page1" class="page-content">
-                        <h3 class="text-lg leading-6 font-bold text-gray-900">基本信息</h3>
-                        <form id="newLetterForm">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">推荐人姓名</label>
-                                    <input type="text" name="refereeName" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">性别</label>
-                                    <input type="text" name="gender" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">职务</label>
-                                    <input type="text" name="position" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">电话</label>
-                                    <input type="text" name="phone" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">邮箱</label>
-                                    <input type="email" name="email" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">工作单位</label>
-                                    <input type="text" name="organization" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">通讯地址</label>
-                                    <input type="text" name="address" class="w-full p-2 border rounded">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-semibold">申请专业</label>
-                                    <input type="text" name="major" class="w-full p-2 border rounded">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="page2" class="page-content hidden">
-                        <h3 class="text-lg leading-6 font-bold text-gray-900">简单了解</h3>
-                        <form id="simpleUnderstandingForm">
-                            <div class="mt-4">
-                                <label class="block mb-2 font-semibold">与推荐人认识的时间？</label>
-                                <input type="text" name="acquaintanceTime" class="w-full p-2 border rounded mb-4">
-                                <label class="block mb-2 font-semibold">您与推荐人认识的事件</label>
-                                <input type="text" name="acquaintanceEvent" class="w-full p-2 border rounded mb-4">
-                                <label class="block mb-2 font-semibold">以最简化的语言描述一下推荐人主要推荐您哪几个方面的能力？</label>
-                                <textarea name="abilities" rows="4" class="w-full p-2 border rounded mb-4"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="page3" class="page-content hidden">
-                        <h3 class="text-lg leading-6 font-bold text-gray-900">具体了解</h3>
-                        <form id="detailedUnderstandingForm">
-                            <div class="mt-4">
-                                <label class="block mb-2 font-semibold">请您以实例来支撑推荐人推荐您的这几项能力。例如参加过他的什么项目等等。具体阐述。</label>
-                                <textarea name="examples" rows="4" class="w-full p-2 border rounded mb-4"></textarea>
-                                <label class="block mb-2 font-semibold">请阐述推荐人的一些情况以作为推荐信写作的参考素材</label>
-                                <textarea name="refereeDetails" rows="4" class="w-full p-2 border rounded mb-4"></textarea>
-                                <label class="block mb-2 font-semibold">请选择推荐信的语言程度：</label>
-                                <div class="flex items-center mb-2">
-                                    <input type="radio" name="languageLevel" value="mature" class="mr-2">
-                                    <span>成熟稳定，语言平实客观。</span>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <input type="radio" name="languageLevel" value="exaggerated" class="mr-2">
-                                    <span>语言显夸张，对你了解很深，能体现出积极推荐你的心情。</span>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <input type="radio" name="languageLevel" value="neutral" class="mr-2">
-                                    <span>推荐人对你没有太多的了解，但是很愿意推荐你。语言中性。</span>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <input type="radio" name="languageLevel" value="any" class="mr-2">
-                                    <span>语言无所谓,根据信息写就好。</span>
-                                </div>
-                                <div class="flex items-center mb-4">
-                                    <input type="radio" name="languageLevel" value="other" class="mr-2">
-                                    <span>其他补充要求：</span>
-                                    <input type="text" name="otherRequirements" class="w-full p-2 border rounded">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="flex justify-center space-x-4 mt-2">
+                    <button class="px-6 py-2 text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none" id="showPage1">Basic Information</button>
+                    <button class="px-6 py-2 text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none" id="showPage2">Brief Overview</button>
+                    <button class="px-6 py-2 text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none" id="showPage3">Detailed Overview</button>
                 </div>
             </div>
+            <!-- Modal Body -->
+            <div class="flex-grow p-6">
+                <!-- Basic Information -->
+                <div id="page1" class="page-content">
+                    <form id = "newLetterForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1">Recommendee Name</label>
+                                <input type="text" name="recommendeeName" placeholder="Enter Name" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Recommender Name</label>
+                                <input type="text" name="recommenderName" placeholder="Enter Name" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Gender</label>
+                                <select name="gender" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1">Position</label>
+                                <input type="text" name="position" placeholder="Enter Position" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Phone</label>
+                                <input type="text" name="phone" placeholder="Enter Phone Number" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Email</label>
+                                <input type="email" name="email" placeholder="Enter Email Address" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Organization</label>
+                                <input type="text" name="organization" placeholder="Enter Organization" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Address</label>
+                                <input type="text" name="address" placeholder="Enter Address" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Major</label>
+                                <input type="text" name="major" placeholder="Enter Major" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Brief Overview -->
+                <div id="page2" class="page-content hidden">
+                    <form id = "newLetterForm2">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block mb-1">Describe your (the recommendee's) personality</label>
+                                <textarea name="personality" rows="3" placeholder="Describe Personality" class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                            </div>
+                            <div>
+                                <label class="block mb-1">How long have you known the recommender?</label>
+                                <input type="text" name="acquaintanceTime" placeholder="Enter Duration" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">What event led to your acquaintance? (Describe the course or the research project you join)</label>
+                                <input type="text" name="acquaintanceEvent" placeholder="Describe Event" class="w-full p-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block mb-1">Which abilities is the recommender primarily recommending you for?</label>
+                                <textarea name="abilities" rows="3" placeholder="Describe Abilities" class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Detailed Overview -->
+                <div id="page3" class="page-content hidden">
+                    <form id = "newLetterForm3">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block mb-1">Please provide examples to support the abilities the recommender is recommending you for, such as projects you've worked on together.</label>
+                                <textarea name="examples" rows="4" placeholder="Provide Details" class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                            </div>
+                            <div>
+                                <label class="block mb-1">Please provide some details about the recommender that can be used as reference material for the recommendation letter.</label>
+                                <textarea name="refereeDetails" rows="4" placeholder="Describe Recommender Details" class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                            </div>
+                            <div>
+                                <label class="block mb-1">Please select the tone of the recommendation letter:</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="mature" aria-describedby="mature-description" name="languageLevel" type="checkbox" value="Mature and stable" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                        </div>
+                                        <div class="ml-3 leading-6">
+                                            <label for="mature" class="font-medium text-gray-900">Mature and stable</label>
+                                            <span id="mature-description" class="text-gray-500"><span class="sr-only">Mature and stable, </span>with a plain and objective tone.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="exaggerated" aria-describedby="exaggerated-description" name="languageLevel" type="checkbox" value="Exaggerated tone" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                        </div>
+                                        <div class="ml-3 leading-6">
+                                            <label for="exaggerated" class="font-medium text-gray-900">Exaggerated tone</label>
+                                            <span id="exaggerated-description" class="text-gray-500"><span class="sr-only">Exaggerated tone, </span>showing deep knowledge and strong willingness to recommend.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="neutral" aria-describedby="neutral-description" name="languageLevel" type="checkbox" value="Neutral tone" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                        </div>
+                                        <div class="ml-3 leading-6">
+                                            <label for="neutral" class="font-medium text-gray-900">Neutral tone</label>
+                                            <span id="neutral-description" class="text-gray-500"><span class="sr-only">Neutral tone, </span>recommender doesn’t know you well but is willing to recommend.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="any" aria-describedby="any-description" name="languageLevel" type="checkbox" value="Any tone" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                        </div>
+                                        <div class="ml-3 leading-6">
+                                            <label for="any" class="font-medium text-gray-900">Any tone</label>
+                                            <span id="any-description" class="text-gray-500"><span class="sr-only">Any tone </span>is fine; write based on the information provided.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="other" aria-describedby="other-description" name="languageLevel" type="checkbox" value="Other specific requirements" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                        </div>
+                                        <div class="ml-3 leading-6">
+                                            <label for="other" class="font-medium text-gray-900">Other specific requirements</label>
+                                            <input type="text" name="otherRequirements" placeholder="Describe Requirements" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                                            <span id="other-description" class="text-gray-500"><span class="sr-only">Other specific requirements: </span>describe your needs.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal Footer -->
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeModal">取消</button>
-                <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm" id="submitModal">提交</button>
+                <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm" id="submitModal">Submit</button>
+                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeModal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+    function closeModal() {
+        document.getElementById('infoModal').classList.add('hidden');
+    }
     function loadLetter(letterId) {
         // 加载选中的推荐信内容
         fetch(`/letters/${letterId}`)
@@ -422,10 +487,10 @@
             var formData1 = $(this).serializeArray();
 
             // 获取第二个表单的数据
-            var formData2 = $('#simpleUnderstandingForm').serializeArray();
+            var formData2 = $('#newLetterForm2').serializeArray();
 
             // 获取第三个表单的数据
-            var formData3 = $('#detailedUnderstandingForm').serializeArray();
+            var formData3 = $('#newLetterForm3').serializeArray();
 
             // 将所有表单数据合并到一个对象
             var mergedData = {};

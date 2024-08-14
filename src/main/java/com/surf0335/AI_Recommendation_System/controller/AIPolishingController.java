@@ -48,11 +48,12 @@ public class AIPolishingController {
 
     private String tmpLetterContent = null;
 
-    private final String prompt = "请根据以下要求和信息生成一封海外留学研究生的英文推荐信:首先，\" +\n" +
-            "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s\\n认识的事件: %s\\n\" +\n" +
-            "第二和第三段用110字描述：推荐人主要推荐的能力: %s\\n推荐人推荐的能力事例: %s\\n。注意，这一段描述要基于推荐人情况: %s\\n\" +\n" +
-            "然后第四段总结对同学各项能力的肯定，并且期望考虑\" +\n" +
-            "注意，推荐信语言风格是: %s\\n，其他补充要求: %s\\n 学生所申请的专业是：%s\\n ";
+    private final String prompt = "请根据以下要求和信息给 %s ( %s ) 生成一封海外留学研究生的英文推荐信:首先，\n" +
+            "推荐信正式开始后，第一段用70-80字描述：与推荐人认识的时间: %s, 在什么情况下认识的: %s \n" +
+            "第二和第三段用110字描述：推荐人的性格：%s ,在这种性格下再推荐主要推荐的能力: %s ,这些能力通过以下例子进行佐证: %s 。注意，这一段描述要基于推荐人老师的背景: %s \n" +
+            "然后第四段总结对同学各项能力的肯定，并且期望让学校考虑录取" +
+            "注意，推荐信语言风格是: %s \n 学生所申请的专业是：%s \n " +
+            "要注意，请只生成推荐信的主体，不要生成开始的问候和后面的落款，只生成上面提及的几段，也不要生成一些其他的废话";
 
 
     private final ExecutorService executor = Executors.newCachedThreadPool();
@@ -110,17 +111,19 @@ public class AIPolishingController {
 
 
     private String generateContentWithBaiduAi(Map<String, String> formData) {
+        String recommendeeName = formData.get("recommendeeName");
+        String gender = formData.get("gender");
+        String personality =  formData.get("personality");
         String acquaintanceTime = formData.get("acquaintanceTime");
         String acquaintanceEvent = formData.get("acquaintanceEvent");
         String abilities = formData.get("abilities");
         String examples = formData.get("examples");
         String refereeDetails = formData.get("refereeDetails");
         String languageLevel = formData.get("languageLevel");
-        String otherRequirements = formData.get("otherRequirements");
         String major = formData.get("major");
         // 组合成prompt
         String prompt = generatePrompt(
-                acquaintanceTime, acquaintanceEvent, abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
+        recommendeeName,gender,personality,acquaintanceTime, acquaintanceEvent, abilities, examples, refereeDetails, languageLevel, major);
         // 调用百度AI API生成推荐信内容
         Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH, baiduAccessKey, baiduApiSecret);
         ChatResponse response = qianfan.chatCompletion()
@@ -133,11 +136,11 @@ public class AIPolishingController {
         return result;
     }
 
-    private String generatePrompt(String acquaintanceTime, String acquaintanceEvent,
-                                  String abilities, String examples, String refereeDetails, String languageLevel, String otherRequirements, String major) {
-        String result = String.format(prompt,
+    private String generatePrompt(String recommendeeName,String gender,String personality, String acquaintanceTime, String acquaintanceEvent,
+                                  String abilities, String examples, String refereeDetails, String languageLevel,  String major) {
+        String result = String.format(prompt,recommendeeName,gender,personality,
                 acquaintanceTime, acquaintanceEvent,
-                abilities, examples, refereeDetails, languageLevel, otherRequirements, major);
+                abilities, examples, refereeDetails, languageLevel, major);
         System.out.println(result);
         return result;
     }

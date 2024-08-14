@@ -28,6 +28,11 @@ import com.itextpdf.kernel.colors.DeviceRgb;
 
 
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -52,7 +57,7 @@ public class ExportController {
     public ResponseEntity<byte[]> exportToPdf(@RequestParam Map<String, String> params) throws Exception {
             // 从请求参数中获取数据
             String padID = params.get("padId");
-            String refereeName = params.get("refereeName");
+            String refereeName = params.get("recommenderName");
             String position = params.get("position");
             String phone = params.get("phone");
             String email = params.get("email");
@@ -113,6 +118,30 @@ public class ExportController {
         Paragraph title = new Paragraph().add(new Text("Recommendation Letter\n").setFontSize(12).setFont(font));
         title.setTextAlignment(TextAlignment.CENTER);
 
+        // 获取今天的日期
+        LocalDate today = LocalDate.now();
+
+        // 获取月份的缩写形式（如 "Sep"）
+        String month = today.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+
+        // 获取年份
+        int year = today.getYear();
+
+        // 获取日期和序数后缀（如 "17th"）
+        int dayOfMonth = today.getDayOfMonth();
+        String dayWithSuffix = getDayWithSuffix(dayOfMonth);
+
+        // 将日期格式化为 "Sep 17th, 2024"
+        String formattedDate = month + " " + dayWithSuffix + ", " + year;
+
+        // 创建 Paragraph 并添加日期
+        Paragraph dateParagraph = new Paragraph().add(new Text(formattedDate))
+                .add(new Text("\n")).setFontSize(11).setFont(font);
+        dateParagraph.setTextAlignment(TextAlignment.LEFT);
+
+        Paragraph dearParagraph = new Paragraph().add(new Text("Dear Admission Office, \n")).setFontSize(11).setFont(font);
+        dearParagraph.setTextAlignment(TextAlignment.LEFT);
+
         Paragraph paragraph = new Paragraph()
                 .add(new Text(padText).setFontSize(11).setFont(font));
 
@@ -127,6 +156,8 @@ public class ExportController {
         // 添加到文档
         document.add(image);
         document.add(formParagraph);
+        document.add(dateParagraph);
+        document.add(dearParagraph);
         document.add(title);
         document.add(paragraph);
         document.add(lastParagraph);
@@ -179,6 +210,18 @@ public class ExportController {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response);
         return jsonNode.get("data").get("text").asText();
+    }
+
+    private static String getDayWithSuffix(int day) {
+        if (day >= 11 && day <= 13) {
+            return day + "th";
+        }
+        switch (day % 10) {
+            case 1:  return day + "st";
+            case 2:  return day + "nd";
+            case 3:  return day + "rd";
+            default: return day + "th";
+        }
     }
 
 
