@@ -73,5 +73,42 @@
     });
 </script>
 
+<script>
+    // 监听来自父页面的消息
+    window.addEventListener('message', function(event) {
+        // 确保接收到的数据是正确的
+        var padId = event.data.padId;
+        if (padId) {
+            // alert(padId);
+            // 发送请求到后端
+            fetch('/createPad', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'padId': padId
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.padId) {
+                        // 保存 padId 到 sessionStorage
+                        sessionStorage.setItem('padId', data.padId);
+                        // 自动打开新创建的 Pad
+                        window.location.href = data.url;
+                    } else {
+                        document.getElementById('result').innerHTML = 'Error creating pad: ' + data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerHTML = 'Error creating pad: ' + error.message;
+                });
+        }
+    });
+</script>
+
+
 </body>
 </html>

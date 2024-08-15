@@ -100,6 +100,7 @@ public class AIPolishingController {
         System.out.println("收到请求： " + formData);
         // 2. 调用百度 AI API 获取推荐信内容
         String content = generateContentWithBaiduAi(formData);
+        // String content = "generateContentWithBaiduAi(formData)";
         tmpLetterContent = content;
 
         // 3. 将内容插入到 Etherpad 文档
