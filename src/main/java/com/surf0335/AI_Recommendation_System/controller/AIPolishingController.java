@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -102,11 +103,29 @@ public class AIPolishingController {
         tmpLetterContent = content;
 
         // 3. 将内容插入到 Etherpad 文档
-        String padId = createEtherpadDocument(content);
+        String padId = generateRandomPadId();
+        createEtherpadDocument(padId,content);
 
         // 4. 返回 Etherpad 文档 ID
         return Map.of("padId", padId);
     }
+
+    @PostMapping("/createPad")
+    public ResponseEntity<Map<String, String>> createPad(@RequestParam(value = "padId", required = false) String padId,
+                                                         @RequestParam(value = "content", required = false) String content) {
+        if (padId == null || padId.isEmpty()) {
+            padId = generateRandomPadId(); // 生成随机 padId
+        }
+
+        String createdPadId = createEtherpadDocument(padId, content);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("padId", createdPadId);
+        result.put("url", etherpadApiUrl.replace("/api", "/p/") + createdPadId);
+
+        return ResponseEntity.ok(result);
+    }
+
 
 
 
@@ -146,11 +165,10 @@ public class AIPolishingController {
     }
     private String generateRandomPadId() {
         // 生成唯一的 padID
-        return UUID.randomUUID().toString();
+        return "pad_" + System.currentTimeMillis();
     }
-    private String createEtherpadDocument(String content) {
+    private String createEtherpadDocument(String padID , String content) {
         System.out.println("createEtherpadDocument");
-        String padID = generateRandomPadId();
         String etherpadCreateApiUrl = etherpadApiUrl + "/1/createPad";
         String createPadRequestUrl = etherpadCreateApiUrl + "?padID=" + padID + "&apikey=" + etherpadApiKey;;
         String authorId = "1";

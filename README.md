@@ -17,6 +17,12 @@ https://github.com/baidubce/bce-qianfan-sdk/tree/main/java
 - cmd 运行 `bin\installOnWindows.bat`
 - 安装依赖成功后 run start.bat and open http://localhost:9001 in your browser.
 
+### 安装的插件
+![img.png](img.png)
+
+### 跨域问题
+- 依然存在，理论上应该用NGINX做反向代理
+
 
 ## 以下git的使用只是个人经验，建议网上找个视频也看看
 
