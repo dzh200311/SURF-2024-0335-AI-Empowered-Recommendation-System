@@ -117,6 +117,17 @@ public class AIPolishingController {
             padId = generateRandomPadId(); // 生成随机 padId
         }
 
+        boolean padExists = checkIfPadExists(padId); // 检查 padId 是否已经存在
+
+        // 如果 padId 已存在，直接返回现有 pad 的 URL
+        if (padExists) {
+            Map<String, String> result = new HashMap<>();
+            result.put("padId", padId);
+            result.put("url", etherpadApiUrl.replace("/api", "/p/") + padId);
+            return ResponseEntity.ok(result);
+        }
+
+        // 如果 padId 不存在，则创建新的文档
         String createdPadId = createEtherpadDocument(padId, content);
 
         Map<String, String> result = new HashMap<>();
@@ -124,6 +135,19 @@ public class AIPolishingController {
         result.put("url", etherpadApiUrl.replace("/api", "/p/") + createdPadId);
 
         return ResponseEntity.ok(result);
+    }
+
+    private boolean checkIfPadExists(String padId) {
+        // 这里你可以调用 Etherpad 的 API 来检查 padId 是否存在
+        String checkPadUrl = etherpadApiUrl + "/1/getRevisionsCount?apikey=" + etherpadApiKey + "&padID=" + padId;
+        try {
+            ResponseEntity<Map> response = restTemplate.getForEntity(checkPadUrl, Map.class);
+            // 如果响应成功且 code 为 0，则表示 pad 存在
+            return response.getStatusCode().is2xxSuccessful() && ((Integer) response.getBody().get("code")) == 0;
+        } catch (Exception e) {
+            // 捕获异常，表示 pad 不存在
+            return false;
+        }
     }
 
 
