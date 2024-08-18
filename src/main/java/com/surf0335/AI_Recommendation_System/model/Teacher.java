@@ -1,6 +1,9 @@
 package com.surf0335.AI_Recommendation_System.model;
 
 import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Set;
 
 @Entity
@@ -8,56 +11,24 @@ public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "teachername")
     private String teachername;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "age")
     private int age;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "gender")
     private String gender;
-
-    @Column(name = "phone")
     private String phone;
-
-    @Column(name = "requiredgrade")
     private int requiredgrade;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "avatar_url")
     private String avatarUrl;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private Set<Preference> preferences;
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<Module> modules;
 
-    public Teacher() {
-    }
-
-    public Teacher(int id, String teachername, String password, int age, String email, String gender, String phone, int requiredgrade, String description, String avatarUrl) {
-        this.id = id;
-        this.teachername = teachername;
-        this.password = password;
-        this.age = age;
-        this.email = email;
-        this.gender = gender;
-        this.phone = phone;
-        this.requiredgrade = requiredgrade;
-        this.description = description;
-        this.avatarUrl = avatarUrl;
-    }
-
-    // Getters and Setters
+    // Getters 和 Setters 方法
     public int getId() {
         return id;
     }
@@ -138,11 +109,11 @@ public class Teacher {
         this.avatarUrl = avatarUrl;
     }
 
-    public Set<Preference> getPreferences() {
-        return preferences;
+    public Set<Module> getModules() {
+        return modules;
     }
 
-    public void setPreferences(Set<Preference> preferences) {
-        this.preferences = preferences;
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
     }
 }

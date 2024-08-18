@@ -1,273 +1,309 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trainer Directory</title>
-    <style>
-        :root {
-            --Red: hsl(1, 90%, 64%);
-            --Blue: hsl(219, 85%, 26%);
-            --White: hsl(0, 0%, 100%);
-            --Very-light-grayish-blue: hsl(206, 54%, 97%);
-            --Light-grayish-blue-1: hsl(216, 56%, 95%);
-            --Light-grayish-blue-2: hsl(205, 33%, 90%);
-            --Grayish-blue: hsl(219, 14%, 63%);
-            --Dark-grayish-blue: hsl(219, 12%, 42%);
-            --Very-dark-blue: hsl(224, 21%, 14%);
-            --bg: #222529;
-        }
-        * {
-            font-family: "Plus Jakarta Sans", sans-serif;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg);
-        }
-        .container {
-            margin: 2rem;
-            background-color: var(--White);
-            padding: 1.5rem;
-            border-radius: 10px; 
-            
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .btn-custom {
-            display: inline-block;
-            border-radius: 25px;
-            background: var(--Blue);
-            color: var(--White);
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 18px;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .btn-custom:hover {
-            background: var(--Blue);
-        }
-        .btn-custom2 {
-            display: inline-block;
-        border-radius: 10px;
-        background-color:  hsl(240, 60%, 54%);
-        border: none;
-        color: #ffff;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 400;
-        padding: 10px;
-        width: 150px;
-        transition: all 0.5s;
-        cursor: pointer;
-        margin-bottom: 5px;
-        vertical-align: middle;
-        text-decoration: none;
-        }
-        .btn-custom2:hover {
-            background: hsl(240, 60%, 54%);
-        }
-        .table-custom {
-            background-color: var(--Very-light-grayish-blue);
-            margin-bottom: 2rem;
-            border-collapse: collapse;
-        }
-        .table-custom th,
-
-        .table-custom td {
-            padding: 12px 15px;
-            border: 1px solid var(--Light-grayish-blue-1);
-        }
-        .table-custom thead {
-            background-color: var(--Light-grayish-blue-2);
-            color: var(--Very-dark-blue);
-        }
-        .table-custom tbody tr:nth-child(odd) {
-            background-color: var(--Light-grayish-blue-1);
-        }
-        .title {
-            color: var(--Very-dark-blue);
-            font-size: 2rem;
-        }
-        
-        .niceButton5 {
-        display: inline-block;
-        border-radius: 15px;
-        background-color:  hsl(240, 60%, 54%);
-        border: none;
-        color: #ffff;
-        text-align: center;
-        font-size: 20px;
-        font-weight: 400;
-        padding: 18px;
-        width: 120px;
-        transition: all 0.5s;
-        cursor: pointer;
-        /* margin: 5px; */
-        vertical-align: middle;
-        display: flex;
-    align-items: center; 
-    justify-content: center;
-      }
-        
-      .niceButton5 span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-      }
-      .niceButton5 span::before {
-        content: "<";
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -20px;
-        transition: 0.5s;
-      }
-      .niceButton5:hover span {
-        padding-right: 30px;
-      }
-      .niceButton5:hover span::before {
-        opacity: 1;
-        right: 0;
-      }
-      a.no-color-change:link, a.no-color-change:visited {
-        color: var(--Very-dark-blue); 
-     
-    }
-
-    a.no-color-change:hover, a.no-color-change:active {
-        color: var(--Very-dark-blue); 
-    }
-    .text-ellipsis {
-    white-space: nowrap;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    max-width: 300px; 
-}
-.trainer_card {
-          display: flex;
-          align-items: center;
-          border-radius: 0.5rem;
-          padding: 1rem;
-          background-color: var(--Very-light-grayish-blue);
-      }
-      @media only screen and (max-width: 600px) {
-            .table-custom, .table-custom thead, .table-custom tbody, .table-custom th, .table-custom td, .table-custom tr {
-                display: block;
-            }
-
-            .table-custom th,
-            .table-custom td {
-                text-align: left;
-            }
-
-            .table-custom thead {
-                display: none;
-            }
-
-            .table-custom tbody tr {
-                margin-bottom: 10px;
-            }
-
-            .table-custom td {
-                text-align: right;
-                padding-left: 50%;
-                position: relative;
-            }
-
-            .table-custom td:before {
-                content: attr(data-title);
-                position: absolute;
-                top: 0;
-                left: 10px;
-                font-weight: bold;
-                text-align: left;
-            }
-
-            .header {
-                flex-direction: column;
-            }
-
-            .header h1,
-            .header .niceButton5 {
-                margin-bottom: 15px;
-            }
-
-            .header .niceButton5 {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .btn-custom,
-            .niceButton5 {
-                font-size: 0.8em;
-            }
-        }
-
-    </style>
+    <title>Match Preferences</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button class="niceButton5" type="button" style="line-height: 23px; height: 50px;" onclick="window.location.href='/manager_page'"><i class="bi bi-arrow-left"></i><span class="lead" style="font-size: 1.1em"> Back</span></button>
-            <h1 class="title">Trainer Directory</h1>
-        </div>
-        
-        <a th:href="@{/trainers/showFormForAdd}" class="btn-custom2">Add Trainer</a>
-        <div th:if="${trainers.isEmpty()}" class="trainer_card">
-            <div class="description">
-                <p>Currently no trainers.</p>
+    <div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+        <nav class="bg-gray-800 p-4">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="relative flex items-center justify-between h-16">
+                    <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                        <div class="flex-shrink-0">
+                            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                        </div>
+                        <div class="hidden sm:block sm:ml-6">
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Preferences</a>
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hidden field to store studentId -->
+        <input type="hidden" id="studentId" value="1"> <!-- 直接设置studentId为1 -->
+
+        <main>
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div class="lg:flex lg:items-center lg:justify-between">
+                    <div class="min-w-0 flex-1">
+                        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Find your teacher</h2>
+                    </div>
+                </div>
+                <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Your Preferences</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Details about your preferences.</p>
+                    </div>
+                    <div class="border-t border-gray-200">
+                        <dl id="preferences-list">
+                            <!-- 动态生成的偏好列表 -->
+                        </dl>
+                        <div id="no-preferences" class="text-center py-4 hidden">
+                            <p class="text-sm text-gray-500">No preferences added yet. Click "Add" to create your first preference.</p>
+                        </div>
+                    </div>
+                    <div class="px-4 py-5 sm:px-6">
+                        <div class="mt-5 flex lg:ml-4 lg:mt-0">
+                            <span class="hidden sm:block">
+                                <button id="addPreferencesButton" type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+                                    <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />
+                                    </svg>
+                                    Add
+                                </button>
+                            </span>
+                            <span class="ml-3 hidden sm:block">
+                                <button id="publishPreferencesButton" type="button" class="inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500">
+                                    <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M12 2a1 1 0 01.8.4l6 7a1 1 0 01.2.6V17a2 2 0 01-2 2H4a2 2 0 01-2-2v-7.9a1 1 0 01.2-.6l6-7A1 1 0 019 2h3z" />
+                                    </svg>
+                                    Publish
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 sm:flex sm:items-center">
+                    <div class="sm:flex-auto">
+                        <h1 class="text-lg font-semibold leading-6 text-gray-900">Students/Teachers List</h1>
+                        <p class="mt-2 text-sm text-gray-700">A list of all the users that satisfied your preference.</p>
+                    </div>
+                    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                        <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed inset-0 hidden z-50 overflow-y-auto">
+        <div class="relative z-10" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" aria-hidden="true"></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+                    <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
+                        <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                            <button id="closeModal" type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
+                                <span class="sr-only">Close</span>
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+                                <div class="sm:col-span-8 lg:col-span-7">
+                                    <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">Edit your preference</h2>
+
+                                    <section aria-labelledby="options-heading" class="mt-10">
+                                        <h3 id="options-heading" class="sr-only">Product options</h3>
+                                        <form id="preferenceForm">
+                                            <div class="mb-4">
+                                                <label class="block text-gray-700 mb-2">Research Field</label>
+                                                <input type="text" class="block w-full p-2 border border-gray-300 rounded" id="preference-researchField" placeholder="Enter Research Field"/>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-gray-700 mb-2">Weight</label>
+                                                <input type="number" class="block w-full p-2 border border-gray-300 rounded" id="preference-weight" placeholder="Enter Weight"/>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-gray-700 mb-2">Description</label>
+                                                <input type="text" class="block w-full p-2 border border-gray-300 rounded" id="preference-description" placeholder="Enter Description"/>
+                                            </div>
+                                        </form>
+                                        <button type="button" id="savePreferences" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <table class="table table-custom">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Level</th>
-                <th>Time Collection</th>
-                <th>Course</th>
-                <th>Coursename</th>
-                <th>Intro</th>
-                <th>Update</th>
-                <th>View Comment</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="tempTrainer : ${trainers}">
-                    <td>
-                        <a th:href="@{/trainers/showFormForReadonly(trainerId=${tempTrainer.id})}" th:text="${tempTrainer.name}" class="no-color-change"></a>
-                    </td>
-                    <td th:text="${tempTrainer.age}"></td>
-                    <td th:text="${tempTrainer.level}"></td>
-                    <td th:text="${tempTrainer.timeCollection}"></td>
-                    <td th:text="${tempTrainer.course}"></td>
-                    <td th:text="${tempTrainer.coursename}"></td>
-                    <td th:text="${tempTrainer.intro}" class="text-ellipsis"></td>
-                    
-                    <td>
-                            <a th:href="@{/trainers/showFormForUpdate(trainerId=${tempTrainer.id})}"
-                            class="btn btn-info btn-sm btn-custom">
-                             Update </a>
-                     </td>
-                        <td>
-                        <a th:href="@{/trainers/{trainerId}/comments(trainerId=${tempTrainer.id})}" class="btn-custom">Comments</a>
-                    </td>
-                </tr>
-                </tbody>
-                
-        </table>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let studentId = document.getElementById('studentId').value;
+
+            let currentPreferenceId = null;
+            const modal = document.getElementById('editModal');
+            const closeModal = document.getElementById('closeModal');
+            const savePreferences = document.getElementById('savePreferences');
+            const addButton = document.getElementById('addPreferencesButton');
+            const publishButton = document.getElementById('publishPreferencesButton');
+            const preferencesList = document.getElementById('preferences-list');
+            const noPreferencesMessage = document.getElementById('no-preferences');
+
+            const loadPreferences = async () => {
+                try {
+                    const response = await fetch(`/preferences/list?studentId=${studentId}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const data = await response.json();
+                    preferencesList.innerHTML = ''; // 清空现有内容
+                    if (data.length === 0) {
+                        noPreferencesMessage.classList.remove('hidden');
+                    } else {
+                        noPreferencesMessage.classList.add('hidden');
+                        data.forEach(pref => {
+                            const prefElement = document.createElement('div');
+                            prefElement.className = 'bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6';
+                            prefElement.innerHTML = `
+                                <dt class="text-sm font-medium text-gray-500">Preference ${pref.id}</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-between">
+                                    <span id="preference-detail-${pref.id}">${pref.researchField} (Weight: ${pref.weight}) - ${pref.description}</span>
+                                    <div>
+                                        <button type="button" class="editPreference inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" data-id="${pref.id}">
+                                            <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+                                            </svg>
+                                            Edit
+                                        </button>
+                                        <button type="button" class="deletePreference inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500" data-id="${pref.id}">
+                                            <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path d="M6 8a1 1 0 011-1h6a1 1 0 011 1v8a1 1 0 11-2 0V9H8v7a1 1 0 11-2 0V8zm5-6a1 1 0 011 1v1h2a1 1 0 110 2H6a1 1 0 110-2h2V3a1 1 0 011-1z" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </div>
+                                </dd>
+                            `;
+                            preferencesList.appendChild(prefElement); // 每个偏好添加到列表中
+                        });
+                        attachButtonListeners(); // 为新添加的元素添加事件监听器
+                    }
+                } catch (error) {
+                    console.error('Error loading preferences:', error);
+                }
+            };
+
+            const attachButtonListeners = () => {
+                document.querySelectorAll('.editPreference').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        currentPreferenceId = button.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`/preferences/${currentPreferenceId}`);
+                            const pref = await response.json();
+                            document.getElementById('preference-researchField').value = pref.researchField;
+                            document.getElementById('preference-weight').value = pref.weight;
+                            document.getElementById('preference-description').value = pref.description;
+                            modal.classList.remove('hidden');
+                        } catch (error) {
+                            console.error('Error fetching preference:', error);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.deletePreference').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const preferenceId = button.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`/preferences/${preferenceId}`, {
+                                method: 'DELETE',
+                            });
+
+                            if (response.ok) {
+                                await loadPreferences();
+                            } else {
+                                console.error('Failed to delete preference');
+                            }
+                        } catch (error) {
+                            console.error('Error deleting preference:', error);
+                        }
+                    });
+                });
+            };
+
+            const hideModal = () => {
+                modal.classList.add('hidden');
+            };
+
+            closeModal.addEventListener('click', hideModal);
+
+            savePreferences.addEventListener('click', async () => {
+                const updatedResearchField = document.getElementById('preference-researchField').value;
+                const updatedWeight = document.getElementById('preference-weight').value;
+                const updatedDescription = document.getElementById('preference-description').value;
+
+                const newPreference = {
+                    researchField: updatedResearchField,
+                    weight: updatedWeight,
+                    description: updatedDescription,
+                    studentPreferenceList: { id: studentId }
+                };
+
+                try {
+                    let response;
+                    if (currentPreferenceId) {
+                        response = await fetch(`/preferences/${currentPreferenceId}?studentId=${studentId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(newPreference),
+                        });
+                    } else {
+                        response = await fetch(`/preferences/save?studentId=${studentId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(newPreference),
+                        });
+                    }
+
+                    if (response.ok) {
+                        await loadPreferences();
+                        hideModal();
+                    } else {
+                        console.error('Failed to save preference');
+                    }
+                } catch (error) {
+                    console.error('Error saving preference:', error);
+                }
+            });
+
+            addButton.addEventListener('click', () => {
+                currentPreferenceId = null;
+                document.getElementById('preference-researchField').value = '';
+                document.getElementById('preference-weight').value = '';
+                document.getElementById('preference-description').value = '';
+                modal.classList.remove('hidden');
+            });
+
+            publishButton.addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/preferences/publish', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ studentId: studentId }),
+                    });
+
+                    if (response.ok) {
+                        alert('Preferences published successfully!');
+                    } else {
+                        console.error('Failed to publish preferences');
+                    }
+                } catch (error) {
+                    console.error('Error publishing preferences:', error);
+                }
+            });
+
+            loadPreferences();
+        });
+    </script>
 </body>
 </html>

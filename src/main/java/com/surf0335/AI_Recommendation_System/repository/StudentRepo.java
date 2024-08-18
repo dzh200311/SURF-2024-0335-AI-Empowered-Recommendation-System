@@ -21,6 +21,6 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     // 根据年龄查找学生
     List<Student> findByAge(int age);
 
-    // 根据模块查找学生
-    List<Student> findByModule(String module);
+    // 根据模块名称查找学生
+    List<Student> findByModules_Name(String moduleName);
 }

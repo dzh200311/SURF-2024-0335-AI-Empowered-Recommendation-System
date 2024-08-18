@@ -39,9 +39,9 @@ public class GradeController {
         List<Grade> grades = gradeRepository.findByStudentIdAndModuleCode(studentId, moduleCode);
         theModel.addAttribute("grades", grades);
 
-        Optional<Module> module = moduleRepository.findByCode(moduleCode);
-        if (module.isPresent()) {
-            theModel.addAttribute("module", module.get());
+        List<Module> modules = moduleRepository.findByCode(moduleCode);
+        if (!modules.isEmpty()) {
+            theModel.addAttribute("modules", modules);
         } else {
             theModel.addAttribute("moduleNotFound", "未找到指定模块");
         }
@@ -49,31 +49,33 @@ public class GradeController {
         return "grades/list-grades";
     }
 
-    @GetMapping("/compare/{studentId}/module/{moduleCode}/teacher/{teacherId}")
-    public String compareStudentGradeWithTeacherRequirement(@PathVariable int studentId, @PathVariable String moduleCode, @PathVariable int teacherId, Model theModel) {
+    @GetMapping("/compare/{studentId}/module/{moduleCode}")
+    public String compareStudentGradeWithTeacherRequirement(@PathVariable int studentId, @PathVariable String moduleCode, Model theModel) {
+        // 获取学生在指定模块的成绩
         List<Grade> grades = gradeRepository.findByStudentIdAndModuleCode(studentId, moduleCode);
         theModel.addAttribute("grades", grades);
 
-        Optional<Module> module = moduleRepository.findByCode(moduleCode);
-        if (module.isPresent()) {
-            theModel.addAttribute("module", module.get());
+        // 获取模块信息
+        List<Module> modules = moduleRepository.findByCode(moduleCode);
+        if (!modules.isEmpty()) {
+            Module module = modules.get(0);  // 假设同一代码下的模块使用第一个模块
+            theModel.addAttribute("module", module);
+            Teacher teacher = module.getTeacher();  // 获取教授该模块的教师信息
+
+            if (teacher != null) {
+                theModel.addAttribute("teacher", teacher);
+                if (!grades.isEmpty()) {
+                    Grade studentGrade = grades.get(0);
+                    int requiredGrade = teacher.getRequiredgrade();
+                    boolean meetsRequirement = studentGrade.getMark() >= requiredGrade;
+                    theModel.addAttribute("meetsRequirement", meetsRequirement);
+                    theModel.addAttribute("requiredGrade", requiredGrade);
+                }
+            } else {
+                theModel.addAttribute("teacherNotFound", "未找到指定老师");
+            }
         } else {
             theModel.addAttribute("moduleNotFound", "未找到指定模块");
-        }
-
-        Optional<Teacher> teacher = teacherRepository.findById(teacherId);
-        if (teacher.isPresent()) {
-            theModel.addAttribute("teacher", teacher.get());
-        } else {
-            theModel.addAttribute("teacherNotFound", "未找到指定老师");
-        }
-
-        if (!grades.isEmpty() && module.isPresent() && teacher.isPresent()) {
-            Grade studentGrade = grades.get(0); 
-            int requiredGrade = teacher.get().getRequiredgrade();
-            boolean meetsRequirement = studentGrade.getMark() >= requiredGrade;
-            theModel.addAttribute("meetsRequirement", meetsRequirement);
-            theModel.addAttribute("requiredGrade", requiredGrade);
         }
 
         return "grades/compare-grade";

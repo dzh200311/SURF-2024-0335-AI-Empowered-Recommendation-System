@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -26,8 +27,13 @@ public class Student {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "module")
-    private String module;
+    @ManyToMany
+    @JoinTable(
+        name = "student_module",
+        joinColumns = @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "module_id")
+    )
+    private Set<Module> modules;
 
     @Column(name = "password")
     private String password;
@@ -38,24 +44,8 @@ public class Student {
     @Column(name = "studentname")
     private String studentname;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private Set<Preference> preferences;
-
-    public Student() {
-    }
-
-    public Student(int id, int age, String avatarUrl, String description, String email, String gender, String module, String password, String phone, String studentname) {
-        this.id = id;
-        this.age = age;
-        this.avatarUrl = avatarUrl;
-        this.description = description;
-        this.email = email;
-        this.gender = gender;
-        this.module = module;
-        this.password = password;
-        this.phone = phone;
-        this.studentname = studentname;
-    }
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    private StudentPreferenceList preferenceList;
 
     // Getters and Setters
     public int getId() {
@@ -106,12 +96,12 @@ public class Student {
         this.gender = gender;
     }
 
-    public String getModule() {
-        return module;
+    public Set<Module> getModules() {
+        return modules;
     }
 
-    public void setModule(String module) {
-        this.module = module;
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
     }
 
     public String getPassword() {
@@ -138,11 +128,11 @@ public class Student {
         this.studentname = studentname;
     }
 
-    public Set<Preference> getPreferences() {
-        return preferences;
+    public StudentPreferenceList getPreferenceList() {
+        return preferenceList;
     }
 
-    public void setPreferences(Set<Preference> preferences) {
-        this.preferences = preferences;
+    public void setPreferenceList(StudentPreferenceList preferenceList) {
+        this.preferenceList = preferenceList;
     }
 }

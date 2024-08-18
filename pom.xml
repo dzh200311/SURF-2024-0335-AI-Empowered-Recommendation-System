@@ -17,20 +17,13 @@
 		<java.version>17</java.version>
 	</properties>
 
-	<repositories>
-        <repository>
-            <id>aliyun-public</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-	
 	<dependencies>
+
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -39,7 +32,6 @@
 		<dependency>
    			<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-data-jpa</artifactId>
-    		<!-- <version>3.2.2</version> -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
@@ -59,13 +51,11 @@
     		<artifactId>spring-boot-devtools</artifactId>
     		<version>3.2.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.baidubce</groupId>
 			<artifactId>qianfan</artifactId>
@@ -76,35 +66,31 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
         </dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itext-core</artifactId>
-			<version>8.0.1</version>
-		</dependency>
-
 		<!-- iText Kernel (Core PDF library) -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>kernel</artifactId>
 			<version>7.2.0</version>
 		</dependency>
-
 		<!-- iText Layout (High-level layout components) -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>layout</artifactId>
 			<version>7.2.0</version>
 		</dependency>
-
 		<!-- Jackson JSON 解析库 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+	</dependencies>
 
-    </dependencies>
+	<repositories>
+		<repository>
+			<id>huaweicloud-maven</id>
+			<url>https://repo.huaweicloud.com/repository/maven/</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
@@ -114,5 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

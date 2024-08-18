@@ -1,43 +1,32 @@
 package com.surf0335.AI_Recommendation_System.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.Set;
 
 @Entity
+@Table(name = "module")
 public class Module {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "code")
     private String code;
 
-    @ManyToOne
-    @JoinColumn(name = "teacherid", referencedColumnName = "id")
+    private String teachername;  // 保留 teachername 字段用于查询
+
+    @ManyToOne(fetch = FetchType.EAGER)  // 改为 EAGER 强制加载 Teacher 数据
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    @JsonBackReference
     private Teacher teacher;
 
-    @Column(name = "teachername")
-    private String teachername;
+    @ManyToMany(mappedBy = "modules")
+    private Set<Student> students;
 
-    public Module(int id, String name, String description, String code, Teacher teacher, String teachername) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.code = code;
-        this.teacher = teacher;
-        this.teachername = teachername;
-    }
-
-    public Module() {
-    }
-
-    // Getters and Setters
+    // Getters 和 Setters 方法
     public int getId() {
         return id;
     }
@@ -70,6 +59,14 @@ public class Module {
         this.code = code;
     }
 
+    public String getTeachername() {
+        return teachername;
+    }
+
+    public void setTeachername(String teachername) {
+        this.teachername = teachername;
+    }
+
     public Teacher getTeacher() {
         return teacher;
     }
@@ -78,11 +75,11 @@ public class Module {
         this.teacher = teacher;
     }
 
-    public String getTeachername() {
-        return teachername;
+    public Set<Student> getStudents() {
+        return students;
     }
 
-    public void setTeachername(String teachername) {
-        this.teachername = teachername;
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }

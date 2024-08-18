@@ -4,14 +4,18 @@ import com.surf0335.AI_Recommendation_System.model.Module;
 import com.surf0335.AI_Recommendation_System.model.Teacher;
 import com.surf0335.AI_Recommendation_System.repository.ModuleRepo;
 import com.surf0335.AI_Recommendation_System.repository.TeacherRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.surf0335.AI_Recommendation_System.services.ModuleService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/modules")
@@ -23,64 +27,26 @@ public class ModuleController {
     @Autowired
     private TeacherRepo teacherRepository;
 
-    @GetMapping("/list")
-    public String listModules(Model theModel) {
-        List<Module> modules = moduleRepository.findAll();
-        theModel.addAttribute("modules", modules);
-        return "modules/list-modules";
-    }
+    @Autowired
+    private ModuleService moduleService;
 
-    @PostMapping("/save")
-    public String createOrUpdateModule(@ModelAttribute("module") Module module) {
-        Optional<Teacher> teacher = teacherRepository.findById(module.getTeacher().getId());
-        if (teacher.isPresent()) {
-            module.setTeachername(teacher.get().getTeachername());
-        }
-        moduleRepository.save(module);
-        return "redirect:/modules/list";
+    @GetMapping("/teachersByStudentModule")
+    public ResponseEntity<List<Teacher>> getTeachersByStudentModule(@RequestParam("studentId") int studentId) {
+        List<Module> modules = moduleService.getModulesByStudentId(studentId);
+        System.out.println("Modules found for studentId " + studentId + ": " + modules.size());
+    
+        modules.forEach(module -> System.out.println("Module: " + module.getName() + ", Teacher: " + (module.getTeacher() != null ? module.getTeacher().getTeachername() : "No Teacher")));
+    
+        List<Teacher> teachers = modules.stream()
+                .map(Module::getTeacher)
+                .filter(Objects::nonNull)
+                .distinct()
+                .collect(Collectors.toList());
+    
+        System.out.println("Teachers found: " + teachers.size());
+        teachers.forEach(teacher -> System.out.println("Teacher: " + teacher.getTeachername()));
+    
+        return ResponseEntity.ok(teachers);
     }
-
-    @GetMapping("/delete/{moduleId}")
-    public String deleteModule(@PathVariable int moduleId, RedirectAttributes redirectAttributes) {
-        try {
-            moduleRepository.deleteById(moduleId);
-            redirectAttributes.addFlashAttribute("successMessage", "模块已成功删除。");
-        } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("errorMessage", "错误：无法找到该模块。");
-        }
-        return "redirect:/modules/list";
-    }
-
-    @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model theModel) {
-        Module theModule = new Module();
-        List<Teacher> teachers = teacherRepository.findAll();
-        theModel.addAttribute("module", theModule);
-        theModel.addAttribute("teachers", teachers);
-        return "modules/module-form";
-    }
-
-    @GetMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("moduleId") int theId, Model theModel) {
-        Optional<Module> theModule = moduleRepository.findById(theId);
-        if (theModule.isPresent()) {
-            List<Teacher> teachers = teacherRepository.findAll();
-            theModel.addAttribute("module", theModule.get());
-            theModel.addAttribute("teachers", teachers);
-            return "modules/module-form-update";
-        } else {
-            return "redirect:/modules/list";
-        }
-    }
-
-    @GetMapping("/showFormForReadonly")
-    public String showFormForReadonly(@RequestParam("moduleId") int theId, Model theModel) {
-        Optional<Module> theModule = moduleRepository.findById(theId);
-        if (theModule.isPresent()) {
-            theModel.addAttribute("module", theModule.get());
-            return "modules/module-form-readonly";
-        } else {
-            return "redirect:/modules/list";
-        }
-    }
+    
 }

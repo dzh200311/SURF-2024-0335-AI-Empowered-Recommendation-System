@@ -1,9 +1,14 @@
 package com.surf0335.AI_Recommendation_System.controller;
 
+import com.surf0335.AI_Recommendation_System.model.StudentPreference;
 import com.surf0335.AI_Recommendation_System.model.Teacher;
 import com.surf0335.AI_Recommendation_System.repository.TeacherRepo;
 import com.surf0335.AI_Recommendation_System.services.StoreImage;
+import com.surf0335.AI_Recommendation_System.services.TeacherService;
+import com.surf0335.AI_Recommendation_System.services.StudentPreferenceService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/teachers")    
+@RequestMapping("/teachers")
 public class TeacherController {
 
     @Autowired
@@ -23,6 +28,12 @@ public class TeacherController {
 
     @Autowired
     private StoreImage storeImage;
+
+    @Autowired
+    private StudentPreferenceService studentPreferenceService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @GetMapping("/list")
     public String listTeachers(Model theModel) {
@@ -32,7 +43,7 @@ public class TeacherController {
     }
 
     @PostMapping("/save")
-    public String createOrUpdateTeacher(@RequestParam(name ="file", required = false) MultipartFile file, @ModelAttribute("teacher") Teacher teacher) {
+    public String createOrUpdateTeacher(@RequestParam(name = "file", required = false) MultipartFile file, @ModelAttribute("teacher") Teacher teacher) {
         if (file != null && !file.isEmpty()) {
             String fileName = file.getOriginalFilename();
             String url = storeImage.store(file);
@@ -80,6 +91,13 @@ public class TeacherController {
         } else {
             return "redirect:/teachers/list";
         }
+    }
+
+    @GetMapping("/scoreAndSortTeachers")
+    public ResponseEntity<List<Teacher>> getScoreAndSortedTeachers(@RequestParam("studentId") int studentId) {
+        List<StudentPreference> preferences = studentPreferenceService.getPreferencesForStudent(studentId);
+        List<Teacher> sortedTeachers = teacherService.getTeachersByStudentPreferences(studentId);
+        return ResponseEntity.ok(sortedTeachers);
     }
 
     @GetMapping("/showFormForReadonly")

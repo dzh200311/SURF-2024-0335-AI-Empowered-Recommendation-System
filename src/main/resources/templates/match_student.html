@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>match</title>
+    <title>Match Preferences</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <!-- Mobile menu -->
     <div id="header-modal" class="hidden relative z-40 lg:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black bg-opacity-25"></div>
         <div class="fixed inset-0 z-40 flex">
@@ -23,28 +24,31 @@
                 <div class="mt-2">
                     <div class="border-b border-gray-200">
                         <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-                            <a href="subPage/Product/ProductList.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">View Food</a>
-                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('./subPage/Product/ProductList')">Order</a>
+                            <a href="/home_page_auth" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium">Home</a>
+                            <a href="match_student" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium">Match</a>
                         </div>
                     </div>
                 </div>
                 <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                     <div class="flow-root">
-                        <a href="subPage/User/Login.html" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                        <a href="/log_in" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
                     </div>
                     <div class="flow-root">
-                        <a href="subPage/User/Register3.html" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                        <a href="/add_user" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Navigation -->
     <nav class="top-0 left-0 w-full z-30">
         <nav aria-label="Top">
             <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
                 <div class="border-b border-gray-200 dark:border-black">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
+                            <!-- Logo (lg+) -->
                             <div class="hidden lg:flex lg:items-center">
                                 <a href="#">
                                     <span class="sr-only">Recommendation system</span>
@@ -54,39 +58,17 @@
                             <div class="hidden h-full lg:flex">
                                 <div class="ml-8">
                                     <div class="flex h-full justify-center space-x-8">
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="/home_page_auth" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="match_student" type="button" class="border-transparent text-purple-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Match</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="ai_polish" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">AI Polishing</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="co_edit" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Co-editing</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="inbox" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Inbox</a>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="relative flex">
-                                                <a href="./subPage/Others/Help.html" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Help</a>
-                                            </div>
-                                        </div>
+                                        <a href="/home_page_auth" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Home</a>
+                                        <a href="match_student" class="border-transparent text-purple-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Match</a>
+                                        <a href="ai_polish" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">AI Polishing</a>
+                                        <a href="co_edit" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Co-editing</a>
+                                        <a href="inbox" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Inbox</a>
+                                        <a href="./subPage/Others/Help.html" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Help</a>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Mobile menu and search (lg-) -->
                             <div class="flex flex-1 items-center lg:hidden">
                                 <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
                                     <span class="sr-only">Open menu</span>
@@ -94,54 +76,45 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                     </svg>
                                 </button>
-                                <a href="subPage/Search.html" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                                    <span class="sr-only">Search</span>
-                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                    </svg>
-                                </a>
                             </div>
+
+                            <!-- Logo (lg-) -->
                             <a href="#" class="lg:hidden">
-                                <span class="sr-only">Easy Eat</span>
+                                <span class="sr-only">Recommendation system</span>
                                 <img src="images/logo.png" alt="" class="h-8 w-auto">
                             </a>
+
                             <div class="flex flex-1 items-center justify-end">
                                 <div class="flex items-center lg:ml-8">
-                                    <div class="hidden lg:flex">
-                                        <a href="subPage/Search.html" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                                            <span class="sr-only">Search</span>
-                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
-                                    <div class="flow-root">
-                                        <button id="translateLanguage" class="p-2 rounded-2xl bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700" onclick="window.location.href = 'index_chinese.html';">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                    <button id="translateLanguage" class="p-2 rounded-2xl bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700" onclick="window.location.href = 'index_chinese.html';">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+                                        </svg>
+                                    </button>
+
                                     <span class="mx-x h-6 w-px lg:mx-3" aria-hidden="true"></span>
-                                    <div class="flow-root">
-                                        <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
-                                                <g class="dark:hidden">
-                                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
-                                                </g>
-                                                <g class="hidden dark:block">
-                                                    <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
-                                                </g>
-                                            </svg>
-                                        </button>
-                                    </div>
+
+                                    <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                            <!-- Sun Icon -->
+                                            <g class="dark:hidden">
+                                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                            </g>
+                                            <!-- Moon Icon -->
+                                            <g class="hidden dark:block">
+                                                <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                            </g>
+                                        </svg>
+                                    </button>
+
                                     <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
                                     <div id="signup-buttons" class="hidden flex space-x-8 px-4">
                                         <a href="/log_in" type="button" class="rounded-md bg-white dark:bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-950 hover:bg-gray-50 dark:hover:bg-gray-700">Sign up</a>
-                                        <a href="/add_user" type="button" class="rounded-md bg-purple-500 dark:bg-purple-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</a>
+                                        <a href="/add_user" type="button" class="rounded-md bg-purple-500 dark:bg-purple-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-purple-600">Sign in</a>
                                     </div>
+
                                     <div id="user-links" class="flex space-x-8 px-4">
                                         <div class="flex space-x-8">
                                             <div class="flex">
@@ -170,6 +143,8 @@
             </div>
         </nav>
     </nav>
+
+    <!-- Main Content -->
     <main>
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <div class="lg:flex lg:items-center lg:justify-between">
@@ -184,9 +159,9 @@
                 </div>
                 <div class="border-t border-gray-200">
                     <dl id="preferences-list">
-                        <!-- This will be dynamically populated with preferences -->
+                        <!-- Dynamic preference items will be inserted here -->
                     </dl>
-                    <div id="no-preferences" class="text-center py-4">
+                    <div id="no-preferences" class="text-center py-4 hidden">
                         <p class="text-sm text-gray-500">No preferences added yet. Click "Add" to create your first preference.</p>
                     </div>
                 </div>
@@ -201,46 +176,21 @@
                             </button>
                         </span>
                         <span class="ml-3 hidden sm:block">
-                            <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z" />
-                                    <path d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z" />
-                                </svg>
-                                View
-                            </button>
-                        </span>
-                        <span class="sm:ml-3">
-                            <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            <button id="publishPreferencesButton" type="button" class="inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500">
+                                <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2a1 1 0 01.8.4l6 7a1 1 0 01.2.6V17a2 2 0 01-2 2H4a2 2 0 01-2-2v-7.9a1 1 0 01.2-.6l6-7A1 1 0 019 2h3z" />
                                 </svg>
                                 Publish
                             </button>
                         </span>
-                        <div class="relative ml-3 sm:hidden">
-                            <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400" id="mobile-menu-button" aria-expanded="false" aria-haspopup="true">
-                                More
-                                <svg class="-mr-1 ml-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <div class="absolute right-0 z-10 -mr-1 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="mobile-menu-item-0">Edit</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="mobile-menu-item-1">View</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class=" mt-10 sm:flex sm:items-center">
+            <div class="mt-10 sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-lg font-semibold leading-6 text-gray-900">Teachers List</h1>
-                    <p class="mt-2 text-sm text-gray-700">A list of all the users that satisfied your preference.</p>
+                    <p class="mt-2 text-sm text-gray-700">A list of all the teachers that match your preference.</p>
                 </div>
-                <!-- <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
-                </div> -->
             </div>
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="mt-8 flow-root">
@@ -251,25 +201,16 @@
                                     <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Title</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Gender</th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span class="sr-only">Edit</span>
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 bg-white">
-                                    <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Lindsay Walton</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">SAT</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">lindsay.walton@example.com</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Professor</td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Check<span class="sr-only">, Lindsay Walton</span></a>
-                                        </td>
-                                    </tr>
-                                    <!-- More rows can go here -->
+                                        <!-- Dynamic rows will be added here -->
                                     </tbody>
                                 </table>
                             </div>
@@ -281,49 +222,43 @@
     </main>
 </div>
 
-<!-- Edit Modal -->
+<!-- Modal -->
 <div id="editModal" class="fixed inset-0 hidden z-50 overflow-y-auto">
     <div class="relative z-10" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" aria-hidden="true"></div>
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div class="flex min-h-full items-center justify-center text-center">
-                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:max-w-lg sm:w-full">
-                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Edit Preference</h3>
-                                <div class="mt-2">
+            <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+                <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
+                    <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                        <button id="closeModal" type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
+                            <span class="sr-only">Close</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+                            <div class="sm:col-span-8 lg:col-span-7">
+                                <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">Edit your preference</h2>
+                                <section aria-labelledby="options-heading" class="mt-10">
+                                    <h3 id="options-heading" class="sr-only">Preference options</h3>
                                     <form id="preferenceForm">
                                         <div class="mb-4">
-                                            <label class="block text-gray-700 mb-2">Grade</label>
-                                            <select class="block w-full p-2 border border-gray-300 rounded" id="preference-grade">
-                                                <option>A</option>
-                                                <option>B</option>
-                                                <option>C</option>
-                                                <option>D</option>
-                                            </select>
+                                            <label class="block text-gray-700 mb-2">Research Field</label>
+                                            <input type="text" class="block w-full p-2 border border-gray-300 rounded" id="preference-researchField" placeholder="Enter Research Field"/>
                                         </div>
                                         <div class="mb-4">
-                                            <label class="block text-gray-700 mb-2">Research</label>
-                                            <select class="block w-full p-2 border border-gray-300 rounded" id="preference-research">
-                                                <option>Artificial Intelligence</option>
-                                                <option>Machine Learning</option>
-                                                <option>Human-Computer Interaction</option>
-                                                <option>Data Science</option>
-                                            </select>
+                                            <label class="block text-gray-700 mb-2">Weight</label>
+                                            <input type="number" class="block w-full p-2 border border-gray-300 rounded" id="preference-weight" placeholder="Enter Weight"/>
                                         </div>
                                         <div class="mb-4">
-                                            <label class="block text-gray-700 mb-2">Other Preferences</label>
-                                            <input type="text" class="block w-full p-2 border border-gray-300 rounded" placeholder="Enter your preference" id="preference-other"/>
+                                            <label class="block text-gray-700 mb-2">Description</label>
+                                            <input type="text" class="block w-full p-2 border border-gray-300 rounded" id="preference-description" placeholder="Enter Description"/>
                                         </div>
+                                        <button id="savePreferences" type="button" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
                                     </form>
-                                </div>
+                                </section>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse">
-                        <button type="button" id="savePreferences" class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">Save</button>
-                        <button type="button" id="closeModal" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -333,99 +268,240 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const editButtons = document.querySelectorAll('#editPreferencesButton');
-        const modal = document.getElementById('editModal');
-        const closeModal = document.getElementById('closeModal');
-        const savePreferences = document.getElementById('savePreferences');
-        const addButton = document.getElementById('addPreferencesButton');
-        let currentPreferenceId = null;
+    const studentId = 1; // 固定 studentId 为 1
+    let currentPreferenceId = null;
+    let isSaving = false; // 防止重复提交
+    const modal = document.getElementById('editModal');
+    const closeModal = document.getElementById('closeModal');
+    const savePreferences = document.getElementById('savePreferences');
+    const addButton = document.getElementById('addPreferencesButton');
+    const publishButton = document.getElementById('publishPreferencesButton');
+    const preferencesList = document.getElementById('preferences-list');
+    const noPreferencesMessage = document.getElementById('no-preferences');
 
-        const preferencesList = document.getElementById('preferences-list');
-        const noPreferencesMessage = document.getElementById('no-preferences');
-
-        // Load existing preferences (this should be replaced with an API call)
-        let preferences = [
-            // Example preference structure
-            { id: 1, grade: 'A', research: 'Artificial Intelligence', otherPreferences: 'AI in education' },
-            { id: 2, grade: 'B', research: 'Data Science', otherPreferences: 'Big data' }
-        ];
-
-        const loadPreferences = () => {
-            preferencesList.innerHTML = '';
-            if (preferences.length === 0) {
+    // 加载偏好列表
+    const loadPreferences = async () => {
+        try {
+            const response = await fetch(`/preferences/list?studentId=${studentId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            preferencesList.innerHTML = ''; // 清空现有内容
+            if (data.length === 0) {
                 noPreferencesMessage.classList.remove('hidden');
             } else {
                 noPreferencesMessage.classList.add('hidden');
-                preferences.forEach(pref => {
+                data.sort((a, b) => a.preferenceOrder - b.preferenceOrder); // 按 preferenceOrder 排序
+                data.forEach((pref, index) => {
                     const prefElement = document.createElement('div');
                     prefElement.className = 'bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6';
                     prefElement.innerHTML = `
-                        <dt class="text-sm font-medium text-gray-500">Preference ${pref.id}</dt>
+                        <dt class="text-sm font-medium text-gray-500">Preference ${index + 1}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-between">
-                            <span id="preference-detail-${pref.id}">${pref.otherPreferences}</span>
-                            <button id="editPreferencesButton" type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" data-id="${pref.id}">
-                                <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
-                                </svg>
-                                Edit
-                            </button>
+                            <span id="preference-detail-${pref.id}"> ${pref.description}</span>
+                            <div>
+                                <button type="button" class="editPreference inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" data-id="${pref.id}">
+                                    <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button type="button" class="deletePreference inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500" data-id="${pref.id}">
+                                    <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M6 8a1 1 0 011-1h6a1 1 0 011 1v8a1 1 0 11-2 0V9H8v7a1 1 0 11-2 0V8zm5-6a1 1 0 011 1v1h2a1 1 0 110 2H6a1 1 0 110-2h2V3a1 1 0 011-1z" />
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
                         </dd>
                     `;
-                    preferencesList.appendChild(prefElement);
+                    preferencesList.appendChild(prefElement); // 每个偏好添加到列表中
                 });
-                attachEditButtonListeners();
+                attachButtonListeners(); // 为新添加的元素添加事件监听器
             }
-        };
+        } catch (error) {
+            console.error('Error loading preferences:', error);
+        }
+    };
 
-        const attachEditButtonListeners = () => {
-            const editButtons = document.querySelectorAll('#editPreferencesButton');
-            editButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    currentPreferenceId = button.getAttribute('data-id');
-                    const pref = preferences.find(p => p.id == currentPreferenceId);
-                    document.getElementById('preference-grade').value = pref.grade;
-                    document.getElementById('preference-research').value = pref.research;
-                    document.getElementById('preference-other').value = pref.otherPreferences;
-                    modal.classList.remove('hidden');
-                });
+    // 加载教师列表，并按评分排序
+    const loadTeachers = async () => {
+    try {
+        const response = await fetch(`/teachers/scoreAndSortTeachers?studentId=${studentId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const teachers = await response.json();
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = ''; // 清空现有内容
+
+        if (teachers.length > 0) {
+            teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">${teacher.teachername}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.description}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.email}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.gender}</td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900">View Profile</a>
+                    </td>
+                `;
+                tbody.appendChild(row);
             });
-        };
+        } else {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td colspan="5" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-6 text-center">
+                    No matching teachers found.
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+    } catch (error) {
+        console.error('Error loading teachers:', error);
+    }
+};
 
-        const hideModal = () => {
-            modal.classList.add('hidden');
-        };
-
-        closeModal.addEventListener('click', hideModal);
-
-        savePreferences.addEventListener('click', () => {
-            const updatedDetail = document.getElementById('preference-other').value;
-            const updatedGrade = document.getElementById('preference-grade').value;
-            const updatedResearch = document.getElementById('preference-research').value;
-
-            const updatedPreference = {
-                id: currentPreferenceId,
-                otherPreferences: updatedDetail,
-                grade: updatedGrade,
-                research: updatedResearch
-            };
-
-            // Update preferences list (this should be replaced with an API call)
-            preferences = preferences.map(pref => pref.id == currentPreferenceId ? updatedPreference : pref);
-
-            loadPreferences();
-            hideModal();
+    // 添加事件监听器
+    const attachButtonListeners = () => {
+        document.querySelectorAll('.editPreference').forEach(button => {
+            button.addEventListener('click', async () => {
+                currentPreferenceId = button.getAttribute('data-id');
+                try {
+                    const response = await fetch(`/preferences/${currentPreferenceId}`);
+                    const pref = await response.json();
+                    document.getElementById('preference-researchField').value = pref.researchField;
+                    document.getElementById('preference-weight').value = pref.weight;
+                    document.getElementById('preference-description').value = pref.description;
+                    modal.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error fetching preference:', error);
+                }
+            });
         });
 
-        addButton.addEventListener('click', () => {
-            currentPreferenceId = null;
-            document.getElementById('preference-grade').value = '';
-            document.getElementById('preference-research').value = '';
-            document.getElementById('preference-other').value = '';
-            modal.classList.remove('hidden');
-        });
+        document.querySelectorAll('.deletePreference').forEach(button => {
+    button.addEventListener('click', async () => {
+        const preferenceId = button.getAttribute('data-id');
+        try {
+            const response = await fetch(`/preferences/${preferenceId}`, {
+                method: 'DELETE',
+            });
 
-        loadPreferences();
+            if (response.ok) {
+                await loadPreferences(); // 删除成功后重新加载偏好列表
+            } else {
+                console.error('Failed to delete preference');
+            }
+        } catch (error) {
+            console.error('Error deleting preference:', error);
+        }
     });
+});
+    };
+
+    const hideModal = () => {
+        modal.classList.add('hidden');
+    };
+
+    closeModal.addEventListener('click', hideModal);
+
+    savePreferences.addEventListener('click', async () => {
+        if (isSaving) return; // 如果已经在保存，直接返回，避免重复提交
+        isSaving = true;  // 标记为正在保存
+
+        // 检查当前偏好数量是否已经达到3个
+        const response = await fetch(`/preferences/list?studentId=${studentId}`);
+        const preferences = await response.json();
+        if (preferences.length >= 3 && !currentPreferenceId) {
+            alert('Cannot add more than 3 preferences.');
+            isSaving = false; // 解除保存标记
+            return;
+        }
+
+        const updatedResearchField = document.getElementById('preference-researchField').value;
+        const updatedWeight = document.getElementById('preference-weight').value;
+        const updatedDescription = document.getElementById('preference-description').value;
+
+        const newPreference = {
+            researchField: updatedResearchField,
+            weight: updatedWeight,
+            description: updatedDescription,
+            studentPreferenceList: { id: studentId }
+        };
+
+        try {
+            let response;
+            if (currentPreferenceId) {
+                response = await fetch(`/preferences/${currentPreferenceId}?studentId=${studentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newPreference),
+                });
+            } else {
+                response = await fetch(`/preferences/save?studentId=${studentId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newPreference),
+                });
+            }
+
+            if (response.ok) {
+                await loadPreferences();
+                hideModal();
+            } else if (response.status === 400) {
+                alert('Cannot add more than 3 preferences.');
+            } else {
+                console.error('Failed to save preference');
+            }
+        } catch (error) {
+            console.error('Error saving preference:', error);
+        } finally {
+            isSaving = false; // 解除保存标记
+        }
+    });
+
+    addButton.addEventListener('click', () => {
+        currentPreferenceId = null;
+        document.getElementById('preference-researchField').value = '';
+        document.getElementById('preference-weight').value = '';
+        document.getElementById('preference-description').value = '';
+        modal.classList.remove('hidden');
+    });
+
+    publishButton.addEventListener('click', async () => {
+        try {
+            const response = await fetch('/preferences/publish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ studentId: studentId }),
+            });
+
+            if (response.ok) {
+                alert('Preferences published successfully!');
+            } else {
+                console.error('Failed to publish preferences');
+            }
+        } catch (error) {
+            console.error('Error publishing preferences:', error);
+        }
+    });
+
+    // 初始化加载偏好和教师列表
+    loadPreferences();
+    loadTeachers();
+});
+
 </script>
+
 </body>
 </html>
+
