@@ -4,6 +4,11 @@ import com.baidubce.qianfan.Qianfan;
 import com.baidubce.qianfan.core.auth.Auth;
 import com.baidubce.qianfan.model.chat.ChatResponse;
 import com.baidubce.qianfan.model.completion.CompletionResponse;
+import com.surf0335.AI_Recommendation_System.model.Letter;
+import com.surf0335.AI_Recommendation_System.model.User;
+import com.surf0335.AI_Recommendation_System.repository.LetterRepository;
+import com.surf0335.AI_Recommendation_System.repository.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,8 +35,12 @@ import java.util.concurrent.Executors;
 
 @Controller
 public class AIPolishingController {
-    //@Autowired
-    //private AIPolishService polishService;
+    @Autowired
+    private LetterRepository letterRepository;
+
+    @Autowired
+    private UserRepo userRepository;
+
 
     @Value("${etherpad.api.url}")
     private String etherpadApiUrl;
@@ -112,8 +121,9 @@ public class AIPolishingController {
     }
 
     @PostMapping("/createPad")
-    public ResponseEntity<Map<String, String>> createPad(@RequestParam(value = "padId", required = false) String padId,
-                                                         @RequestParam(value = "content", required = false) String content) {
+    public ResponseEntity<Map<String, String>> createPad(@RequestParam(value = "padId", required = true) String padId,
+                                                         @RequestParam(value = "content", required = false) String content,
+                                                         @RequestParam(value = "username", required = true) String username) {
         if (padId == null || padId.isEmpty()) {
             padId = generateRandomPadId(); // 生成随机 padId
         }
@@ -134,6 +144,20 @@ public class AIPolishingController {
         Map<String, String> result = new HashMap<>();
         result.put("padId", createdPadId);
         result.put("url", etherpadApiUrl.replace("/api", "/p/") + createdPadId);
+
+        // 根据用户名获取用户
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.ok(result);
+        }
+
+        // 创建Letter对象
+        Letter letter = new Letter();
+        letter.setPadId(padId);
+        letter.setUser(user);
+
+        // 保存Letter到数据库
+        letterRepository.save(letter);
 
         return ResponseEntity.ok(result);
     }
@@ -198,7 +222,7 @@ public class AIPolishingController {
         String createPadRequestUrl = etherpadCreateApiUrl + "?padID=" + padID + "&apikey=" + etherpadApiKey;;
         String authorId = "1";
 
-        content = "padID: " + padID + "\n\n" + content;
+        content = "padID: " + padID;
         // 创建 Etherpad 文档
         try {
             // 创建请求体

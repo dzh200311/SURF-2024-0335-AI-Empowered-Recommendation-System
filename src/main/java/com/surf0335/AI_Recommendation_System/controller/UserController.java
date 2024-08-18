@@ -93,6 +93,7 @@ public class UserController {
         User user = userRepo.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("user", user);
+            System.out.println(session);
             return "redirect:/home_page_auth";
         } else {
             m.addAttribute("user", new User());

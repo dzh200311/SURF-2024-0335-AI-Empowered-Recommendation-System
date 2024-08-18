@@ -110,11 +110,9 @@
             </span>
         </div>
         <ul>
-            <li th:each="letter : ${letters}"
-                th:text="${letter.title}"
-                th:onclick="'loadLetter(' + ${letter.id} + ')' "
-                class="cursor-pointer p-2 hover:bg-gray-200 rounded">
-            </li>
+            <ul id="lettersList">
+                <!-- 推荐信列表将动态插入到这里 -->
+            </ul>
         </ul>
     </div>
 
@@ -311,6 +309,98 @@
     </div>
 </div>
 
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const username = /*[[${session.user.username}]]*/ 'defaultUsername';
+        //alert(username)
+        loadList(username);
+        function loadList(username){
+            fetch(`/getLetters?username=${username}`)
+                .then(response => response.json())
+                .then(letters => {
+                    const lettersList = document.getElementById('lettersList');
+                    lettersList.innerHTML = ''; // 清空现有内容
+                    letters.forEach(letter => {
+                        const li = document.createElement('li');
+                        li.classList.add('cursor-pointer', 'p-2', 'hover:bg-gray-200', 'rounded', 'flex', 'justify-between', 'items-center');
+
+                        const letterSpan = document.createElement('span');
+                        letterSpan.textContent = letter.padId;
+                        letterSpan.onclick = () => loadLetter(letter.padId);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.innerHTML = '&times;'; // 使用“×”符号作为删除按钮
+                        deleteButton.classList.add('text-red-500', 'hover:text-red-700');
+                        deleteButton.onclick = () => deleteLetter(letter.padId);
+
+                        li.appendChild(letterSpan);
+                        li.appendChild(deleteButton);
+                        lettersList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error fetching letters:', error));
+
+        }
+
+        function deleteLetter(padId) {
+            const username = /*[[${session.user.username}]]*/ 'defaultUsername';
+
+            alert("Confirm delete letter" + padId + "?");
+
+            fetch(`/deleteLetters`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, padId: padId })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        loadList(username);
+                    } else {
+                        throw new Error('Failed to delete letter');
+                    }
+                })
+                .catch(error => console.error('Error deleting letter:', error));
+        }
+
+
+        function loadLetter(letterId) {
+            console.log("Load letter with ID: " + letterId);
+
+            // 1. 获取iframe元素
+            const iframe = document.getElementById('etherpad'); // 替换为实际的iframe ID
+
+            // 2. 确保iframe已加载
+            iframe.onload = function() {
+                // 3. 访问iframe的内容文档
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                // 4. 查找padIdInput和createBtn元素
+                const padIdInput = iframeDocument.getElementById('padIdInput');
+                const createBtn = iframeDocument.getElementById('createBtn');
+
+                if (padIdInput && createBtn) {
+                    // 5. 将letterId设置为padIdInput的值
+                    padIdInput.value = letterId;
+
+                    // 6. 模拟点击createBtn按钮
+                    createBtn.click();
+                } else {
+                    console.error('padIdInput or createBtn not found in the iframe.');
+                }
+            };
+
+            // 如果iframe已经加载完毕，则直接执行
+            if (iframe.contentDocument.readyState === 'complete') {
+                iframe.onload();
+            }
+        }
+    });
+
+
+</script>
+
 
 <script>
     // Simulate user list and chat functionality (without real-time backend)
@@ -328,12 +418,6 @@
         }
     });
 
-    // Placeholder for user list interactions
-    document.querySelectorAll('.user-list-item').forEach(item => {
-        item.addEventListener('click', function() {
-            alert('User clicked: ' + this.textContent);
-        });
-    });
 </script>
 
 <script>

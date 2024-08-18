@@ -1,9 +1,8 @@
 package com.surf0335.AI_Recommendation_System.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -19,6 +18,9 @@ public class User {
     private String birthday;
     private String about;
     private String avatarUrl;
+
+    @OneToMany(mappedBy = "user")
+    private List<Letter> letters;
 
     
     public User(int id, String email, String username, String nickname, 
