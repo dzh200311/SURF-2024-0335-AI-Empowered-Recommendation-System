@@ -46,30 +46,59 @@ public class TeacherService {
         teacherRepository.deleteById(id);
     }
 
-    // 根据学生的偏好获取匹配的老师，并按权重打分
     public List<Teacher> getTeachersByStudentPreferences(int studentId) {
-        // 获取学生的偏好列表
         List<StudentPreference> preferences = studentPreferenceService.getPreferencesForStudent(studentId);
-        
-        // 获取所有老师
         List<Teacher> teachers = getAllTeachers();
 
-        // 按照匹配偏好进行打分
-        Map<Teacher, Double> teacherScores = new HashMap<>();
         for (Teacher teacher : teachers) {
             double score = 0.0;
             for (StudentPreference preference : preferences) {
-                if (teacher.getDescription() != null && teacher.getDescription().contains(preference.getResearchField())) {
+                if (teacher.getDescription() != null && containsIgnoreCase(teacher.getDescription(), preference.getResearchField())) {
                     score += preference.getWeight();
                 }
             }
-            teacherScores.put(teacher, score);
+            teacher.setScore(score); // 设置教师分数
         }
 
-        // 根据分数排序老师
-        return teacherScores.entrySet().stream()
-                .sorted(Map.Entry.<Teacher, Double>comparingByValue().reversed())
-                .map(Map.Entry::getKey)
+        // 按分数排序教师
+        return teachers.stream()
+                .sorted((t1, t2) -> Double.compare(t2.getScore(), t1.getScore())) // 降序排列
                 .collect(Collectors.toList());
     }
+
+    // // 自定义的方法，用于不区分大小写的字符串匹配
+    // private boolean containsIgnoreCase(String str, String searchStr) {
+    //     if (str == null || searchStr == null) {
+    //         return false;
+    //     }
+    //     return str.toLowerCase().contains(searchStr.toLowerCase());
+    // }
+    
+    public List<Teacher> scoreAndSortTeachersByPreferences(List<Teacher> teachers, int studentId) {
+        List<StudentPreference> preferences = studentPreferenceService.getPreferencesForStudent(studentId);
+
+        for (Teacher teacher : teachers) {
+            double score = 0.0;
+            for (StudentPreference preference : preferences) {
+                if (teacher.getDescription() != null && containsIgnoreCase(teacher.getDescription(), preference.getResearchField())) {
+                    score += preference.getWeight();
+                }
+            }
+            teacher.setScore(score); // 设置教师分数
+        }
+
+        // 按分数排序教师
+        return teachers.stream()
+                .sorted((t1, t2) -> Double.compare(t2.getScore(), t1.getScore())) // 降序排列
+                .collect(Collectors.toList());
+    }
+
+    // 自定义的方法，用于不区分大小写的字符串匹配
+    private boolean containsIgnoreCase(String str, String searchStr) {
+        if (str == null || searchStr == null) {
+            return false;
+        }
+        return str.toLowerCase().contains(searchStr.toLowerCase());
+    }
 }
+

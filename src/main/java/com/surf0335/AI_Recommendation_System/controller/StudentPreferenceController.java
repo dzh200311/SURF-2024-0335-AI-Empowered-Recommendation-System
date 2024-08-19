@@ -115,18 +115,25 @@ public boolean isPublished(@RequestParam(value = "studentId", defaultValue = "1"
 }
 
 
-    @DeleteMapping("/{preferenceId}")
-    @ResponseBody
-    public String deletePreference(@PathVariable("preferenceId") int preferenceId) {
-        try {
-            preferenceService.deletePreference(preferenceId);
-            return "Preference deleted successfully!";
-        } catch (Exception e) {
-            // 记录错误日志
-            System.err.println("Error deleting preference for preferenceId: " + preferenceId);
-            e.printStackTrace();
-            return "Error deleting preference.";
-        }
+@DeleteMapping("/{preferenceId}")
+@ResponseBody
+public ResponseEntity<String> deletePreference(@PathVariable("preferenceId") int preferenceId) {
+    System.out.println("Attempting to delete preference with ID: " + preferenceId); // 添加日志
+
+    try {
+        // 首先解除外键引用，将 student_preference_list 表中引用该 preferenceId 的字段设置为 NULL
+        preferenceService.nullifyForeignKeyReferences(preferenceId);
+
+        // 然后删除 preference
+        preferenceService.deletePreference(preferenceId);
+
+        return ResponseEntity.ok("Preference deleted successfully!");
+    } catch (Exception e) {
+        System.err.println("Error deleting preference for preferenceId: " + preferenceId);
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting preference.");
     }
-    
+}
+
+
 }

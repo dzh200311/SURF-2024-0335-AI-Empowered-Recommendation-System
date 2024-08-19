@@ -204,6 +204,7 @@
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Gender</th>
+                                        <!-- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Score</th> 新增评分列 -->
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span class="sr-only">Edit</span>
                                         </th>
@@ -325,10 +326,10 @@
         }
     };
 
-    // 加载教师列表，并按评分排序
+    // 加载教师列表，并根据学生偏好重新排序
     const loadTeachers = async () => {
     try {
-        const response = await fetch(`/teachers/scoreAndSortTeachers?studentId=${studentId}`);
+        const response = await fetch(`/modules/teachersByStudentModule?studentId=${studentId}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -337,13 +338,24 @@
         tbody.innerHTML = ''; // 清空现有内容
 
         if (teachers.length > 0) {
+            console.log("原始教师列表和分数:");
             teachers.forEach(teacher => {
+                console.log(`教师: ${teacher.teachername}, 分数: ${teacher.score}`);
+            });
+
+            // 将教师按分数排序
+            teachers.sort((a, b) => b.score - a.score);
+
+            console.log("排序后的教师列表:");
+            teachers.forEach(teacher => {
+                console.log(`教师: ${teacher.teachername}, 排序后的分数: ${teacher.score}`);
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">${teacher.teachername}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.description}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.email}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${teacher.gender}</td>
+          
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" class="text-indigo-600 hover:text-indigo-900">View Profile</a>
                     </td>
@@ -353,7 +365,7 @@
         } else {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td colspan="5" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-6 text-center">
+                <td colspan="6" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-6 text-center">
                     No matching teachers found.
                 </td>
             `;
@@ -363,6 +375,8 @@
         console.error('Error loading teachers:', error);
     }
 };
+
+
 
     // 添加事件监听器
     const attachButtonListeners = () => {
@@ -381,25 +395,30 @@
                 }
             });
         });
-
-        document.querySelectorAll('.deletePreference').forEach(button => {
+    document.querySelectorAll('.deletePreference').forEach(button => {
     button.addEventListener('click', async () => {
         const preferenceId = button.getAttribute('data-id');
+        console.log('Delete button clicked for preferenceId:', preferenceId); // 确认点击事件触发
+
         try {
             const response = await fetch(`/preferences/${preferenceId}`, {
                 method: 'DELETE',
             });
 
             if (response.ok) {
+                console.log('Preference deleted successfully.');
                 await loadPreferences(); // 删除成功后重新加载偏好列表
+                await loadTeachers(); // 更新教师列表
             } else {
-                console.error('Failed to delete preference');
+                console.error('Failed to delete preference:', response.statusText);
             }
         } catch (error) {
             console.error('Error deleting preference:', error);
         }
     });
 });
+
+
     };
 
     const hideModal = () => {
@@ -454,6 +473,7 @@
 
             if (response.ok) {
                 await loadPreferences();
+                await loadTeachers(); // 更新教师列表
                 hideModal();
             } else if (response.status === 400) {
                 alert('Cannot add more than 3 preferences.');
@@ -487,6 +507,7 @@
 
             if (response.ok) {
                 alert('Preferences published successfully!');
+                await loadTeachers(); // 更新教师列表
             } else {
                 console.error('Failed to publish preferences');
             }
@@ -500,8 +521,8 @@
     loadTeachers();
 });
 
+
 </script>
 
 </body>
 </html>
-

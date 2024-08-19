@@ -12,7 +12,8 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Transient
+    private Double score = 0.0; 
     private String teachername;
     private String password;
     private int age;
@@ -31,6 +32,14 @@ public class Teacher {
     // Getters 和 Setters 方法
     public int getId() {
         return id;
+    }
+    
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public void setId(int id) {

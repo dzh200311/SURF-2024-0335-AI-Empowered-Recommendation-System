@@ -92,6 +92,14 @@ public class TeacherController {
             return "redirect:/teachers/list";
         }
     }
+    
+    // 新增的部分：展示按学生偏好排序并打分后的教师列表页面
+    @GetMapping("/sortedTeachersByPreference")
+    public String showSortedTeachersByPreference(@RequestParam("studentId") int studentId, Model theModel) {
+        List<Teacher> sortedTeachers = teacherService.getTeachersByStudentPreferences(studentId);
+        theModel.addAttribute("teachers", sortedTeachers);
+        return "teachers/sorted-teachers";
+    }
 
     @GetMapping("/scoreAndSortTeachers")
     public ResponseEntity<List<Teacher>> getScoreAndSortedTeachers(@RequestParam("studentId") int studentId) {
@@ -109,5 +117,11 @@ public class TeacherController {
         } else {
             return "redirect:/teachers/list";
         }
+    }
+    @GetMapping("/teachersByStudentModule")
+    public ResponseEntity<List<Teacher>> getTeachersByStudentModule(@RequestParam("studentId") int studentId) {
+        // 使用 TeacherService 获取按偏好排序的老师
+        List<Teacher> sortedTeachers = teacherService.getTeachersByStudentPreferences(studentId);
+        return ResponseEntity.ok(sortedTeachers);
     }
 }

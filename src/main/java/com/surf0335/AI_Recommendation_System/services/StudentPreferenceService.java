@@ -5,6 +5,9 @@ import com.surf0335.AI_Recommendation_System.model.StudentPreference;
 import com.surf0335.AI_Recommendation_System.model.StudentPreferenceList;
 import com.surf0335.AI_Recommendation_System.repository.StudentPreferenceListRepository;
 import com.surf0335.AI_Recommendation_System.repository.StudentPreferenceRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +84,7 @@ public void publishPreferences(int studentId) {
     preferenceListRepository.save(preferenceList);  // 保存偏好列表
 }
 
+
 // 在 StudentPreferenceService 中添加一个方法来检查偏好是否已发布
 public boolean isPreferencesPublished(int studentId) {
     StudentPreferenceList preferenceList = preferenceListRepository.findByStudentId(studentId);
@@ -107,4 +111,14 @@ public boolean isPreferencesPublished(int studentId) {
             preferenceRepository.delete(preference);
         }
     }
+    @Transactional
+    public void nullifyForeignKeyReferences(int preferenceId) {
+        // 将所有引用该 preferenceId 的外键字段设置为 NULL
+        preferenceListRepository.nullifyPreference1(preferenceId);
+        preferenceListRepository.nullifyPreference2(preferenceId);
+          preferenceListRepository.nullifyPreference3(preferenceId);
+    }
+
+    
 }
+
