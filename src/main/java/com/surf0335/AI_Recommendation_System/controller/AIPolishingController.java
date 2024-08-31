@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -115,6 +116,20 @@ public class AIPolishingController {
         // 3. 将内容插入到 Etherpad 文档
         String padId = generateRandomPadId();
         createEtherpadDocument(padId,content);
+
+        // 根据用户名获取用户
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            Map.of("fail to save in database", username);
+        }
+
+        // 创建Letter对象
+        Letter letter = new Letter();
+        letter.setPadId(padId);
+        letter.setUser(user);
+
+        // 保存Letter到数据库
+        letterRepository.save(letter);
 
         // 4. 返回 Etherpad 文档 ID
         return Map.of("padId", padId);
@@ -213,8 +228,10 @@ public class AIPolishingController {
         return result;
     }
     private String generateRandomPadId() {
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String dateStr = dateformat.format(System.currentTimeMillis());
         // 生成唯一的 padID
-        return "pad_" + System.currentTimeMillis();
+        return "pad_" + dateStr;
     }
     private String createEtherpadDocument(String padID , String content) {
         System.out.println("createEtherpadDocument");
@@ -222,7 +239,7 @@ public class AIPolishingController {
         String createPadRequestUrl = etherpadCreateApiUrl + "?padID=" + padID + "&apikey=" + etherpadApiKey;;
         String authorId = "1";
 
-        content = "padID: " + padID;
+
         // 创建 Etherpad 文档
         try {
             // 创建请求体

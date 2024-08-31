@@ -34,7 +34,7 @@
                             <div class="hidden lg:flex lg:items-center">
                                 <a href="#">
                                     <span class="sr-only">Recommendation system</span>
-                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                    <img class="h-10 w-auto" src="logo.png" alt="">
                                 </a>
                             </div>
 
@@ -105,7 +105,7 @@
                             <!-- Logo (lg-) -->
                             <a href="#" class="lg:hidden">
                                 <span class="sr-only">Easy Eat</span>
-                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                                <img src="logo.png" alt="" class="h-8 w-auto">
                             </a>
 
                             <div class="flex flex-1 items-center justify-end">
@@ -904,7 +904,7 @@
     });
 </script>
 
-<script>
+<script th:inline="javascript">
     $(document).ready(function(){
         // 显示模态框
         $('#generateAiBtn').click(function() {
@@ -955,6 +955,10 @@
             formData3.forEach(function(item) {
                 mergedData[item.name] = item.value;
             });
+
+            // 添加username字段
+            const username = /*[[${session.user.username}]]*/ 'defaultUsername';
+            mergedData['username'] = username;
 
             $.post('/generate_letter', mergedData, function(response) {
                 // 提交成功后的提示

@@ -79,6 +79,7 @@
     window.addEventListener('message', function(event) {
         // 确保接收到的数据是正确的
         var padId = event.data.padId;
+        const username = /*[[${session.user.username}]]*/ 'dzh';
         if (padId) {
             // alert(padId);
             // 发送请求到后端
@@ -88,7 +89,8 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: new URLSearchParams({
-                    'padId': padId
+                    'padId': padId,
+                    'username': username
                 })
             })
                 .then(response => response.json())

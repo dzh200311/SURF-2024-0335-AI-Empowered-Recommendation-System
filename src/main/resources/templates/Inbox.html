@@ -6,6 +6,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<script th:inline="javascript">
+    function showDetails(id,subject,content,sender,createDateTime) {
+        console.log(id,subject,console,subject,createDateTime)
+        document.getElementById("sender").innerText = "Sender:"+sender;
+        document.getElementById("subject").innerText = "Subject:"+subject;
+        document.getElementById("date").innerText = "Date:"+createDateTime;
+        document.getElementById("content").innerText = "Content:"+content;
+    }
+
+    $(document).ready(function() {
+        // Add any JavaScript/jQuery code here
+    });
+</script>
 <body class="bg-gray-100">
 
 <!-- Navigation Bar -->
@@ -14,8 +27,8 @@
         <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
             <div class="hidden lg:flex lg:items-center">
-                <a href="#">
-                    <img class="h-10 w-auto" src="./images/logo.png" alt="Logo">
+                <a href="/home_page_auth">
+                    <img class="h-10 w-auto" src="logo.png" alt="Logo">
                 </a>
             </div>
             <!-- Navigation Links -->
@@ -89,11 +102,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="py-2 px-4 border-b"></td>
-                        <td class="py-2 px-4 border-b"></td>
-                        <td class="py-2 px-4 border-b"></td>
-                    </tr>
+                    <div>
+                        <tr th:each="mail : ${mailMsgList}" th:onclick="showDetails([[${mail.id}]],[[${mail.subject}]],[[${mail.context}]],[[${mail.sender}]],[[${mail.createDateTime}]])">
+                            <td class="py-2 px-4 border-b" th:text="${mail.sender}"></td>
+                            <td class="py-2 px-4 border-b" th:text="${mail.subject}"></td>
+                            <td class="py-2 px-4 border-b" th:text="${mail.createDateTime}"></td>
+                        </tr>
+                    </div>
+                    <!--                    <tr>-->
+                    <!--                        <td class="py-2 px-4 border-b" th:text="${mailMsgList[0].context}"></td>-->
+                    <!--                        <td class="py-2 px-4 border-b" th:text="${mailMsgList[0].subject}"></td>-->
+                    <!--                        <td class="py-2 px-4 border-b" th:text="${mailMsgList[0].createDateTime}"></td>-->
+                    <!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -102,29 +122,20 @@
         <!-- Email Details and Text Mining -->
         <div class="w-1/3 bg-white p-4 rounded shadow-md ml-4">
             <h2 class="text-2xl font-semibold mb-4">Email Details</h2>
-            <div th:if="${selectedEmail}">
-                <p><strong>Sender:</strong> <span></span></p>
-                <p><strong>Subject:</strong> <span></span></p>
-                <p><strong>Date:</strong> <span></span></p>
-                <p><strong>Content:</strong> <span></span></p>
+            <div>
+                <p><strong id="sender">Sender:</strong> <span></span></p>
+                <p><strong id="subject">Subject:</strong> <span></span></p>
+                <p><strong id="date">Date:</strong> <span></span></p>
+                <p><strong id="content">Content:</strong> <span></span></p>
             </div>
             <div>
                 <p>Select an email to view details.</p>
             </div>
 
-            <h2 class="text-2xl font-semibold mt-6 mb-4">Text Mining</h2>
-            <form method="post">
-                <input type="hidden" name="emailId" />
-                <button type="submit" class="bg-purple-500 text-white p-2 rounded">Extract Information</button>
-            </form>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        // Add any JavaScript/jQuery code here
-    });
-</script>
+
 </body>
 </html>

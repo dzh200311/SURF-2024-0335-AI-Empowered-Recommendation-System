@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Recommendation Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .fade-in-section {
         opacity: 0;
@@ -52,9 +53,9 @@
                     <div class="border-b border-gray-200">
                         <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
                             <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <a href="subPage/Product/ProductList.html" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Match</a>
+                            <a href="/match" id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Match</a>
                             <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="sendTokenRequest('./subPage/Product/ProductList')">Match</a>
+                            <a href="javascript:void(0);" id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button">Match</a>
 
                         </div>
                     </div>
@@ -85,7 +86,7 @@
                             <div class="hidden lg:flex lg:items-center">
                                 <a href="#">
                                     <span class="sr-only">Recommendation system</span>
-                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                    <img class="h-10 w-auto" src="logo.png" alt="">
                                 </a>
                             </div>
 
@@ -127,7 +128,7 @@
                             <!-- Logo (lg-) -->
                             <a href="#" class="lg:hidden">
                                 <span class="sr-only">Easy Eat</span>
-                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                                <img src="logo.png" alt="" class="h-8 w-auto">
                             </a>
 
                             <div class="flex flex-1 items-center justify-end">
