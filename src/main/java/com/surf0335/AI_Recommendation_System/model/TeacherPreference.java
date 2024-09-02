@@ -1,17 +1,16 @@
 package com.surf0335.AI_Recommendation_System.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-public class StudentPreference {
+public class TeacherPreference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "research_field")
-    private String researchField;
+    @Column(name = "requirement")
+    private String requirement;
 
     @Column(name = "weight")
     private Integer weight;
@@ -19,15 +18,18 @@ public class StudentPreference {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "order_index")  // 添加这个字段用于排序
+    @Column(name = "order_index")  // 用于排序
     private Integer orderIndex;
 
     @ManyToOne
     @JoinColumn(name = "preference_list_id")
-    @JsonBackReference(value = "studentPreferenceListReference")
-    private StudentPreferenceList studentPreferenceList;
+    private TeacherPreferenceList teacherPreferenceList;
 
-    // Getters and setters
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    // Getters 和 Setters 方法
     public Long getId() {
         return id;
     }
@@ -36,12 +38,12 @@ public class StudentPreference {
         this.id = id;
     }
 
-    public String getResearchField() {
-        return researchField;
+    public String getRequirement() {
+        return requirement;
     }
 
-    public void setResearchField(String researchField) {
-        this.researchField = researchField;
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
     }
 
     public Integer getWeight() {
@@ -68,11 +70,19 @@ public class StudentPreference {
         this.orderIndex = orderIndex;
     }
 
-    public StudentPreferenceList getStudentPreferenceList() {
-        return studentPreferenceList;
+    public TeacherPreferenceList getTeacherPreferenceList() {
+        return teacherPreferenceList;
     }
 
-    public void setStudentPreferenceList(StudentPreferenceList studentPreferenceList) {
-        this.studentPreferenceList = studentPreferenceList;
+    public void setTeacherPreferenceList(TeacherPreferenceList teacherPreferenceList) {
+        this.teacherPreferenceList = teacherPreferenceList;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

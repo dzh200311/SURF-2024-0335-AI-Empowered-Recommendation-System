@@ -12,6 +12,6 @@ public interface GradeRepository extends JpaRepository<Grade, Integer> {
     // 根据学生ID和模块代码查找成绩
     List<Grade> findByStudentIdAndModuleCode(int studentId, String moduleCode);
 
-    // 根据教师ID查找成绩
-    List<Grade> findByTeacherId(int teacherId);
+    // // 根据教师ID查找成绩
+    // List<Grade> findByTeacherId(int teacherId);
 }

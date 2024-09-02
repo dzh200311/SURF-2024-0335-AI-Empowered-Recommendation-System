@@ -1,22 +1,9 @@
 package com.surf0335.AI_Recommendation_System.model;
 
-import jakarta.persistence.*;
-
-import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-public class Teacher {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TeacherDTO {
     private int id;
-
-    @Transient
-    private Double score = 0.0;
-
     private String teachername;
     private int age;
     private String email;
@@ -25,42 +12,16 @@ public class Teacher {
     private int requiredgrade;
     private String description;
     private String avatarUrl;
+    private Double score;
+    private Set<TeacherPreferenceDTO> preferences;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TeacherPreference> preferences;
-
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Module> modules;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
-
-    @OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private TeacherPreferenceList preferenceList;
-
-     @OneToMany(mappedBy = "receiver")
-    @JsonIgnore
-    private Set<Message> receivedMessages = new HashSet<>();
-
-    // Getters 和 Setters 方法
+    // Getters 和 Setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
     }
 
     public String getTeachername() {
@@ -127,35 +88,19 @@ public class Teacher {
         this.avatarUrl = avatarUrl;
     }
 
-    public Set<Module> getModules() {
-        return modules;
+    public Double getScore() {
+        return score;
     }
 
-    public void setModules(Set<Module> modules) {
-        this.modules = modules;
+    public void setScore(Double score) {
+        this.score = score;
     }
 
-    public Set<TeacherPreference> getPreferences() {
+    public Set<TeacherPreferenceDTO> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(Set<TeacherPreference> preferences) {
+    public void setPreferences(Set<TeacherPreferenceDTO> preferences) {
         this.preferences = preferences;
-    }
-
-    public TeacherPreferenceList getPreferenceList() {
-        return preferenceList;
-    }
-
-    public void setPreferenceList(TeacherPreferenceList preferenceList) {
-        this.preferenceList = preferenceList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

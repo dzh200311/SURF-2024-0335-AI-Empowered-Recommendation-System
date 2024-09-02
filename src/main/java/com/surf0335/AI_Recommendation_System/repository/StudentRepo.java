@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StudentRepo extends JpaRepository<Student, Integer> {
@@ -23,4 +24,12 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     // 根据模块名称查找学生
     List<Student> findByModules_Name(String moduleName);
+    
+    default Optional<Student> findById(Long id) {
+        return findById(id.intValue());
+    }
+   
+        Student findByUserId(int userId);
+    
+    
 }

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.55, 0.72),
+                        transform 0.3s cubic-bezier(0.47, 0, 0.75, 0.72);
+        }
+        .main-content {
+            padding-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <header class="relative top-0 left-0 w-full z-30">
+        <nav aria-label="Top">
+            <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="border-b border-gray-200 dark:border-black">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <div class="hidden lg:flex lg:items-center">
+                                <!-- <a href="#">
+                                    <span class="sr-only">Recommendation system</span>
+                                    <img class="h-10 w-auto" src="./images/logo.png" alt="Logo">
+                                </a> -->
+                            </div>
+                            <div class="hidden h-full lg:flex">
+                                <div class="ml-8">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <a href="/home_page_auth" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Home</a>
+                                        <a href="match_student" class="border-transparent text-purple-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Match</a>
+                                        <a href="ai_polish" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">AI Polishing</a>
+                                        <a href="co_edit" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Co-editing</a>
+                                        <a href="inbox" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Inbox</a>
+                                        <a href="./subPage/Others/Help.html" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Help</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 items-center justify-end lg:hidden">
+                                <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                    <span class="sr-only">Open menu</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </button>
+                                <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-3xl font-bold leading-9 text-gray-900 dark:text-white sm:truncate sm:text-4xl sm:tracking-tight">Student Profile</h2>
+                </div>
+                <div class="mt-5">
+                    <a th:href="@{/students/showFormForUpdate}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-7 py-3.5 text-xl font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit Profile</a>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+                <div class="px-6 py-6 sm:p-8">
+                    <div class="mb-8">
+                        <label class="profile-label">Name</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.studentname}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Avatar</label>
+                        <div>
+                            <img th:src="@{${student.avatarUrl}}" alt="Avatar" class="w-32 h-32 rounded-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Age</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.age}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Email</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.email}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Gender</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.gender}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Phone</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.phone}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Modules</label>
+                        <ul class="profile-info text-gray-600 dark:text-white">
+                            <li th:each="module : ${student.modules}" th:text="${module.name}"></li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Description</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${student.description}]]</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    window.addEventListener('scroll', function () {
+        var fadeInElements = document.querySelectorAll('.fade-in-section');
+        fadeInElements.forEach(function (element) {
+            var position = element.getBoundingClientRect();
+            if (position.top < window.innerHeight && position.bottom >= 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            } else {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(-20px)';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,21 +1,28 @@
 package com.surf0335.AI_Recommendation_System.services;
 
 import com.surf0335.AI_Recommendation_System.model.Teacher;
+import com.surf0335.AI_Recommendation_System.model.TeacherPreference;
+import com.surf0335.AI_Recommendation_System.model.Student;
 import com.surf0335.AI_Recommendation_System.model.StudentPreference;
 import com.surf0335.AI_Recommendation_System.repository.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.surf0335.AI_Recommendation_System.services.TeacherPreferenceService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import com.surf0335.AI_Recommendation_System.repository.StudentRepo;
 @Service
 public class TeacherService {
 
     @Autowired
+    private TeacherPreferenceService preferenceService;
+    @Autowired
     private TeacherRepo teacherRepository;
+
+    @Autowired
+    private StudentRepo studentRepository;
 
     @Autowired
     private StudentPreferenceService studentPreferenceService;  // 正确注入 StudentPreferenceService
@@ -100,5 +107,25 @@ public class TeacherService {
         }
         return str.toLowerCase().contains(searchStr.toLowerCase());
     }
+
+    public List<Student> getStudentsByTeacherPreferences(int teacherId, List<Student> students) {
+        List<TeacherPreference> preferences = preferenceService.getPreferencesForTeacher(teacherId);
+
+        for (Student student : students) {
+            double score = 0.0;
+
+            for (TeacherPreference preference : preferences) {
+                if (student.getDescription() != null && containsIgnoreCase(student.getDescription(), preference.getRequirement())) {
+                    score += preference.getWeight();
+                }
+            }
+            student.setScore(score);
+        }
+
+        return students.stream()
+                .sorted((s1, s2) -> Double.compare(s2.getScore(), s1.getScore()))
+                .collect(Collectors.toList());
+    }
+    
 }
 

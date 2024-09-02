@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Edit Student Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Teacher Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
@@ -42,7 +42,9 @@
     </style>
 </head>
 <body>
+
 <div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <!-- Navbar -->
     <header class="fixed top-0 left-0 w-full z-30">
         <nav aria-label="Top">
             <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
@@ -50,17 +52,17 @@
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
                             <div class="hidden lg:flex lg:items-center">
-                                <!-- <a href="#">
+                                <a href="#">
                                     <span class="sr-only">Recommendation system</span>
-                                    <img class="h-10 w-auto" src="./images/logo.png" alt="Logo">
-                                </a> -->
+                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                </a>
                             </div>
 
                             <div class="hidden h-full lg:flex">
                                 <div class="ml-8">
                                     <div class="flex h-full justify-center space-x-8">
-                                        <a href="/studentdashboard" class="border-transparent text-purple-600 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
-                                        <a href="match_student" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Match</a>
+                                        <a href="teacherdashboard" class="border-transparent text-purple-600 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Home</a>
+                                        <a href="match_teacher" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Match</a>
                                         <a href="ai_polish" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">AI Polishing</a>
                                         <a href="co_edit" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Co-editing</a>
                                         <a href="/inbox" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Inbox</a>
@@ -143,7 +145,7 @@
                                                 </button>
 
                                                 <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                                    <a th:href="@{/students/profile(studentId=${session.user.id})}" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                                    <a th:href="@{/teachers/profile(teacherId=${session.user.id})}" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
 
                                                     <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
                                                     <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
@@ -170,28 +172,34 @@
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <div class="lg:flex lg:items-center lg:justify-between">
                 <div class="min-w-0 flex-1">
-                    <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight" th:text="${student.id == null ? 'Add Student' : 'Update Student'}"></h2>
+                    <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight" th:text="${teacher.id == null ? 'Add Teacher' : 'Update Teacher'}"></h2>
                 </div>
             </div>
+
+            <!-- 成功提示消息 -->
+            <div th:if="${successMessage}" class="alert-success">
+                <span th:text="${successMessage}"></span>
+            </div>
+
             <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
-                    <form th:action="@{/students/save}" th:object="${student}" method="POST" enctype="multipart/form-data">
+                    <form th:action="@{/teachers/save}" th:object="${teacher}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}" />
                         <div class="mb-6">
-                            <label for="studentname" class="block text-lg font-medium text-gray-700">Student Name</label>
-                            <input type="text" th:field="*{studentname}" id="studentname" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter student name" required>
+                            <label for="teachername" class="block text-lg font-medium text-gray-700">Teacher Name</label>
+                            <input type="text" th:field="*{teachername}" id="teachername" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter teacher name" required>
                         </div>
                         <div class="mb-6">
                             <label for="avatar" class="block text-lg font-medium text-gray-700">Upload Avatar</label>
                             <input type="file" name="file" id="avatar" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" accept="image/*">
                         </div>
                         <div class="mb-6">
-                            <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
-                            <input type="email" th:field="*{email}" id="email" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter email" required>
-                        </div>
-                        <div class="mb-6">
                             <label for="age" class="block text-lg font-medium text-gray-700">Age</label>
                             <input type="number" th:field="*{age}" id="age" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter age" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
+                            <input type="email" th:field="*{email}" id="email" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter email" required>
                         </div>
                         <div class="mb-6">
                             <label for="gender" class="block text-lg font-medium text-gray-700">Gender</label>
@@ -202,21 +210,20 @@
                             </select>
                         </div>
                         <div class="mb-6">
-                            <label for="modules" class="block text-lg font-medium text-gray-700">Modules</label>
-                            <select th:field="*{modules}" id="modules" multiple class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg">
-                                <option th:each="module : ${allModules}" th:value="${module.id}" th:text="${module.name}"></option>
-                            </select>
-                        </div>
-                        <div class="mb-6">
                             <label for="phone" class="block text-lg font-medium text-gray-700">Phone</label>
                             <input type="text" th:field="*{phone}" id="phone" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter phone number" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="requiredgrade" class="block text-lg font-medium text-gray-700">Required Grade</label>
+                            <input type="number" th:field="*{requiredgrade}" id="requiredgrade" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter required grade" required>
                         </div>
                         <div class="mb-6">
                             <label for="description" class="block text-lg font-medium text-gray-700">Description</label>
                             <textarea th:field="*{description}" id="description" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg" placeholder="Enter description" rows="4" required></textarea>
                         </div>
+                        
                         <div class="mt-8">
-                            <button type="submit" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Student</button>
+                            <button type="submit" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Teacher</button>
                         </div>
                     </form>
                 </div>
@@ -224,5 +231,6 @@
         </div>
     </main>
 </div>
+
 </body>
 </html>

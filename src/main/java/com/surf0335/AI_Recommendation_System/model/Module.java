@@ -2,6 +2,8 @@ package com.surf0335.AI_Recommendation_System.model;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
 @Entity
@@ -12,21 +14,31 @@ public class Module {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "code", unique = true, nullable = false)
     private String code;
 
-    private String teachername;  // 保留 teachername 字段用于查询
+    @Column(name = "teachername")
+    private String teachername;
 
-    @ManyToOne(fetch = FetchType.EAGER)  // 改为 EAGER 强制加载 Teacher 数据
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     @JsonBackReference
     private Teacher teacher;
 
     @ManyToMany(mappedBy = "modules")
+    @JsonIgnore
     private Set<Student> students;
 
-    // Getters 和 Setters 方法
+    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Grade> grades;
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -81,5 +93,13 @@ public class Module {
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public Set<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Set<Grade> grades) {
+        this.grades = grades;
     }
 }

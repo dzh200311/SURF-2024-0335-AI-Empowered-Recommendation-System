@@ -1,7 +1,9 @@
 package com.surf0335.AI_Recommendation_System.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "student")
@@ -27,16 +29,14 @@ public class Student {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "student_module",
         joinColumns = @JoinColumn(name = "student_id"),
         inverseJoinColumns = @JoinColumn(name = "module_id")
     )
-    private Set<Module> modules;
-
-    @Column(name = "password")
-    private String password;
+    @JsonIgnore
+    private Set<Module> modules = new HashSet<>();
 
     @Column(name = "phone")
     private String phone;
@@ -44,10 +44,28 @@ public class Student {
     @Column(name = "studentname")
     private String studentname;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Grade> grades = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonIgnore
     private StudentPreferenceList preferenceList;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    private Set<Message> sentMessages = new HashSet<>();
+    
+    // 新增的字段
+    @Transient  // 这个字段不需要持久化到数据库
+    private double score;
+
+    // Getters 和 Setters 方法
     public int getId() {
         return id;
     }
@@ -104,14 +122,6 @@ public class Student {
         this.modules = modules;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -128,11 +138,36 @@ public class Student {
         this.studentname = studentname;
     }
 
+    public Set<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Set<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public StudentPreferenceList getPreferenceList() {
         return preferenceList;
     }
 
     public void setPreferenceList(StudentPreferenceList preferenceList) {
         this.preferenceList = preferenceList;
+    }
+
+    // 新增的 score 字段的 getter 和 setter
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 }

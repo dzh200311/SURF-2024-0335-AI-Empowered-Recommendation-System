@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TeacherRepo extends JpaRepository<Teacher, Integer> {
@@ -23,4 +24,8 @@ public interface TeacherRepo extends JpaRepository<Teacher, Integer> {
 
     // 根据所需的分数查找教师
     List<Teacher> findByRequiredgrade(int requiredgrade);
+
+    default Optional<Teacher> findById(Long id) {
+        return findById(id.intValue());
+    }
 }
