@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.55, 0.72),
+                        transform 0.3s cubic-bezier(0.47, 0, 0.75, 0.72);
+        }
+        .main-content {
+            padding-top: 0.5rem; /* Adjust the padding to avoid overlap with the navbar */
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-white dark:bg-gray-950 transition-colors duration-500">
+    <!-- Navbar -->
+    <header class="relative top-0 left-0 w-full z-30">
+        <nav aria-label="Top">
+            <div class="bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="border-b border-gray-200 dark:border-black">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div class="flex h-16 items-center justify-between">
+                            <div class="hidden lg:flex lg:items-center">
+                                <a href="#">
+                                    <span class="sr-only">Recommendation system</span>
+                                    <img class="h-10 w-auto" src="./images/logo.png" alt="">
+                                </a>
+                            </div>
+
+                            <div class="hidden h-full lg:flex">
+                                <div class="ml-8">
+                                    <div class="flex h-full justify-center space-x-8">
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="teacherdashboard" type="button" class="border-transparent text-purple-600 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Home</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="match_teacher" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Match</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="ai_polish" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">AI Polishing</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="co_edit" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Co-editing</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="/inbox" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Inbox</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="relative flex">
+                                                <a href="/help" type="button" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">Help</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-1 items-center lg:hidden">
+                                <button id="mobile-menu-btn" type="button" class="-ml-2 rounded-md bg-white p-2 text-gray-400 dark:bg-gray-950">
+                                    <span class="sr-only">Open menu</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </button>
+                                <a href="/search" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Search</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <a href="#" class="lg:hidden">
+                                <span class="sr-only">Easy Eat</span>
+                                <img src="images/logo.png" alt="" class="h-8 w-auto">
+                            </a>
+
+                            <div class="flex flex-1 items-center justify-end">
+                                <div class="flex items-center lg:ml-8">
+                                    <div class="hidden lg:flex">
+                                        <a href="/search" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                            <span class="sr-only">Search</span>
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-6" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+                                        <button id="translateLanguage" class="p-2 rounded-2xl bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700" onclick="window.location.href = 'index_chinese.html';">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <span class="mx-x h-6 w-px lg:mx-3" aria-hidden="true"></span>
+
+                                    <div class="flow-root">
+                                        <button id="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-all duration-300 dark:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-800 dark:text-gray-200">
+                                                <g class="dark:hidden">
+                                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.485-7.071l1.414 1.414M6.343 17.657l1.414-1.414m12.728 0l-1.414-1.414M6.343 6.343L4.93 7.757"/>
+                                                </g>
+                                                <g class="hidden dark:block">
+                                                    <path fill="currentColor" d="M21 12.795A9.004 9.004 0 0012.205 3a7.5 7.5 0 018.8 8.8 9.005 9.005 0 00-.005 1.995z"/>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
+
+                                    <div id="signup-buttons" class="hidden flex space-x-8 px-4">
+                                        <a href="/log_in" type="button" class="rounded-md bg-white dark:bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-950 hover:bg-gray-50 dark:hover:bg-gray-700">Sign up</a>
+
+                                        <a href="/add_user" type="button" class="rounded-md bg-purple-500 dark:bg-purple-700 px-2.5 py-1.5 text-sm font-semibold text-white dark:text-white shadow-sm hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</a>
+                                    </div>
+
+                                    <div id="user-links" class="flex space-x-8 px-4">
+                                        <div class="flex space-x-8">
+                                            <div class="flex">
+                                                <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                    <span class="sr-only">Account</span>
+                                                    <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="">
+                                                </button>
+
+                                                <div id="dropdownMenu" class="hidden absolute right-[0px] z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                                    <a th:href="@{/teachers/profile(teacherId=${session.user.id})}" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+
+                                                    <button onclick="logout()" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                                    <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                        <span class="sr-only">Close</span>
+                                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-3xl font-bold leading-9 text-gray-900 dark:text-white sm:truncate sm:text-4xl sm:tracking-tight">Teacher Profile</h2>
+                </div>
+                <div class="mt-5">
+                    <a th:href="@{/teachers/showFormForUpdate}" 
+   class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-7 py-3.5 text-xl font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+   Edit Profile
+</a>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+                <div class="px-6 py-6 sm:p-8">
+                    <div class="mb-8">
+                        <label class="profile-label">Name</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.teachername}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Avatar</label>
+                        <div>
+                            <img th:src="@{${teacher.avatarUrl}}" alt="Avatar" class="w-32 h-32 rounded-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Age</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.age}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Email</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.email}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Gender</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.gender}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Phone</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.phone}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Required Grade</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.requiredgrade}]]</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="profile-label">Description</label>
+                        <p class="profile-info text-gray-600 dark:text-white">[[${teacher.description}]]</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    window.addEventListener('scroll', function () {
+        var fadeInElements = document.querySelectorAll('.fade-in-section');
+        fadeInElements.forEach(function (element) {
+            var position = element.getBoundingClientRect();
+            if (position.top < window.innerHeight && position.bottom >= 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            } else {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(-20px)';
+            }
+        });
+    });
+</script>
+
+<script>
+    window.addEventListener('scroll', function () {
+        var fadeInElements = document.querySelectorAll('.fade-in-section');
+        fadeInElements.forEach(function (element) {
+            var position = element.getBoundingClientRect();
+            if (position.top < window.innerHeight && position.bottom >= 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            } else {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(-20px)';
+            }
+        });
+    });
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.classList.toggle('hidden');
+    }
+
+    function closeDropdown() {
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.classList.add('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('no-teacher-info-modal').classList.add('hidden');
+    }
+
+    // 如果没有教师信息，显示弹出窗口
+    window.onload = function() {
+        const noTeacherInfo = /*[[${noTeacherInfo}]]*/ false;
+        if (noTeacherInfo) {
+            document.getElementById('no-teacher-info-modal').classList.remove('hidden');
+        }
+    }
+</script>
+</body>
+</html>
