@@ -27,10 +27,7 @@
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
                             <div class="hidden lg:flex lg:items-center">
-                                <!-- <a href="#">
-                                    <span class="sr-only">Recommendation system</span>
-                                    <img class="h-10 w-auto" src="./images/logo.png" alt="Logo">
-                                </a> -->
+                                <!-- Logo Placeholder -->
                             </div>
                             <div class="hidden h-full lg:flex">
                                 <div class="ml-8">
@@ -41,6 +38,27 @@
                                         <a href="co_edit" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Co-editing</a>
                                         <a href="inbox" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Inbox</a>
                                         <a href="./subPage/Others/Help.html" class="border-transparent text-gray-700 dark:text-white hover:text-purple-600 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out">Help</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- User Avatar and Dropdown -->
+                            <div id="user-links" class="flex space-x-8 px-4">
+                                <div class="flex space-x-8">
+                                    <div class="relative">
+                                        <button onclick="toggleDropdown()" class="-m-2 p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
+                                            <span class="sr-only">Account</span>
+                                            <img class="inline-block h-10 w-10 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=626&ext=jpg" alt="Avatar">
+                                        </button>
+                                        <div id="dropdownMenu" class="hidden absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                            <a th:href="@{/students/profile}" class="block px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                                            <button onclick="logout()" class="block w-full text-left px-3 py-1 text-sm leading-6 text-gray-900 dark:text-white" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</button>
+                                            <button onclick="closeDropdown()" class="content-center block w-full text-right px-3 py-1 text-gray-400 hover:text-gray-500">
+                                                <span class="sr-only">Close</span>
+                                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
