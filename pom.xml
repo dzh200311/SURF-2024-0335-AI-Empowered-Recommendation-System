@@ -16,6 +16,20 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+	<repositories>
+        <repository>
+            <id>aliyun-public</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,7 +77,6 @@
             <version>3.1.0</version>
         </dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
@@ -84,7 +97,6 @@
 			<artifactId>layout</artifactId>
 			<version>7.2.0</version>
 		</dependency>
-
 
 		<!-- Jackson JSON 解析库 -->
 		<dependency>
@@ -114,6 +126,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
