@@ -1,3 +1,4 @@
+Contributors: Zihan Deng, Yifan Hong, Haoran Qin, Ruixuan Chen, Yunchu Peng, Zemeng Gu, Xinda Li.
 ## 运行代码
 1.	git clone https://github.com/J1mMilton/fitness4life.git
 2.	SQL workbench在那个端口为3306，用户名为root的connection下新建一个数据库，名为appointmentsystem
